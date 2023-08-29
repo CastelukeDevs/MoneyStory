@@ -1,27 +1,15 @@
-export default [
+import {IEndpointPool} from './APIUtils';
+
+/**
+ * This endpoint pool types accepts
+ * @type IEndpointPool
+ */
+const EndpointPool = [
   {
-    endpoint: 'getContact',
-    url: '/contact',
+    endpoint: 'GET_USER',
+    url: '/user',
     method: 'get',
-  },
-  {
-    endpoint: 'postContact',
-    url: '/contact',
-    method: 'post',
-  },
-  {
-    endpoint: 'getContactByID',
-    url: '/contact/',
-    method: 'get',
-  },
-  {
-    endpoint: 'editContactByID',
-    url: '/contact/',
-    method: 'put',
-  },
-  {
-    endpoint: 'deleteContactByID',
-    url: '/contact/',
-    method: 'delete',
   },
 ] as const;
+
+export default EndpointPool;

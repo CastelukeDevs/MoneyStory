@@ -1,3 +1,4 @@
+import {CancelToken} from 'axios';
 import EndpointPool from './EndpointPool';
 
 enum EndpointMethod {
@@ -7,18 +8,30 @@ enum EndpointMethod {
   put,
 }
 
-export type EndpointMethodType = keyof typeof EndpointMethod;
+export type IEndpointMethod = keyof typeof EndpointMethod;
 
-export type EndpointTypes = {
+export type IEndpointPool = {
   endpoint: string;
   url: string;
-  method: EndpointMethodType;
+  method: IEndpointMethod;
   payload?: any;
   params?: any;
+  auth?: boolean;
 };
 
-export type Endpoint = (typeof EndpointPool)[number]['endpoint'];
+export type IEndpoint = (typeof EndpointPool)[number]['endpoint'];
 
-export const getEndpoint = (endpoint: Endpoint) => {
+export const getEndpoint = (endpoint: IEndpoint) => {
   return EndpointPool.find(item => item.endpoint === endpoint);
 };
+
+export type IAPIsCallOption = {
+  params?: any;
+  payload?: any;
+  auth?: boolean;
+  cancelToken?: CancelToken;
+};
+
+export const ActionPrefix: IEndpoint[] = EndpointPool.map(
+  endpointItem => endpointItem.endpoint,
+);

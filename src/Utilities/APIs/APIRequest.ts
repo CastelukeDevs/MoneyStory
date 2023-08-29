@@ -1,27 +1,31 @@
 import axios, {AxiosError} from 'axios';
-import GlobalValue from '../GlobalValue';
-import {Endpoint, getEndpoint} from './APIUtils';
+import {IAPIsCallOption, IEndpoint, getEndpoint} from './APIUtils';
+import {BASE_URL} from '@env';
 
-const APICall = async (endpoint: Endpoint, params?: any, payload?: any) => {
-  axios.defaults.baseURL = GlobalValue.BaseURL;
+const BaseURL = BASE_URL;
 
-  console.log('new Api call with detail:', {endpoint, params, payload});
+const APICall = async (endpoint: IEndpoint, options?: IAPIsCallOption) => {
+  axios.defaults.baseURL = BaseURL;
+
+  console.log('new Api call with detail:', {
+    endpoint,
+    options: options,
+  });
 
   const selectEndpoint = getEndpoint(endpoint)!;
 
   return await axios({
     method: selectEndpoint.method,
-    url:
-      params === undefined
-        ? selectEndpoint.url
-        : `${selectEndpoint.url}${params.id}`,
-    data: payload,
-    // params: params,
+    url: selectEndpoint.url,
+    data: options?.payload,
+    params: options?.params,
+    cancelToken: options?.cancelToken,
   })
     .then(result => {
       return result.data;
     })
     .catch((error: AxiosError) => {
+      console.error('axios error on request', error.config?.url);
       console.error('axios error', error);
       return error;
     });

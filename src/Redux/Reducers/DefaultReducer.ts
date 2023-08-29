@@ -1,5 +1,6 @@
 import {PayloadAction, createSlice} from '@reduxjs/toolkit';
 import {IErrorMessage, IUser} from '../../Types/Types';
+import DefaultAction from '../Actions/DefaultAction';
 
 export type IDefaultState = {
   isLoading: boolean;
@@ -27,7 +28,7 @@ const DefaultReducer = createSlice({
       state.error = null;
     },
   },
-  //   extraReducers: ContactActionReducerBuilder,
+  extraReducers: DefaultAction,
 });
 
 export const {setUser, removeUser} = DefaultReducer.actions;
