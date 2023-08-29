@@ -4,7 +4,6 @@ module.exports = {
     // 'module:react-native-dotenv',
   ],
   plugins: [
-    'react-native-reanimated/plugin',
     [
       'module:react-native-dotenv',
       {
@@ -16,5 +15,6 @@ module.exports = {
         allowUndefined: true,
       },
     ],
+    'react-native-reanimated/plugin',
   ],
 };
