@@ -1,6 +1,7 @@
 import React, {FC} from 'react';
 import {View, Text} from 'react-native';
 import {IMainNavPropTypes} from '../Routes/RouteTypes';
+import Icon from 'react-native-vector-icons/Ionicons';
 
 const SplashScreen: FC<IMainNavPropTypes<'SplashScreen'>> = props => {
   const {navigation, route} = props;
@@ -10,6 +11,7 @@ const SplashScreen: FC<IMainNavPropTypes<'SplashScreen'>> = props => {
   return (
     <View>
       <Text>SplashScreen</Text>
+      <Icon name="bonfire-outline" />
     </View>
   );
 };
