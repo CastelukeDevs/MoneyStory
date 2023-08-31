@@ -1,7 +1,13 @@
-import React from 'react';
+import React, {useEffect, useRef, useState} from 'react';
+
+import analytics from '@react-native-firebase/analytics';
+import auth, {FirebaseAuthTypes} from '@react-native-firebase/auth';
 
 import {SafeAreaProvider} from 'react-native-safe-area-context';
-import {NavigationContainer} from '@react-navigation/native';
+import {
+  NavigationContainer,
+  createNavigationContainerRef,
+} from '@react-navigation/native';
 import {
   StackNavigationOptions,
   createStackNavigator,
@@ -32,9 +38,56 @@ const DashboardRoute = () => {
 };
 
 const Route = () => {
+  const routeNameRef = useRef<string | null>();
+  const navigationRef = createNavigationContainerRef<IMainNav>();
+
+  const [user, setUser] = useState<FirebaseAuthTypes.User | null>(null);
+  const [initializing, setInitializing] = useState(false);
+
+  useEffect(() => {
+    const authSub = auth().onAuthStateChanged(onAuthStateChangeHandler);
+    return authSub;
+  }, []);
+
+  const onAuthStateChangeHandler = (FUser: any) => {
+    setUser(FUser);
+    if (initializing) {
+      setInitializing(false);
+    }
+  };
+
+  const onReadyHandler = () => {
+    if (navigationRef.current === null) {
+      return;
+    }
+
+    routeNameRef.current = navigationRef.current.getCurrentRoute()?.name;
+  };
+
+  const onNavigationStateChangeHandler = async () => {
+    if (navigationRef.current === null) {
+      return;
+    }
+
+    const previousRouteName = routeNameRef.current;
+    const currentRouteName = navigationRef.current.getCurrentRoute()?.name;
+
+    if (previousRouteName !== currentRouteName) {
+      await analytics().logScreenView({
+        screen_name: currentRouteName,
+        screen_class: currentRouteName,
+      });
+    }
+
+    routeNameRef.current = currentRouteName;
+  };
+
   return (
     <SafeAreaProvider>
-      <NavigationContainer>
+      <NavigationContainer
+        ref={navigationRef}
+        onReady={onReadyHandler}
+        onStateChange={onNavigationStateChangeHandler}>
         <Stack.Navigator screenOptions={defaultScreenOptions}>
           <Stack.Screen name="SplashScreen" component={SplashScreen} />
           <Stack.Screen name="SignInScreen" component={SignInScreen} />

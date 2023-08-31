@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "715578850020",
+    "project_id": "moneystory-2023",
+    "storage_bucket": "moneystory-2023.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:715578850020:android:466fbd575e93f7cc37caf1",
+        "android_client_info": {
+          "package_name": "com.moneystory"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "715578850020-fvcb7euoju5i8ooquoffldiio2p9d22f.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.moneystory",
+            "certificate_hash": "5e8f16062ea3cd2c4a0d547876baa6f38cabf625"
+          }
+        },
+        {
+          "client_id": "715578850020-sls1k6nt435ichlf1doj5cumk1uhg8bl.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAVeK_ABA-vERoTMnuI-XlwPMA1Tf74XUM"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "715578850020-sls1k6nt435ichlf1doj5cumk1uhg8bl.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
