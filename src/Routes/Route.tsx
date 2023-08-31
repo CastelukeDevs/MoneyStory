@@ -1,6 +1,7 @@
-import React, {useRef} from 'react';
+import React, {useEffect, useRef, useState} from 'react';
 
 import analytics from '@react-native-firebase/analytics';
+import auth from '@react-native-firebase/auth';
 
 import {SafeAreaProvider} from 'react-native-safe-area-context';
 import {
@@ -40,6 +41,21 @@ const Route = () => {
   const routeNameRef = useRef<string | null>();
   const navigationRef = createNavigationContainerRef<IMainNav>();
 
+  const [user, setUser] = useState(null);
+  const [initializing, setInitializing] = useState(false);
+
+  useEffect(() => {
+    const authSub = auth().onAuthStateChanged(onAuthStateChangeHandler);
+    return authSub;
+  }, []);
+
+  const onAuthStateChangeHandler = (FUser: any) => {
+    setUser(FUser);
+    if (initializing) {
+      setInitializing(false);
+    }
+  };
+
   const onReadyHandler = () => {
     if (navigationRef.current === null) {
       return;
@@ -48,7 +64,7 @@ const Route = () => {
     routeNameRef.current = navigationRef.current.getCurrentRoute()?.name;
   };
 
-  const onStateChangeHandler = async () => {
+  const onNavigationStateChangeHandler = async () => {
     if (navigationRef.current === null) {
       return;
     }
@@ -71,7 +87,7 @@ const Route = () => {
       <NavigationContainer
         ref={navigationRef}
         onReady={onReadyHandler}
-        onStateChange={onStateChangeHandler}>
+        onStateChange={onNavigationStateChangeHandler}>
         <Stack.Navigator screenOptions={defaultScreenOptions}>
           <Stack.Screen name="SplashScreen" component={SplashScreen} />
           <Stack.Screen name="SignInScreen" component={SignInScreen} />
