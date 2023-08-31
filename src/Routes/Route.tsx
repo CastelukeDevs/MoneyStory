@@ -1,7 +1,7 @@
 import React, {useEffect, useRef, useState} from 'react';
 
 import analytics from '@react-native-firebase/analytics';
-import auth from '@react-native-firebase/auth';
+import auth, {FirebaseAuthTypes} from '@react-native-firebase/auth';
 
 import {SafeAreaProvider} from 'react-native-safe-area-context';
 import {
@@ -41,7 +41,7 @@ const Route = () => {
   const routeNameRef = useRef<string | null>();
   const navigationRef = createNavigationContainerRef<IMainNav>();
 
-  const [user, setUser] = useState(null);
+  const [user, setUser] = useState<FirebaseAuthTypes.User | null>(null);
   const [initializing, setInitializing] = useState(false);
 
   useEffect(() => {
