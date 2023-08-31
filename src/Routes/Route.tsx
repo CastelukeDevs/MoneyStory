@@ -1,7 +1,12 @@
-import React from 'react';
+import React, {useRef} from 'react';
+
+import analytics from '@react-native-firebase/analytics';
 
 import {SafeAreaProvider} from 'react-native-safe-area-context';
-import {NavigationContainer} from '@react-navigation/native';
+import {
+  NavigationContainer,
+  createNavigationContainerRef,
+} from '@react-navigation/native';
 import {
   StackNavigationOptions,
   createStackNavigator,
@@ -32,9 +37,41 @@ const DashboardRoute = () => {
 };
 
 const Route = () => {
+  const routeNameRef = useRef<string | null>();
+  const navigationRef = createNavigationContainerRef<IMainNav>();
+
+  const onReadyHandler = () => {
+    if (navigationRef.current === null) {
+      return;
+    }
+
+    routeNameRef.current = navigationRef.current.getCurrentRoute()?.name;
+  };
+
+  const onStateChangeHandler = async () => {
+    if (navigationRef.current === null) {
+      return;
+    }
+
+    const previousRouteName = routeNameRef.current;
+    const currentRouteName = navigationRef.current.getCurrentRoute()?.name;
+
+    if (previousRouteName !== currentRouteName) {
+      await analytics().logScreenView({
+        screen_name: currentRouteName,
+        screen_class: currentRouteName,
+      });
+    }
+
+    routeNameRef.current = currentRouteName;
+  };
+
   return (
     <SafeAreaProvider>
-      <NavigationContainer>
+      <NavigationContainer
+        ref={navigationRef}
+        onReady={onReadyHandler}
+        onStateChange={onStateChangeHandler}>
         <Stack.Navigator screenOptions={defaultScreenOptions}>
           <Stack.Screen name="SplashScreen" component={SplashScreen} />
           <Stack.Screen name="SignInScreen" component={SignInScreen} />
