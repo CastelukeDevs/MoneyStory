@@ -1,41 +1,61 @@
-import React, {useEffect, useState} from 'react';
+import React, {PropsWithChildren, useEffect} from 'react';
 import {
   Dimensions,
+  Keyboard,
+  KeyboardAvoidingView,
+  Platform,
   StyleSheet,
-  Text,
   TouchableWithoutFeedback,
   View,
-  useWindowDimensions,
 } from 'react-native';
 import GlobalColor from '../../Utilities/Styles/GlobalColor';
-import {viewStyle} from '../../Utilities/Styles/GlobalStyle';
 import Animated, {
+  runOnJS,
   useAnimatedStyle,
   useSharedValue,
-  withSpring,
   withTiming,
 } from 'react-native-reanimated';
-import Button from './Button';
-import ConCol from '../../Utilities/Styles/ConCol';
+import {
+  Gesture,
+  GestureDetector,
+  GestureHandlerRootView,
+} from 'react-native-gesture-handler';
 
-const width = Dimensions.get('window').width;
+const {width, height} = Dimensions.get('window');
 
 type IModalProp = {
   visible: boolean;
   onDismiss: (visible: boolean) => void;
 };
-const Modal = ({visible, onDismiss}: IModalProp) => {
-  //   const {width, height} = useWindowDimensions();
 
-  //   const [childHeight, setChildHeight] = useState(0);
-  const dimensionH = useWindowDimensions().height;
+/**
+ * TODO:
+ * - Solve height problem when keyboard appear
+ */
 
+/**
+ * Modal Components
+ * @type IModalProp
+ * @param visible
+ * @param onDismiss
+ *
+ * to dismiss just change visible to false
+ * or drag the draglines down
+ */
+const Modal = ({
+  visible,
+  onDismiss,
+  children,
+}: PropsWithChildren<IModalProp>) => {
+  /**
+   * Animator using Reanimated
+   */
   const animatedZIndex = useSharedValue(-1);
   const animatedOpacity = useSharedValue(0);
-  const animatedYPos = useSharedValue(dimensionH);
+  const animatedYPos = useSharedValue(height);
+  const animatedMinHeight = useSharedValue(0);
 
   const animatedContainerStyle = useAnimatedStyle(() => ({
-    // zIndex: animatedZIndex.value,
     zIndex: withTiming(animatedZIndex.value, {
       duration: 500,
     }),
@@ -48,6 +68,9 @@ const Modal = ({visible, onDismiss}: IModalProp) => {
   }));
 
   const animatedModalStyle = useAnimatedStyle(() => ({
+    minHeight: withTiming(animatedMinHeight.value, {
+      duration: 500,
+    }),
     transform: [
       {
         translateY: withTiming(animatedYPos.value, {
@@ -58,12 +81,6 @@ const Modal = ({visible, onDismiss}: IModalProp) => {
   }));
 
   useEffect(() => {
-    console.log(
-      visible ? ConCol.bg.green : ConCol.bg.red,
-      `Modal is now ${visible ? 'visible' : 'invisible'}`,
-      ConCol.reset,
-    );
-
     if (visible) {
       animatedZIndex.value = 400;
       animatedOpacity.value = 1;
@@ -71,49 +88,60 @@ const Modal = ({visible, onDismiss}: IModalProp) => {
     } else {
       animatedZIndex.value = -1;
       animatedOpacity.value = 0;
-      animatedYPos.value = dimensionH;
+      animatedYPos.value = height;
+      animatedMinHeight.value = 0;
+      Keyboard.dismiss();
     }
-    return () => {};
   }, [visible]);
 
   const onCloseHandler = () => {
     onDismiss(false);
   };
+  const pressed = useSharedValue(false);
+
+  const pan = Gesture.Pan()
+    .onBegin(() => {
+      pressed.value = true;
+    })
+    .onFinalize(event => {
+      const transY = event.translationY;
+      if (transY >= 0) {
+        runOnJS(onDismiss)(false);
+      }
+      if (transY <= -1) {
+        animatedMinHeight.value = height;
+      }
+      pressed.value = false;
+    });
 
   return (
     <Animated.View style={[styles.BaseContainer, animatedContainerStyle]}>
-      <TouchableWithoutFeedback
-        style={[StyleSheet.absoluteFillObject]}
-        onPress={onCloseHandler}>
-        <Animated.View
-          style={[
-            StyleSheet.absoluteFillObject,
-            {backgroundColor: GlobalColor.overlay},
-            animatedOverlayStyle,
-          ]}
-        />
-      </TouchableWithoutFeedback>
+      <KeyboardAvoidingView
+        style={{flex: 1}}
+        behavior={Platform.OS === 'ios' ? 'padding' : undefined}>
+        <GestureHandlerRootView style={{flex: 1}}>
+          <TouchableWithoutFeedback
+            style={[StyleSheet.absoluteFillObject]}
+            onPress={onCloseHandler}>
+            <Animated.View
+              style={[
+                StyleSheet.absoluteFillObject,
+                {backgroundColor: GlobalColor.overlay},
+                animatedOverlayStyle,
+              ]}
+            />
+          </TouchableWithoutFeedback>
 
-      <Animated.View
-        style={[
-          {
-            marginTop: 'auto',
-            backgroundColor: GlobalColor.light,
-            borderTopEndRadius: 20,
-            borderTopStartRadius: 20,
-            //   transform: [{translateY: 100}],
-          },
-          animatedModalStyle,
-        ]}
-        // onLayout={event => {
-        //   const {height} = event.nativeEvent.layout;
-        //   setChildHeight(height);
-        // }}
-      >
-        <View style={[styles.DragLines]} />
-        <Text>Modal</Text>
-        <Button onPress={onCloseHandler} label="Close" />
-      </Animated.View>
+          <Animated.View style={[styles.Background, animatedModalStyle]}>
+            <GestureDetector gesture={pan}>
+              <View>
+                <View style={[styles.DragLines]} />
+              </View>
+            </GestureDetector>
+            {children}
+          </Animated.View>
+        </GestureHandlerRootView>
+      </KeyboardAvoidingView>
     </Animated.View>
   );
 };
@@ -127,7 +155,13 @@ const styles = StyleSheet.create({
     height: '100%',
     flex: 1,
   },
-  Overlay: {},
+  Background: {
+    marginTop: 'auto',
+    backgroundColor: GlobalColor.light,
+    borderTopEndRadius: 20,
+    borderTopStartRadius: 20,
+    maxHeight: height,
+  },
   DragLines: {
     backgroundColor: 'black',
     alignSelf: 'center',

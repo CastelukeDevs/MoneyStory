@@ -1,5 +1,5 @@
 import React, {FC, useState} from 'react';
-import {View, Text, Image, StyleSheet} from 'react-native';
+import {View, Text, Image, StyleSheet, TextInput} from 'react-native';
 import {SafeAreaView} from 'react-native-safe-area-context';
 
 import {IMainNavPropTypes} from '../Routes/RouteTypes';
@@ -21,7 +21,6 @@ const SplashScreen: FC<IMainNavPropTypes<'SplashScreen'>> = props => {
     setModalVisible(true);
     console.log('press');
   };
-  const txtTest = getString('APP_NAME');
   return (
     <View style={viewStyle.Base}>
       <Image
@@ -58,8 +57,11 @@ const SplashScreen: FC<IMainNavPropTypes<'SplashScreen'>> = props => {
           console.log('dismissed');
 
           setModalVisible(false);
-        }}
-      />
+        }}>
+        <Text>Modal</Text>
+        <TextInput />
+        <Button onPress={() => setModalVisible(false)} label="Close" />
+      </Modal>
     </View>
   );
 };

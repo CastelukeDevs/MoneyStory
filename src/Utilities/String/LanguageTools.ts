@@ -15,6 +15,12 @@ type IGetString = {
 
 type StringKey = keyof typeof EN;
 
+/**
+ *
+ * @param string key of text
+ * @param object of {language, key}
+ * @returns string
+ */
 const getString = (param: IGetString | StringKey): string => {
   const isDefault = typeof param === 'string';
   if (isDefault) return Language.EN[param];
