@@ -90,8 +90,10 @@ const Route = () => {
         onStateChange={onNavigationStateChangeHandler}>
         <Stack.Navigator screenOptions={defaultScreenOptions}>
           <Stack.Screen name="SplashScreen" component={SplashScreen} />
-          <Stack.Screen name="SignInScreen" component={SignInScreen} />
           <Stack.Screen name="MainDashboard" component={DashboardRoute} />
+          <Stack.Group screenOptions={{presentation: 'modal'}}>
+            <Stack.Screen name="SignInScreen" component={SignInScreen} />
+          </Stack.Group>
         </Stack.Navigator>
       </NavigationContainer>
     </SafeAreaProvider>
