@@ -1,173 +1,215 @@
-import React, {PropsWithChildren, useEffect} from 'react';
+import {useKeyboard, useLayout} from '@react-native-community/hooks';
+import React, {PropsWithChildren, useEffect, useState} from 'react';
 import {
   Dimensions,
-  Keyboard,
   KeyboardAvoidingView,
   Platform,
+  Pressable,
   StyleSheet,
-  TouchableWithoutFeedback,
   View,
+  ViewStyle,
 } from 'react-native';
-import GlobalColor from '../../Utilities/Styles/GlobalColor';
+import {Gesture, GestureDetector} from 'react-native-gesture-handler';
 import Animated, {
+  FadeIn,
+  FadeOut,
+  SlideInDown,
+  SlideOutDown,
   runOnJS,
+  useAnimatedKeyboard,
   useAnimatedStyle,
   useSharedValue,
-  withTiming,
+  withSpring,
 } from 'react-native-reanimated';
-import {
-  Gesture,
-  GestureDetector,
-  GestureHandlerRootView,
-} from 'react-native-gesture-handler';
+import useKeyboardStatus from '../../Utilities/Hooks/useKeyboardStatus';
 
-const {width, height} = Dimensions.get('window');
+const windowHeight = Dimensions.get('window').height;
+const AnimatedPressable = Animated.createAnimatedComponent(Pressable);
 
 type IModalProp = {
   visible: boolean;
-  onDismiss: (visible: boolean) => void;
+  onDismiss?: () => void;
+  onChange?: (open: boolean) => void;
+  addTopPadding?: boolean;
+  style?: ViewStyle;
 };
 
-/**
- * TODO:
- * - Solve height problem when keyboard appear
- */
+const OverflowHeight = 200;
 
 /**
  * Modal Components
  * @type IModalProp
- * @param visible
+ * @param visible *required
  * @param onDismiss
+ * @param onChange
+ * @param addTopPadding
+ * @param style (container style)
  *
  * to dismiss just change visible to false
  * or drag the draglines down
  */
 const Modal = ({
+  children,
   visible,
   onDismiss,
-  children,
+  onChange,
+  addTopPadding,
+  style,
 }: PropsWithChildren<IModalProp>) => {
-  /**
-   * Animator using Reanimated
-   */
-  const animatedZIndex = useSharedValue(-1);
-  const animatedOpacity = useSharedValue(0);
-  const animatedYPos = useSharedValue(height);
-  const animatedMinHeight = useSharedValue(0);
+  const [isOpen, setIsOpen] = useState(false);
 
-  const animatedContainerStyle = useAnimatedStyle(() => ({
-    zIndex: withTiming(animatedZIndex.value, {
-      duration: 500,
-    }),
-  }));
+  const {onLayout, height} = useLayout();
+  const keyboard = useKeyboard();
+  const animkey = useAnimatedKeyboard();
 
-  const animatedOverlayStyle = useAnimatedStyle(() => ({
-    opacity: withTiming(animatedOpacity.value, {
-      duration: 500,
-    }),
-  }));
+  // console.log('animkey', animkey.height.value);
+  // console.log('animkey', animkey.state.value);
 
-  const animatedModalStyle = useAnimatedStyle(() => ({
-    minHeight: withTiming(animatedMinHeight.value, {
-      duration: 500,
-    }),
-    transform: [
-      {
-        translateY: withTiming(animatedYPos.value, {
-          duration: 500,
-        }),
-      },
-    ],
-  }));
+  console.log('keyboard is open -> ', keyboard.keyboardShown);
+  console.log('keyboard height -> ', keyboard.keyboardHeight);
+  console.log('keyboard coord -> ', keyboard.coordinates);
+
+  const offsetY = useSharedValue(0);
 
   useEffect(() => {
-    if (visible) {
-      animatedZIndex.value = 400;
-      animatedOpacity.value = 1;
-      animatedYPos.value = 0;
-    } else {
-      animatedZIndex.value = -1;
-      animatedOpacity.value = 0;
-      animatedYPos.value = height;
-      animatedMinHeight.value = 0;
-      Keyboard.dismiss();
-    }
+    return () => {};
+  }, [keyboard]);
+
+  useEffect(() => {
+    if (isOpen !== visible) toggleOpenModal();
   }, [visible]);
 
-  const onCloseHandler = () => {
-    onDismiss(false);
+  /**
+   * use this function to toggle modal
+   */
+  const toggleOpenModal = () => {
+    onChange?.(!isOpen);
+    setIsOpen(!isOpen);
+    if (isOpen) onDismiss?.();
+    offsetY.value = 0;
   };
-  const pressed = useSharedValue(false);
 
-  const pan = Gesture.Pan()
-    .onBegin(() => {
-      pressed.value = true;
+  const gesture = Gesture.Pan()
+    .onChange(({changeY}) => {
+      const offsetDelta = changeY + offsetY.value;
+
+      //Clamping scroll to top
+      const clamp = Math.max(-OverflowHeight, offsetDelta);
+
+      offsetY.value =
+        offsetDelta > 0 ? offsetDelta : windowHeight < height ? 0 : clamp;
     })
-    .onFinalize(event => {
-      const transY = event.translationY;
-      if (transY >= 0) {
-        runOnJS(onDismiss)(false);
-      }
-      if (transY <= -1) {
-        animatedMinHeight.value = height;
-      }
-      pressed.value = false;
+    .onFinalize(() => {
+      const closingHeight = height / 4;
+      // console.log('allHeightProp -> ', {closingHeight, height, windowHeight});
+      // console.log('offsetY.value -> ', offsetY.value);
+
+      if (offsetY.value > closingHeight) runOnJS(toggleOpenModal)();
+      offsetY.value = withSpring(0);
     });
 
-  return (
-    <Animated.View style={[styles.BaseContainer, animatedContainerStyle]}>
-      <KeyboardAvoidingView
-        style={{flex: 1}}
-        behavior={Platform.OS === 'ios' ? 'padding' : undefined}>
-        <GestureHandlerRootView style={{flex: 1}}>
-          <TouchableWithoutFeedback
-            style={[StyleSheet.absoluteFillObject]}
-            onPress={onCloseHandler}>
-            <Animated.View
-              style={[
-                StyleSheet.absoluteFillObject,
-                {backgroundColor: GlobalColor.overlay},
-                animatedOverlayStyle,
-              ]}
-            />
-          </TouchableWithoutFeedback>
+  const animateTranslateY = useAnimatedStyle(() => ({
+    transform: [{translateY: offsetY.value}],
+  }));
 
-          <Animated.View style={[styles.Background, animatedModalStyle]}>
-            <GestureDetector gesture={pan}>
-              <View>
-                <View style={[styles.DragLines]} />
-              </View>
-            </GestureDetector>
+  // return (
+  //   visible && (
+  //     <>
+  //       <AnimatedPressable
+  //         style={styles.Overlay}
+  //         onPress={toggleOpenModal}
+  //         entering={FadeIn}
+  //         exiting={FadeOut}
+  //       />
+
+  //       <GestureDetector gesture={gesture}>
+  //         <Animated.View
+  //           onLayout={onLayout}
+  //           style={[
+  //             styles.ModalContainer,
+  //             addTopPadding && {paddingTop: 12},
+  //             style,
+  //             animateTranslateY,
+  //           ]}
+  //           entering={SlideInDown.springify().damping(15)}
+  //           exiting={SlideOutDown}>
+  //           {children}
+  //           <View style={[styles.Overflow]} />
+  //         </Animated.View>
+  //       </GestureDetector>
+  //     </>
+  //   )
+  // );
+  return (
+    visible && (
+      <>
+        <AnimatedPressable
+          style={styles.Overlay}
+          onPress={toggleOpenModal}
+          entering={FadeIn}
+          exiting={FadeOut}
+        />
+        <KeyboardAvoidingView
+          style={styles.KeyAvoidingStyle}
+          behavior={Platform.OS === 'ios' ? 'padding' : undefined}>
+          <View
+            style={{
+              backgroundColor: 'white',
+              bottom: 0,
+            }}>
             {children}
+          </View>
+        </KeyboardAvoidingView>
+        {/* <GestureDetector gesture={gesture}>
+          <Animated.View
+            onLayout={onLayout}
+            style={[
+              styles.ModalContainer,
+              addTopPadding && {paddingTop: 12},
+              style,
+              animateTranslateY,
+            ]}
+            entering={SlideInDown.springify().damping(15)}
+            exiting={SlideOutDown}>
+            {children}
+            <View style={[styles.Overflow]} />
           </Animated.View>
-        </GestureHandlerRootView>
-      </KeyboardAvoidingView>
-    </Animated.View>
+        </GestureDetector> */}
+      </>
+    )
   );
 };
 
 export default Modal;
 
 const styles = StyleSheet.create({
-  BaseContainer: {
-    position: 'absolute',
+  Overlay: {
+    ...StyleSheet.absoluteFillObject,
+    backgroundColor: 'rgba(0,0,0,0.5)',
+    zIndex: 1,
+  },
+  KeyAvoidingStyle: {
+    // backgroundColor: 'white',
+    // ...StyleSheet.absoluteFillObject,
     width: '100%',
-    height: '100%',
+    position: 'absolute',
+    zIndex: 1,
+    bottom: 0,
     flex: 1,
   },
-  Background: {
-    marginTop: 'auto',
-    backgroundColor: GlobalColor.light,
-    borderTopEndRadius: 20,
-    borderTopStartRadius: 20,
-    maxHeight: height,
+  ModalContainer: {
+    backgroundColor: 'white',
+    borderTopLeftRadius: 12,
+    borderTopRightRadius: 12,
+    position: 'absolute',
+    width: '100%',
+    zIndex: 1,
+    bottom: -OverflowHeight,
+    // bottom: 0,
+    flex: 1,
+    maxHeight: windowHeight + OverflowHeight,
   },
-  DragLines: {
-    backgroundColor: 'black',
-    alignSelf: 'center',
-    margin: 20,
-    borderRadius: 200,
-    height: 3,
-    width: width / 3,
+  Overflow: {
+    height: OverflowHeight,
   },
 });
