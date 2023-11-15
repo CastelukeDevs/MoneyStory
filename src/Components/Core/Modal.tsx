@@ -58,16 +58,7 @@ const Modal = ({
 }: PropsWithChildren<IModalProp>) => {
   const [isOpen, setIsOpen] = useState(false);
 
-  const {onLayout, height} = useLayout();
-  const keyboard = useKeyboard();
-  const animkey = useAnimatedKeyboard();
-
-  // console.log('animkey', animkey.height.value);
-  // console.log('animkey', animkey.state.value);
-
-  // console.log('keyboard is open -> ', keyboard.keyboardShown);
-  // console.log('keyboard height -> ', keyboard.keyboardHeight);
-  // console.log('keyboard coord -> ', keyboard.coordinates);
+  const {onLayout: onContainerLayout, height: containerHeight} = useLayout();
 
   const offsetY = useSharedValue(0);
   const bottomOffset = useSharedValue(-OverflowHeight);
@@ -75,18 +66,6 @@ const Modal = ({
   useEffect(() => {
     if (isOpen !== visible) toggleOpenModal();
   }, [visible]);
-
-  // useEffect(() => {
-  //   console.log('=======================triggered');
-
-  //   if (keyboard.keyboardShown) {
-  //     bottomOffset.value = withSpring(
-  //       -OverflowHeight + keyboard.keyboardHeight,
-  //     );
-  //   } else {
-  //     bottomOffset.value = withSpring(-OverflowHeight);
-  //   }
-  // }, [keyboard]);
 
   /**
    * use this function to toggle modal
@@ -98,18 +77,30 @@ const Modal = ({
     offsetY.value = 0;
   };
 
+  console.log('height', {
+    cHeight: containerHeight - OverflowHeight,
+    windowHeight,
+  });
+
   const gesture = Gesture.Pan()
     .onChange(({changeY}) => {
       const offsetDelta = changeY + offsetY.value;
+      const windowDelta = containerHeight - OverflowHeight - windowHeight;
 
       //Clamping scroll to top
-      const clamp = Math.max(-OverflowHeight, offsetDelta);
+      const topClamp = Math.max(-OverflowHeight, offsetDelta, windowDelta);
+
+      console.log('clamp', -OverflowHeight, offsetDelta, topClamp, windowDelta);
 
       offsetY.value =
-        offsetDelta > 0 ? offsetDelta : windowHeight < height ? 0 : clamp;
+        offsetDelta > 0
+          ? offsetDelta
+          : // : containerHeight - OverflowHeight >= windowHeight
+            // ? 0
+            topClamp;
     })
     .onFinalize(() => {
-      const closingHeight = height / 4;
+      const closingHeight = containerHeight / 4;
       // console.log('allHeightProp -> ', {closingHeight, height, windowHeight});
       // console.log('offsetY.value -> ', offsetY.value);
 
@@ -137,7 +128,7 @@ const Modal = ({
 
         <GestureDetector gesture={gesture}>
           <Animated.View
-            onLayout={onLayout}
+            onLayout={onContainerLayout}
             style={[
               styles.ModalContainer,
               addTopPadding && {paddingTop: 12},
@@ -153,39 +144,6 @@ const Modal = ({
       </>
     )
   );
-  //   return (
-  //     visible && (
-  //       <>
-  //         <AnimatedPressable
-  //           style={styles.Overlay}
-  //           onPress={toggleOpenModal}
-  //           entering={FadeIn}
-  //           exiting={FadeOut}
-  //         />
-  //         <KeyboardAvoidingView
-  //           style={styles.KeyAvoidingStyle}
-  //           behavior={Platform.OS === 'ios' ? 'padding' : 'padding'}>
-  //           <GestureDetector gesture={gesture}>
-  //             <Animated.View
-  //               entering={SlideInDown.springify().damping(15)}
-  //               exiting={SlideOutDown}
-  //               style={[
-  //                 {
-  //                   backgroundColor: 'white',
-  //                   bottom: 0,
-  //                   borderTopLeftRadius: 12,
-  //                   borderTopRightRadius: 12,
-  //                 },
-  //                 animateTranslateY,
-  //               ]}>
-  //               {children}
-  //               <View style={[styles.Overflow]} />
-  //             </Animated.View>
-  //           </GestureDetector>
-  //         </KeyboardAvoidingView>
-  //       </>
-  //     )
-  //   );
 };
 
 export default Modal;
@@ -194,44 +152,21 @@ const styles = StyleSheet.create({
   Overlay: {
     ...StyleSheet.absoluteFillObject,
     backgroundColor: 'rgba(0,0,0,0.5)',
-    // zIndex: 1,
-  },
-  KeyAvoidingStyle: {
-    // backgroundColor: 'white',
-    // ...StyleSheet.absoluteFillObject,
-    width: '100%',
-    position: 'absolute',
     zIndex: 1,
-    bottom: -OverflowHeight,
-    flex: 1,
   },
+
   ModalContainer: {
     backgroundColor: 'white',
     borderTopLeftRadius: 12,
     borderTopRightRadius: 12,
     position: 'absolute',
     width: '100%',
-    // height: '100%',
     zIndex: 1,
     bottom: -OverflowHeight,
-    // bottom: 0,
     flex: 1,
     // maxHeight: windowHeight + OverflowHeight,
   },
-  ModalFullViewContainer: {
-    position: 'absolute',
-    zIndex: 1,
-    backgroundColor: 'white',
-    borderTopLeftRadius: 12,
-    borderTopRightRadius: 12,
-    width: '100%',
-    height: '100%',
-    // bottom: -OverflowHeight,
-    // bottom: 0,
-    // top: 0,
-    // flex: 1,
-    // maxHeight: windowHeight + OverflowHeight,
-  },
+
   Overflow: {
     height: OverflowHeight,
   },

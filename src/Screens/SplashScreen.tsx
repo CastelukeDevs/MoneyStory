@@ -1,5 +1,12 @@
 import React, {FC, useCallback, useMemo, useRef, useState} from 'react';
-import {View, Text, Image, StyleSheet} from 'react-native';
+import {
+  View,
+  Text,
+  Image,
+  StyleSheet,
+  KeyboardAvoidingView,
+  Platform,
+} from 'react-native';
 import {SafeAreaView} from 'react-native-safe-area-context';
 
 import {IMainNavPropTypes} from '../Routes/RouteTypes';
@@ -68,7 +75,7 @@ const SplashScreen: FC<IMainNavPropTypes<'SplashScreen'>> = props => {
           style={[viewStyle.Base, {justifyContent: 'flex-end', padding: 20}]}>
           <Button label="Unlock the possibilities" onPress={openModalHandler} />
         </View>
-        <BottomSheetModal
+        {/* <BottomSheetModal
           ref={bottomSheetModalRef}
           // index={1}
           snapPoints={snapPoints}
@@ -79,9 +86,9 @@ const SplashScreen: FC<IMainNavPropTypes<'SplashScreen'>> = props => {
           <View style={styles.contentContainer}>
             <Text>Awesome 🎉</Text>
           </View>
-        </BottomSheetModal>
+        </BottomSheetModal> */}
       </SafeAreaView>
-      {/* <Modal
+      <Modal
         addTopPadding
         visible={modalVisible}
         onChange={open => {
@@ -93,15 +100,18 @@ const SplashScreen: FC<IMainNavPropTypes<'SplashScreen'>> = props => {
           setModalVisible(false);
         }}>
         <View
-          style={{
-            flex: 1,
-            backgroundColor: 'skyblue',
-          }}>
+          style={
+            {
+              // flex: 1,
+              // backgroundColor: 'skyblue',
+              // height: 600,
+            }
+          }>
           <Text>Modal</Text>
           <TextInput label="Email" value={email} onTextChange={setEmail} />
           <Button onPress={() => setModalVisible(false)} label="Close" />
         </View>
-      </Modal> */}
+      </Modal>
     </View>
   );
 };

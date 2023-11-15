@@ -39,6 +39,7 @@ type IModalProp = {
 /**
 
  * Modal Components
+ * @deprecated use Modal Component
  * @type IModalProp
  * @param visible
  * @param onDismiss
