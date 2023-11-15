@@ -1,14 +1,6 @@
-import {useKeyboard, useLayout} from '@react-native-community/hooks';
-import React, {PropsWithChildren, useEffect, useState} from 'react';
-import {
-  Dimensions,
-  KeyboardAvoidingView,
-  Platform,
-  Pressable,
-  StyleSheet,
-  View,
-  ViewStyle,
-} from 'react-native';
+import {useLayout} from '@react-native-community/hooks';
+import React, {ReactNode, useEffect, useState} from 'react';
+import {Dimensions, Pressable, StyleSheet, View, ViewStyle} from 'react-native';
 import {Gesture, GestureDetector} from 'react-native-gesture-handler';
 import Animated, {
   FadeIn,
@@ -16,12 +8,10 @@ import Animated, {
   SlideInDown,
   SlideOutDown,
   runOnJS,
-  useAnimatedKeyboard,
   useAnimatedStyle,
   useSharedValue,
   withSpring,
 } from 'react-native-reanimated';
-import useKeyboardStatus from '../../Utilities/Hooks/useKeyboardStatus';
 
 const windowHeight = Dimensions.get('window').height;
 const AnimatedPressable = Animated.createAnimatedComponent(Pressable);
@@ -32,12 +22,14 @@ type IModalProp = {
   onChange?: (open: boolean) => void;
   addTopPadding?: boolean;
   style?: ViewStyle;
+  children: ReactNode;
 };
 
-const OverflowHeight = 300;
+//bottom overflow height
+const defaultOverflowHeight = 250;
 
 /**
- * Modal Components
+ * Simple Modal Components
  * @type IModalProp
  * @param visible *required
  * @param onDismiss
@@ -48,20 +40,15 @@ const OverflowHeight = 300;
  * to dismiss just change visible to false
  * or drag the draglines down
  */
-const Modal = ({
-  children,
-  visible,
-  onDismiss,
-  onChange,
-  addTopPadding,
-  style,
-}: PropsWithChildren<IModalProp>) => {
+
+const Modal = (props: IModalProp) => {
+  const {children, visible, onDismiss, onChange, addTopPadding, style} = props;
+
   const [isOpen, setIsOpen] = useState(false);
 
   const {onLayout: onContainerLayout, height: containerHeight} = useLayout();
 
   const offsetY = useSharedValue(0);
-  const bottomOffset = useSharedValue(-OverflowHeight);
 
   useEffect(() => {
     if (isOpen !== visible) toggleOpenModal();
@@ -77,44 +64,31 @@ const Modal = ({
     offsetY.value = 0;
   };
 
-  console.log('height', {
-    cHeight: containerHeight - OverflowHeight,
-    windowHeight,
-  });
-
   const gesture = Gesture.Pan()
     .onChange(({changeY}) => {
       const offsetDelta = changeY + offsetY.value;
-      const windowDelta = containerHeight - OverflowHeight - windowHeight;
+      const windowDelta =
+        containerHeight - defaultOverflowHeight - windowHeight;
 
       //Clamping scroll to top
-      const topClamp = Math.max(-OverflowHeight, offsetDelta, windowDelta);
+      const topClamp = Math.max(
+        -defaultOverflowHeight,
+        offsetDelta,
+        windowDelta,
+      );
 
-      console.log('clamp', -OverflowHeight, offsetDelta, topClamp, windowDelta);
-
-      offsetY.value =
-        offsetDelta > 0
-          ? offsetDelta
-          : // : containerHeight - OverflowHeight >= windowHeight
-            // ? 0
-            topClamp;
+      offsetY.value = offsetDelta > 0 ? offsetDelta : topClamp;
     })
     .onFinalize(() => {
       const closingHeight = containerHeight / 4;
-      // console.log('allHeightProp -> ', {closingHeight, height, windowHeight});
-      // console.log('offsetY.value -> ', offsetY.value);
 
       if (offsetY.value > closingHeight) runOnJS(toggleOpenModal)();
       offsetY.value = withSpring(0);
     });
 
-  const animateTranslateY = useAnimatedStyle(() => ({
+  const containerAnimationStyle = useAnimatedStyle(() => ({
     transform: [{translateY: offsetY.value}],
   }));
-
-  // const animateBottomOffset = useAnimatedStyle(() => ({
-  //   bottom: bottomOffset.value,
-  // }));
 
   return (
     visible && (
@@ -133,7 +107,7 @@ const Modal = ({
               styles.ModalContainer,
               addTopPadding && {paddingTop: 12},
               style,
-              animateTranslateY,
+              containerAnimationStyle,
             ]}
             entering={SlideInDown.springify().damping(15)}
             exiting={SlideOutDown}>
@@ -162,12 +136,11 @@ const styles = StyleSheet.create({
     position: 'absolute',
     width: '100%',
     zIndex: 1,
-    bottom: -OverflowHeight,
+    bottom: -defaultOverflowHeight,
     flex: 1,
-    // maxHeight: windowHeight + OverflowHeight,
   },
 
   Overflow: {
-    height: OverflowHeight,
+    height: defaultOverflowHeight,
   },
 });
