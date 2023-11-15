@@ -34,7 +34,7 @@ type IModalProp = {
   style?: ViewStyle;
 };
 
-const OverflowHeight = 200;
+const OverflowHeight = 300;
 
 /**
  * Modal Components
@@ -65,19 +65,28 @@ const Modal = ({
   // console.log('animkey', animkey.height.value);
   // console.log('animkey', animkey.state.value);
 
-  console.log('keyboard is open -> ', keyboard.keyboardShown);
-  console.log('keyboard height -> ', keyboard.keyboardHeight);
-  console.log('keyboard coord -> ', keyboard.coordinates);
+  // console.log('keyboard is open -> ', keyboard.keyboardShown);
+  // console.log('keyboard height -> ', keyboard.keyboardHeight);
+  // console.log('keyboard coord -> ', keyboard.coordinates);
 
   const offsetY = useSharedValue(0);
-
-  useEffect(() => {
-    return () => {};
-  }, [keyboard]);
+  const bottomOffset = useSharedValue(-OverflowHeight);
 
   useEffect(() => {
     if (isOpen !== visible) toggleOpenModal();
   }, [visible]);
+
+  // useEffect(() => {
+  //   console.log('=======================triggered');
+
+  //   if (keyboard.keyboardShown) {
+  //     bottomOffset.value = withSpring(
+  //       -OverflowHeight + keyboard.keyboardHeight,
+  //     );
+  //   } else {
+  //     bottomOffset.value = withSpring(-OverflowHeight);
+  //   }
+  // }, [keyboard]);
 
   /**
    * use this function to toggle modal
@@ -112,34 +121,10 @@ const Modal = ({
     transform: [{translateY: offsetY.value}],
   }));
 
-  // return (
-  //   visible && (
-  //     <>
-  //       <AnimatedPressable
-  //         style={styles.Overlay}
-  //         onPress={toggleOpenModal}
-  //         entering={FadeIn}
-  //         exiting={FadeOut}
-  //       />
+  // const animateBottomOffset = useAnimatedStyle(() => ({
+  //   bottom: bottomOffset.value,
+  // }));
 
-  //       <GestureDetector gesture={gesture}>
-  //         <Animated.View
-  //           onLayout={onLayout}
-  //           style={[
-  //             styles.ModalContainer,
-  //             addTopPadding && {paddingTop: 12},
-  //             style,
-  //             animateTranslateY,
-  //           ]}
-  //           entering={SlideInDown.springify().damping(15)}
-  //           exiting={SlideOutDown}>
-  //           {children}
-  //           <View style={[styles.Overflow]} />
-  //         </Animated.View>
-  //       </GestureDetector>
-  //     </>
-  //   )
-  // );
   return (
     visible && (
       <>
@@ -149,18 +134,8 @@ const Modal = ({
           entering={FadeIn}
           exiting={FadeOut}
         />
-        <KeyboardAvoidingView
-          style={styles.KeyAvoidingStyle}
-          behavior={Platform.OS === 'ios' ? 'padding' : undefined}>
-          <View
-            style={{
-              backgroundColor: 'white',
-              bottom: 0,
-            }}>
-            {children}
-          </View>
-        </KeyboardAvoidingView>
-        {/* <GestureDetector gesture={gesture}>
+
+        <GestureDetector gesture={gesture}>
           <Animated.View
             onLayout={onLayout}
             style={[
@@ -174,10 +149,43 @@ const Modal = ({
             {children}
             <View style={[styles.Overflow]} />
           </Animated.View>
-        </GestureDetector> */}
+        </GestureDetector>
       </>
     )
   );
+  //   return (
+  //     visible && (
+  //       <>
+  //         <AnimatedPressable
+  //           style={styles.Overlay}
+  //           onPress={toggleOpenModal}
+  //           entering={FadeIn}
+  //           exiting={FadeOut}
+  //         />
+  //         <KeyboardAvoidingView
+  //           style={styles.KeyAvoidingStyle}
+  //           behavior={Platform.OS === 'ios' ? 'padding' : 'padding'}>
+  //           <GestureDetector gesture={gesture}>
+  //             <Animated.View
+  //               entering={SlideInDown.springify().damping(15)}
+  //               exiting={SlideOutDown}
+  //               style={[
+  //                 {
+  //                   backgroundColor: 'white',
+  //                   bottom: 0,
+  //                   borderTopLeftRadius: 12,
+  //                   borderTopRightRadius: 12,
+  //                 },
+  //                 animateTranslateY,
+  //               ]}>
+  //               {children}
+  //               <View style={[styles.Overflow]} />
+  //             </Animated.View>
+  //           </GestureDetector>
+  //         </KeyboardAvoidingView>
+  //       </>
+  //     )
+  //   );
 };
 
 export default Modal;
@@ -186,7 +194,7 @@ const styles = StyleSheet.create({
   Overlay: {
     ...StyleSheet.absoluteFillObject,
     backgroundColor: 'rgba(0,0,0,0.5)',
-    zIndex: 1,
+    // zIndex: 1,
   },
   KeyAvoidingStyle: {
     // backgroundColor: 'white',
@@ -194,7 +202,7 @@ const styles = StyleSheet.create({
     width: '100%',
     position: 'absolute',
     zIndex: 1,
-    bottom: 0,
+    bottom: -OverflowHeight,
     flex: 1,
   },
   ModalContainer: {
@@ -203,11 +211,26 @@ const styles = StyleSheet.create({
     borderTopRightRadius: 12,
     position: 'absolute',
     width: '100%',
+    // height: '100%',
     zIndex: 1,
     bottom: -OverflowHeight,
     // bottom: 0,
     flex: 1,
-    maxHeight: windowHeight + OverflowHeight,
+    // maxHeight: windowHeight + OverflowHeight,
+  },
+  ModalFullViewContainer: {
+    position: 'absolute',
+    zIndex: 1,
+    backgroundColor: 'white',
+    borderTopLeftRadius: 12,
+    borderTopRightRadius: 12,
+    width: '100%',
+    height: '100%',
+    // bottom: -OverflowHeight,
+    // bottom: 0,
+    // top: 0,
+    // flex: 1,
+    // maxHeight: windowHeight + OverflowHeight,
   },
   Overflow: {
     height: OverflowHeight,

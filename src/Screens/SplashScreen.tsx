@@ -7,15 +7,13 @@ import {textStyle, viewStyle} from '../Utilities/Styles/GlobalStyle';
 import GlobalColor from '../Utilities/Styles/GlobalColor';
 import getString from '../Utilities/String/LanguageTools';
 
+import BottomSheet, {BottomSheetModal} from '@gorhom/bottom-sheet';
+
 import Logo from '../Components/Logo';
 import Button from '../Components/Core/Button';
 import ModalDep from '../Components/Core/ModalDep';
 import TextInput from '../Components/Core/TextInput';
 import Modal from '../Components/Core/Modal';
-import BottomSheet, {
-  BottomSheetModal,
-  useBottomSheetDynamicSnapPoints,
-} from '@gorhom/bottom-sheet';
 
 const SplashScreen: FC<IMainNavPropTypes<'SplashScreen'>> = props => {
   const {navigation, route} = props;
@@ -34,15 +32,7 @@ const SplashScreen: FC<IMainNavPropTypes<'SplashScreen'>> = props => {
   const bottomSheetModalRef = useRef<BottomSheetModal>(null);
 
   // variables
-  // const snapPoints = useMemo(() => ['50%', '100%'], []);
-  // const initialSnapPoints = useMemo(() => ['25%', 'CONTENT_HEIGHT'], []);
-
-  // const {
-  //   animatedHandleHeight,
-  //   animatedSnapPoints,
-  //   animatedContentHeight,
-  //   handleContentLayout,
-  // } = useBottomSheetDynamicSnapPoints(initialSnapPoints);
+  const snapPoints = useMemo(() => ['50%', '100%'], []);
 
   // callbacks
   const handlePresentModalPress = useCallback(() => {
@@ -78,35 +68,40 @@ const SplashScreen: FC<IMainNavPropTypes<'SplashScreen'>> = props => {
           style={[viewStyle.Base, {justifyContent: 'flex-end', padding: 20}]}>
           <Button label="Unlock the possibilities" onPress={openModalHandler} />
         </View>
-        {/* <BottomSheetModal
+        <BottomSheetModal
           ref={bottomSheetModalRef}
           // index={1}
-          // snapPoints={snapPoints}
-          // snapPoints={[200]}
-          enableDynamicSizing={true}
-          // enablePanDownToClose
+          snapPoints={snapPoints}
+          // snapPoints={['50%', '100%']}
+          // enableDynamicSizing={true}
+          enablePanDownToClose
           onChange={handleSheetChanges}>
           <View style={styles.contentContainer}>
             <Text>Awesome 🎉</Text>
           </View>
-        </BottomSheetModal> */}
+        </BottomSheetModal>
+      </SafeAreaView>
+      {/* <Modal
+        addTopPadding
+        visible={modalVisible}
+        onChange={open => {
+          console.log(open ? 'modal is open' : 'modal is closed');
+        }}
+        onDismiss={() => {
+          console.log('dismissed');
 
-        <Modal
-          addTopPadding
-          visible={modalVisible}
-          onChange={open => {
-            console.log(open ? 'modal is open' : 'modal is closed');
-          }}
-          onDismiss={() => {
-            console.log('dismissed');
-
-            setModalVisible(false);
+          setModalVisible(false);
+        }}>
+        <View
+          style={{
+            flex: 1,
+            backgroundColor: 'skyblue',
           }}>
           <Text>Modal</Text>
           <TextInput label="Email" value={email} onTextChange={setEmail} />
           <Button onPress={() => setModalVisible(false)} label="Close" />
-        </Modal>
-      </SafeAreaView>
+        </View>
+      </Modal> */}
     </View>
   );
 };
