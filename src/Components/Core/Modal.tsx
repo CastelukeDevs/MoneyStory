@@ -1,17 +1,28 @@
 import {useLayout} from '@react-native-community/hooks';
-import React, {ReactNode, useEffect, useState} from 'react';
-import {Dimensions, Pressable, StyleSheet, View, ViewStyle} from 'react-native';
+import React, {ReactNode, useState} from 'react';
+import {
+  Dimensions,
+  KeyboardAvoidingView,
+  Platform,
+  Pressable,
+  StyleSheet,
+  View,
+  ViewStyle,
+} from 'react-native';
 import {Gesture, GestureDetector} from 'react-native-gesture-handler';
 import Animated, {
+  Extrapolate,
   FadeIn,
   FadeOut,
   SlideInDown,
   SlideOutDown,
+  interpolate,
   runOnJS,
   useAnimatedStyle,
   useSharedValue,
   withSpring,
 } from 'react-native-reanimated';
+import GlobalColor from '../../Utilities/Styles/GlobalColor';
 
 const windowHeight = Dimensions.get('window').height;
 const AnimatedPressable = Animated.createAnimatedComponent(Pressable);
@@ -26,7 +37,7 @@ type IModalProp = {
 };
 
 //bottom overflow height
-const defaultOverflowHeight = 250;
+const defaultOverflowHeight = 50;
 
 /**
  * Simple Modal Components
@@ -50,10 +61,6 @@ const Modal = (props: IModalProp) => {
 
   const offsetY = useSharedValue(0);
 
-  useEffect(() => {
-    if (isOpen !== visible) toggleOpenModal();
-  }, [visible]);
-
   /**
    * use this function to toggle modal
    */
@@ -64,11 +71,11 @@ const Modal = (props: IModalProp) => {
     offsetY.value = 0;
   };
 
+  const windowDelta = containerHeight - defaultOverflowHeight - windowHeight;
   const gesture = Gesture.Pan()
     .onChange(({changeY}) => {
       const offsetDelta = changeY + offsetY.value;
-      const windowDelta =
-        containerHeight - defaultOverflowHeight - windowHeight;
+      // console.log('test', {windowDelta, offsetDelta});
 
       //Clamping scroll to top
       const topClamp = Math.max(
@@ -86,20 +93,33 @@ const Modal = (props: IModalProp) => {
       offsetY.value = withSpring(0);
     });
 
-  const containerAnimationStyle = useAnimatedStyle(() => ({
-    transform: [{translateY: offsetY.value}],
-  }));
+  const containerAnimationStyle = useAnimatedStyle(() => {
+    const borderRadius = interpolate(
+      offsetY.value,
+      [windowDelta + 75, windowDelta],
+      [12, 0],
+      Extrapolate.CLAMP,
+    );
+
+    return {
+      transform: [{translateY: offsetY.value}],
+      borderTopLeftRadius: borderRadius,
+    };
+  });
+
+  const KAVBehavior = Platform.OS === 'ios' ? 'height' : undefined;
+  // const KAVBehavior = Platform.OS === 'ios' ? 'height' : 'padding';
 
   return (
     visible && (
-      <>
+      <KeyboardAvoidingView behavior={KAVBehavior} style={styles.RootContainer}>
+        {/* <Pressable style={styles.Overlay} onPress={toggleOpenModal} /> */}
         <AnimatedPressable
           style={styles.Overlay}
           onPress={toggleOpenModal}
           entering={FadeIn}
           exiting={FadeOut}
         />
-
         <GestureDetector gesture={gesture}>
           <Animated.View
             onLayout={onContainerLayout}
@@ -115,7 +135,7 @@ const Modal = (props: IModalProp) => {
             <View style={[styles.Overflow]} />
           </Animated.View>
         </GestureDetector>
-      </>
+      </KeyboardAvoidingView>
     )
   );
 };
@@ -123,14 +143,23 @@ const Modal = (props: IModalProp) => {
 export default Modal;
 
 const styles = StyleSheet.create({
+  RootContainer: {
+    position: 'absolute',
+    zIndex: 1,
+    height: '100%',
+    width: '100%',
+    top: 0,
+    left: 0,
+  },
+
   Overlay: {
     ...StyleSheet.absoluteFillObject,
-    backgroundColor: 'rgba(0,0,0,0.5)',
+    backgroundColor: GlobalColor.overlay,
     zIndex: 1,
   },
 
   ModalContainer: {
-    backgroundColor: 'white',
+    backgroundColor: GlobalColor.light,
     borderTopLeftRadius: 12,
     borderTopRightRadius: 12,
     position: 'absolute',

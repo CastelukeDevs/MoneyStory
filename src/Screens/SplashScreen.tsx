@@ -33,7 +33,7 @@ const SplashScreen: FC<IMainNavPropTypes<'SplashScreen'>> = props => {
     // navigation.navigate('SignInScreen');
     setModalVisible(true);
     console.log('press');
-    handlePresentModalPress();
+    // handlePresentModalPress();
   };
 
   const bottomSheetModalRef = useRef<BottomSheetModal>(null);
@@ -108,6 +108,9 @@ const SplashScreen: FC<IMainNavPropTypes<'SplashScreen'>> = props => {
             }
           }>
           <Text>Modal</Text>
+          <TextInput label="Email" value={email} onTextChange={setEmail} />
+          <TextInput label="Email" value={email} onTextChange={setEmail} />
+          <TextInput label="Email" value={email} onTextChange={setEmail} />
           <TextInput label="Email" value={email} onTextChange={setEmail} />
           <Button onPress={() => setModalVisible(false)} label="Close" />
         </View>
