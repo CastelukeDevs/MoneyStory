@@ -100,18 +100,48 @@ const SplashScreen: FC<IMainNavPropTypes<'SplashScreen'>> = props => {
           setModalVisible(false);
         }}>
         <View
-          style={
-            {
-              // flex: 1,
-              // backgroundColor: 'skyblue',
-              // height: 600,
-            }
-          }>
+          style={{
+            // flex: 1,
+            // backgroundColor: 'skyblue',
+            // height: 600,
+            padding: 12,
+          }}>
           <Text>Modal</Text>
-          <TextInput label="Email" value={email} onTextChange={setEmail} />
-          <TextInput label="Email" value={email} onTextChange={setEmail} />
-          <TextInput label="Email" value={email} onTextChange={setEmail} />
-          <TextInput label="Email" value={email} onTextChange={setEmail} />
+          <View style={{height: 6}} />
+          <TextInput
+            iconLeading={{name: 'home-outline'}}
+            label="Email"
+            value={email}
+            onTextChange={setEmail}
+          />
+          <View style={{height: 6}} />
+          <TextInput
+            label="Email"
+            value={email}
+            onTextChange={setEmail}
+            mode="Outlined"
+          />
+          <View style={{height: 6}} />
+          <TextInput
+            label="Email"
+            value={email}
+            onTextChange={setEmail}
+            mode="Underlined"
+            iconLeading={{name: 'home-outline'}}
+          />
+          <View style={{height: 6}} />
+          <TextInput
+            iconLeading={{name: 'planet-outline'}}
+            iconTrailing={{
+              name: 'chevron-forward-outline',
+              onPress() {
+                console.log('clicked');
+              },
+            }}
+            label="Email"
+            value={email}
+            onTextChange={setEmail}
+          />
           <Button onPress={() => setModalVisible(false)} label="Close" />
         </View>
       </Modal>
