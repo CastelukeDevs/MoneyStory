@@ -1,7 +1,7 @@
 import React from 'react';
-import {StyleSheet, Text, View} from 'react-native';
-import {TouchableOpacity} from 'react-native-gesture-handler';
+import {TouchableOpacity} from 'react-native';
 import IonIcon from 'react-native-vector-icons/Ionicons';
+import GlobalColor from '../../Utilities/Styles/GlobalColor';
 
 export type IIconProps = {
   name?: string;
@@ -13,7 +13,7 @@ export type IIconProps = {
 
 const Icon = (props: IIconProps) => {
   const iconName = props.name || 'home';
-  const iconColor = props.color || 'black';
+  const iconColor = props.color || GlobalColor.dark;
   const iconSize = props.size || 20;
   const isDisabled = props.disabled || typeof props.onPress !== 'function';
 
@@ -26,12 +26,10 @@ const Icon = (props: IIconProps) => {
         name={iconName}
         color={iconColor}
         size={iconSize}
-        onPress={() => props.onPress?.()}
+        // onPress={() => props.onPress?.()}
       />
     </TouchableOpacity>
   );
 };
 
 export default Icon;
-
-const styles = StyleSheet.create({});

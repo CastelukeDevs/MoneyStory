@@ -9,6 +9,7 @@ import {
 } from 'react-native';
 import Icon, {IIconProps} from './Icon';
 import GlobalColor from '../../Utilities/Styles/GlobalColor';
+import {textStyle} from '../../Utilities/Styles/GlobalStyle';
 
 // type ITextInputMode = 'Outlined' | 'Circled' | 'Underlined';
 
@@ -29,6 +30,7 @@ type ITextInputProp = {
   onTextChange: (str: string) => void;
   iconLeading?: IIconProps;
   iconTrailing?: IIconProps;
+  style?: ViewStyle;
 } & MergedTextInputType;
 
 /**
@@ -47,15 +49,19 @@ const TextInput = (props: ITextInputProp) => {
         styles.CoreContainer,
         getCodeStyle(currentMode),
         props.mode === 'Underlined' && {
-          borderColor: props.lineColor || GlobalColor.primary,
+          borderColor: props.lineColor || GlobalColor.dark,
         },
+        props.style,
       ]}>
       {props.iconLeading && (
         <View style={{marginRight: 10}}>
           <Icon {...props.iconLeading} />
         </View>
       )}
-      <TextInputReact style={[inputPlatformStyle]} placeholder={props.label} />
+      <TextInputReact
+        style={[inputPlatformStyle, textStyle.SubTitle_Regular]}
+        placeholder={props.label}
+      />
 
       {props.iconTrailing && (
         <View style={{marginLeft: 10}}>
@@ -82,8 +88,6 @@ const getCodeStyle = (mode: ITextInputProp['mode']): ViewStyle => {
 
 const baseInputStyle: TextStyle = {
   flex: 1,
-  fontSize: 14,
-  // backgroundColor: 'red',
 };
 
 const baseBorderedContainerStyle: ViewStyle = {
@@ -97,7 +101,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'center',
-    borderColor: GlobalColor.primary,
+    borderColor: GlobalColor.dark,
   },
   InputIOS: {
     ...baseInputStyle,

@@ -21,6 +21,7 @@ const style = StyleSheet.create({
     padding: 12,
     backgroundColor: GlobalColor.light,
     alignSelf: 'baseline',
+    borderRadius: 12,
   },
 });
 

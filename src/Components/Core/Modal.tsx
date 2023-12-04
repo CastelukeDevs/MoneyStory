@@ -1,5 +1,5 @@
 import {useLayout} from '@react-native-community/hooks';
-import React, {ReactNode, useState} from 'react';
+import React, {ReactNode, useEffect, useState} from 'react';
 import {
   Dimensions,
   KeyboardAvoidingView,
@@ -34,6 +34,7 @@ type IModalProp = {
   addTopPadding?: boolean;
   style?: ViewStyle;
   children: ReactNode;
+  doNotAvoidKeyboard?: boolean;
 };
 
 //bottom overflow height
@@ -65,11 +66,17 @@ const Modal = (props: IModalProp) => {
    * use this function to toggle modal
    */
   const toggleOpenModal = () => {
+    console.log('toggling modal');
+
     onChange?.(!isOpen);
     setIsOpen(!isOpen);
     if (isOpen) onDismiss?.();
     offsetY.value = 0;
   };
+
+  useEffect(() => {
+    setIsOpen(visible);
+  }, [visible]);
 
   const windowDelta = containerHeight - defaultOverflowHeight - windowHeight;
   const gesture = Gesture.Pan()
@@ -107,7 +114,8 @@ const Modal = (props: IModalProp) => {
     };
   });
 
-  const KAVBehavior = Platform.OS === 'ios' ? 'height' : undefined;
+  const KAVBehavior =
+    Platform.OS === 'ios' && !props.doNotAvoidKeyboard ? 'height' : undefined;
   // const KAVBehavior = Platform.OS === 'ios' ? 'height' : 'padding';
 
   return (

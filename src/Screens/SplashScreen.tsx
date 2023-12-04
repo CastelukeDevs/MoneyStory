@@ -1,12 +1,5 @@
-import React, {FC, useCallback, useMemo, useRef, useState} from 'react';
-import {
-  View,
-  Text,
-  Image,
-  StyleSheet,
-  KeyboardAvoidingView,
-  Platform,
-} from 'react-native';
+import React, {FC, useState} from 'react';
+import {View, Text, Image, StyleSheet} from 'react-native';
 import {SafeAreaView} from 'react-native-safe-area-context';
 
 import {IMainNavPropTypes} from '../Routes/RouteTypes';
@@ -14,13 +7,11 @@ import {textStyle, viewStyle} from '../Utilities/Styles/GlobalStyle';
 import GlobalColor from '../Utilities/Styles/GlobalColor';
 import getString from '../Utilities/String/LanguageTools';
 
-import BottomSheet, {BottomSheetModal} from '@gorhom/bottom-sheet';
-
 import Logo from '../Components/Logo';
 import Button from '../Components/Core/Button';
-import ModalDep from '../Components/Core/ModalDep';
 import TextInput from '../Components/Core/TextInput';
 import Modal from '../Components/Core/Modal';
+import IconButton from '../Components/Core/IconButton';
 
 const SplashScreen: FC<IMainNavPropTypes<'SplashScreen'>> = props => {
   const {navigation, route} = props;
@@ -36,24 +27,12 @@ const SplashScreen: FC<IMainNavPropTypes<'SplashScreen'>> = props => {
     // handlePresentModalPress();
   };
 
-  const bottomSheetModalRef = useRef<BottomSheetModal>(null);
-
-  // variables
-  const snapPoints = useMemo(() => ['50%', '100%'], []);
-
-  // callbacks
-  const handlePresentModalPress = useCallback(() => {
-    bottomSheetModalRef.current?.present();
-  }, []);
-  const handleSheetChanges = useCallback((index: number) => {
-    console.log('handleSheetChanges', index);
-  }, []);
-
   return (
     <View style={viewStyle.Base}>
       <Image
-        source={require('../Resources/bg-1.jpg')}
-        style={StyleSheet.absoluteFillObject}
+        // source={require('../Resources/bg-1.jpg')}
+        source={require('../Resources/Gradient/01.RoyalHeath.png')}
+        style={[StyleSheet.absoluteFillObject, styles.CenterImage]}
       />
       <View
         style={[
@@ -62,7 +41,7 @@ const SplashScreen: FC<IMainNavPropTypes<'SplashScreen'>> = props => {
         ]}
       />
 
-      <SafeAreaView style={viewStyle.Base}>
+      <SafeAreaView style={[viewStyle.Base, styles.RootContainer]}>
         <View style={viewStyle.LogoArea}>
           <Logo />
         </View>
@@ -75,18 +54,6 @@ const SplashScreen: FC<IMainNavPropTypes<'SplashScreen'>> = props => {
           style={[viewStyle.Base, {justifyContent: 'flex-end', padding: 20}]}>
           <Button label="Unlock the possibilities" onPress={openModalHandler} />
         </View>
-        {/* <BottomSheetModal
-          ref={bottomSheetModalRef}
-          // index={1}
-          snapPoints={snapPoints}
-          // snapPoints={['50%', '100%']}
-          // enableDynamicSizing={true}
-          enablePanDownToClose
-          onChange={handleSheetChanges}>
-          <View style={styles.contentContainer}>
-            <Text>Awesome 🎉</Text>
-          </View>
-        </BottomSheetModal> */}
       </SafeAreaView>
       <Modal
         addTopPadding
@@ -98,66 +65,101 @@ const SplashScreen: FC<IMainNavPropTypes<'SplashScreen'>> = props => {
           console.log('dismissed');
 
           setModalVisible(false);
-        }}>
-        <View
-          style={{
-            // flex: 1,
-            // backgroundColor: 'skyblue',
-            // height: 600,
-            padding: 12,
-          }}>
-          <Text>Modal</Text>
-          <View style={{height: 6}} />
-          <TextInput
-            iconLeading={{name: 'home-outline'}}
-            label="Email"
-            value={email}
-            onTextChange={setEmail}
-          />
-          <View style={{height: 6}} />
-          <TextInput
-            label="Email"
-            value={email}
-            onTextChange={setEmail}
-            mode="Outlined"
-          />
-          <View style={{height: 6}} />
-          <TextInput
-            label="Email"
-            value={email}
-            onTextChange={setEmail}
-            mode="Underlined"
-            iconLeading={{name: 'home-outline'}}
-          />
-          <View style={{height: 6}} />
-          <TextInput
-            iconLeading={{name: 'planet-outline'}}
-            iconTrailing={{
-              name: 'chevron-forward-outline',
-              onPress() {
-                console.log('clicked');
-              },
-            }}
-            label="Email"
-            value={email}
-            onTextChange={setEmail}
-          />
-          <Button onPress={() => setModalVisible(false)} label="Close" />
-        </View>
+        }}
+        doNotAvoidKeyboard>
+        {ModalLayout()}
       </Modal>
     </View>
   );
 };
 
+const ModalLayout = () => {
+  return (
+    <View style={{padding: 18}}>
+      <Text style={textStyle.Hero_Bold}>Login to your Account</Text>
+      <TextInput
+        label="Email"
+        onTextChange={() => {}}
+        value={''}
+        iconLeading={{name: 'mail-outline'}}
+        style={{marginTop: 12}}
+      />
+      <TextInput
+        label="Password"
+        onTextChange={() => {}}
+        value={''}
+        iconLeading={{name: 'lock-closed-outline'}}
+        iconTrailing={{name: 'eye-outline'}}
+        style={{marginTop: 12}}
+      />
+      <Button
+        label="Login"
+        containerStyle={{marginTop: 12}}
+        onPress={() => {}}
+      />
+      <Button
+        label="Forgot your Password?"
+        containerStyle={{marginTop: 12}}
+        mode="text"
+        onPress={() => {}}
+      />
+      <View style={{height: 50}} />
+      <Text style={[textStyle.Content_Regular, {textAlign: 'center'}]}>
+        or continue with
+      </Text>
+      <View
+        style={{
+          flexDirection: 'row',
+          justifyContent: 'space-evenly',
+          marginTop: 12,
+        }}>
+        <IconButton
+          name="logo-google"
+          onPress={() => {
+            console.log('pressed');
+          }}
+        />
+        <IconButton
+          name="logo-facebook"
+          onPress={() => {
+            console.log('pressed');
+          }}
+        />
+        <IconButton
+          name="logo-apple"
+          onPress={() => {
+            console.log('pressed');
+          }}
+        />
+      </View>
+      <View style={{height: 50}} />
+      <Text style={{textAlign: 'center', marginBottom: 12}}>
+        <Text style={textStyle.SubTitle_Regular}>Don't have an account? </Text>
+        <Text
+          style={[textStyle.SubTitle_Bold, textStyle.hyperlink]}
+          onPress={() => {}}>
+          Sign up
+        </Text>
+      </Text>
+    </View>
+  );
+};
+
 const styles = StyleSheet.create({
+  RootContainer: {padding: 18},
   BodyContainer: {
-    padding: 20,
+    // padding: 20,
     flex: 2,
   },
   contentContainer: {
     // height: 120,
     flex: 1,
     backgroundColor: 'skyblue',
+  },
+  CenterImage: {
+    justifyContent: 'center',
+    alignItems: 'center',
+    resizeMode: 'contain',
   },
 });
 
