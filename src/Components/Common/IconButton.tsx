@@ -9,9 +9,11 @@ import React from 'react';
 import Icon, {IIconProps} from './Icon';
 import GlobalColor from '../../Utilities/Styles/GlobalColor';
 
-type IIconButtonProp = {
+type IIconButtonModeType = 'contained' | 'bordered' | 'icon';
+
+type IIconButtonPropType = {
   style?: ViewStyle;
-  mode?: 'contained' | 'bordered';
+  mode?: IIconButtonModeType;
   onPress: () => void;
 } & IIconProps;
 
@@ -22,10 +24,10 @@ type IIconButtonProp = {
  * @param props
  * @returns
  */
-const IconButton = (props: IIconButtonProp) => {
+const IconButton = (props: IIconButtonPropType) => {
   const currentMode = props.mode || 'contained';
   const currentLogoColor =
-    props.mode === 'contained' ? GlobalColor.accent : GlobalColor.light;
+    currentMode === 'contained' ? GlobalColor.light : GlobalColor.accent;
 
   return (
     <TouchableOpacity
@@ -37,15 +39,26 @@ const IconButton = (props: IIconButtonProp) => {
             padding: 12,
             borderRadius: 12,
           },
-          currentMode === 'contained'
-            ? styles.ModeContainedContainer
-            : styles.ModeBorderedContainer,
+          selectedContainerStyle(currentMode),
           props.style,
         ]}>
-        <Icon {...props} color={currentLogoColor} />
+        <Icon {...props} color={props.color || currentLogoColor} />
       </View>
     </TouchableOpacity>
   );
+};
+
+const selectedContainerStyle = (selectedMode: IIconButtonModeType) => {
+  switch (selectedMode) {
+    case 'bordered':
+      return styles.ModeBorderedContainer;
+
+    case 'contained':
+      return styles.ModeContainedContainer;
+
+    default:
+      return null;
+  }
 };
 
 export default IconButton;

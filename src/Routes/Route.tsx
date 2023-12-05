@@ -21,6 +21,7 @@ import HomeScreen from '../Screens/Dashboard/HomeScreen';
 import Dev from '../Screens/Dev';
 import AboutScreen from '../Screens/Dashboard/AboutScreen';
 import SignInScreen from '../Screens/SignInScreen';
+import SignUpScreen from '../Screens/SignUpScreen';
 
 const Stack = createStackNavigator<IMainNav>();
 const Drawer = createDrawerNavigator<IDashNav>();
@@ -90,10 +91,10 @@ const Route = () => {
         onStateChange={onNavigationStateChangeHandler}>
         <Stack.Navigator screenOptions={defaultScreenOptions}>
           <Stack.Screen name="SplashScreen" component={SplashScreen} />
+          <Stack.Screen name="SignInScreen" component={SignInScreen} />
+          <Stack.Screen name="SignUpScreen" component={SignUpScreen} />
           <Stack.Screen name="MainDashboard" component={DashboardRoute} />
-          <Stack.Group screenOptions={{presentation: 'modal'}}>
-            <Stack.Screen name="SignInScreen" component={SignInScreen} />
-          </Stack.Group>
+          {/* <Stack.Group screenOptions={{presentation: 'modal'}}></Stack.Group> */}
         </Stack.Navigator>
       </NavigationContainer>
     </SafeAreaProvider>

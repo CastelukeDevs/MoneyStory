@@ -1,4 +1,4 @@
-import React, {FC, useState} from 'react';
+import React, {useState} from 'react';
 import {View, Text, Image, StyleSheet} from 'react-native';
 import {SafeAreaView} from 'react-native-safe-area-context';
 
@@ -7,13 +7,13 @@ import {textStyle, viewStyle} from '../Utilities/Styles/GlobalStyle';
 import GlobalColor from '../Utilities/Styles/GlobalColor';
 import getString from '../Utilities/String/LanguageTools';
 
+import Button from '../Components/Common/Button';
+import TextInput from '../Components/Common/TextInput';
+import Modal from '../Components/Common/Modal';
+import IconButton from '../Components/Common/IconButton';
 import Logo from '../Components/Logo';
-import Button from '../Components/Core/Button';
-import TextInput from '../Components/Core/TextInput';
-import Modal from '../Components/Core/Modal';
-import IconButton from '../Components/Core/IconButton';
 
-const SplashScreen: FC<IMainNavPropTypes<'SplashScreen'>> = props => {
+const SplashScreen = (props: IMainNavPropTypes<'SplashScreen'>) => {
   const {navigation, route} = props;
 
   const [modalVisible, setModalVisible] = useState(false);
@@ -26,6 +26,14 @@ const SplashScreen: FC<IMainNavPropTypes<'SplashScreen'>> = props => {
     console.log('press');
     // handlePresentModalPress();
   };
+
+  const signInHandler = () => {};
+
+  const signUpHandler = () => {
+    navigation.navigate('SignUpScreen');
+  };
+
+  const forgotPasswordHandler = () => {};
 
   return (
     <View style={viewStyle.Base}>
@@ -65,15 +73,25 @@ const SplashScreen: FC<IMainNavPropTypes<'SplashScreen'>> = props => {
           console.log('dismissed');
 
           setModalVisible(false);
-        }}
-        doNotAvoidKeyboard>
-        {ModalLayout()}
+        }}>
+        {ModalLayout({
+          onSignIn: signInHandler,
+          onForgotPassword: forgotPasswordHandler,
+          onSignUp: signUpHandler,
+        })}
       </Modal>
     </View>
   );
 };
 
-const ModalLayout = () => {
+//Move this layout elsewhere later
+type IModalLayoutPropType = {
+  onSignIn?: () => void;
+  onSignUp?: () => void;
+  onForgotPassword?: () => void;
+};
+
+const ModalLayout = (prop: IModalLayoutPropType) => {
   return (
     <View style={{padding: 18}}>
       <Text style={textStyle.Hero_Bold}>Login to your Account</Text>
@@ -101,7 +119,7 @@ const ModalLayout = () => {
         label="Forgot your Password?"
         containerStyle={{marginTop: 12}}
         mode="text"
-        onPress={() => {}}
+        onPress={() => prop.onForgotPassword?.()}
       />
       <View style={{height: 50}} />
       <Text style={[textStyle.Content_Regular, {textAlign: 'center'}]}>
@@ -137,7 +155,7 @@ const ModalLayout = () => {
         <Text style={textStyle.SubTitle_Regular}>Don't have an account? </Text>
         <Text
           style={[textStyle.SubTitle_Bold, textStyle.hyperlink]}
-          onPress={() => {}}>
+          onPress={prop.onSignUp}>
           Sign up
         </Text>
       </Text>

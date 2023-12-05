@@ -34,7 +34,7 @@ type IModalProp = {
   addTopPadding?: boolean;
   style?: ViewStyle;
   children: ReactNode;
-  doNotAvoidKeyboard?: boolean;
+  avoidKeyboard?: boolean;
 };
 
 //bottom overflow height
@@ -115,7 +115,7 @@ const Modal = (props: IModalProp) => {
   });
 
   const KAVBehavior =
-    Platform.OS === 'ios' && !props.doNotAvoidKeyboard ? 'height' : undefined;
+    Platform.OS === 'ios' && props.avoidKeyboard ? 'height' : undefined;
   // const KAVBehavior = Platform.OS === 'ios' ? 'height' : 'padding';
 
   return (
