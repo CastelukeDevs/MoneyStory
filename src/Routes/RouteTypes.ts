@@ -8,7 +8,14 @@ import {StackScreenProps} from '@react-navigation/stack';
 export type IMainNav = {
   SplashScreen: undefined;
   SignInScreen: undefined;
+  SignUpScreen: undefined;
+  SignUpProfileScreen: undefined;
+  SignUpImageScreen: undefined;
+  ForgotPasswordScreen: undefined;
+
   MainDashboard: NavigatorScreenParams<IDashNav>;
+
+  PasswordScreen: undefined;
 };
 
 export type IMainNavPropTypes<T extends keyof IMainNav> = StackScreenProps<

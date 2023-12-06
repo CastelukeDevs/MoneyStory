@@ -4,7 +4,7 @@ import {textStyle} from '../../Utilities/Styles/GlobalStyle';
 import GlobalColor from '../../Utilities/Styles/GlobalColor';
 import Icon, {IIconProps} from './Icon';
 
-type IButtonProp = {
+type IButtonPropTypes = {
   label: string;
   onPress: () => void;
   containerStyle?: ViewStyle;
@@ -21,7 +21,7 @@ type IButtonProp = {
  * @param onPress function
  * Simple button
  */
-const Button = (props: IButtonProp) => {
+const Button = (props: IButtonPropTypes) => {
   const currentMode = props.mode || 'contained';
 
   return (
@@ -34,15 +34,25 @@ const Button = (props: IButtonProp) => {
         },
         {
           padding: 12,
+          flexDirection: 'row',
+          justifyContent: 'center',
+          alignItems: 'center',
         },
         props.containerStyle,
       ]}>
-      {/* {props.icon && <Icon {...props.icon} />} */}
+      {props.icon && (
+        <Icon
+          {...props.icon}
+          color={
+            currentMode === 'contained' ? GlobalColor.light : GlobalColor.accent
+          }
+        />
+      )}
       {props.label && (
         <Text
           style={[
             textStyle.SubTitle_Bold,
-            {textAlign: 'center'},
+            {textAlign: 'center', marginHorizontal: 12},
             {
               color:
                 currentMode === 'contained'

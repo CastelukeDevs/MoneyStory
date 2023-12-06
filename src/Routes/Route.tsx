@@ -9,6 +9,7 @@ import {
   createNavigationContainerRef,
 } from '@react-navigation/native';
 import {
+  StackHeaderProps,
   StackNavigationOptions,
   createStackNavigator,
 } from '@react-navigation/stack';
@@ -16,11 +17,16 @@ import {createDrawerNavigator} from '@react-navigation/drawer';
 
 import {IDashNav, IMainNav} from './RouteTypes';
 
-import SplashScreen from '../Screens/SplashScreen';
+import SplashScreen from '../Screens/PreAuth/SplashScreen';
 import HomeScreen from '../Screens/Dashboard/HomeScreen';
 import Dev from '../Screens/Dev';
 import AboutScreen from '../Screens/Dashboard/AboutScreen';
-import SignInScreen from '../Screens/SignInScreen';
+import SignInScreen from '../Screens/PreAuth/SignInScreen';
+import SignUpScreen from '../Screens/PreAuth/SignUpScreen';
+import Header from '../Components/Header';
+import SignUpProfileScreen from '../Screens/PreAuth/SignUpProfileScreen';
+import SignUpImageScreen from '../Screens/PreAuth/SignUpImageScreen';
+import ForgotPasswordScreen from '../Screens/PreAuth/ForgotPasswordScreen';
 
 const Stack = createStackNavigator<IMainNav>();
 const Drawer = createDrawerNavigator<IDashNav>();
@@ -82,6 +88,34 @@ const Route = () => {
     routeNameRef.current = currentRouteName;
   };
 
+  //All Header below
+  const preLoginHeader = (options: StackHeaderProps) => {
+    return <Header onBackPressed={options.navigation.goBack} />;
+  };
+
+  const profileCompletionHeader = (options: StackHeaderProps) => {
+    console.log('current active', routeNameRef.current);
+
+    //trigger change to
+    const getProgress = () => {
+      switch (routeNameRef.current) {
+        case 'SignUpProfileScreen':
+          return 1;
+        case 'SignUpImageScreen':
+          return 2;
+        default:
+          return 0;
+      }
+    };
+
+    return (
+      <Header
+        onBackPressed={options.navigation.goBack}
+        progressBar={{indicatorCount: 2, indicatorActive: getProgress()}}
+      />
+    );
+  };
+
   return (
     <SafeAreaProvider>
       <NavigationContainer
@@ -90,10 +124,36 @@ const Route = () => {
         onStateChange={onNavigationStateChangeHandler}>
         <Stack.Navigator screenOptions={defaultScreenOptions}>
           <Stack.Screen name="SplashScreen" component={SplashScreen} />
-          <Stack.Screen name="MainDashboard" component={DashboardRoute} />
-          <Stack.Group screenOptions={{presentation: 'modal'}}>
-            <Stack.Screen name="SignInScreen" component={SignInScreen} />
+          <Stack.Screen name="SignInScreen" component={SignInScreen} />
+          <Stack.Group
+            navigationKey="SignUp"
+            screenOptions={{
+              header: props => preLoginHeader(props),
+              headerShown: true,
+            }}>
+            <Stack.Screen name="SignUpScreen" component={SignUpScreen} />
+            <Stack.Screen
+              name="ForgotPasswordScreen"
+              component={ForgotPasswordScreen}
+            />
           </Stack.Group>
+          <Stack.Group
+            navigationKey="ProfileCompletion"
+            screenOptions={{
+              header: props => profileCompletionHeader(props),
+              headerShown: true,
+            }}>
+            <Stack.Screen
+              name="SignUpProfileScreen"
+              component={SignUpProfileScreen}
+            />
+            <Stack.Screen
+              name="SignUpImageScreen"
+              component={SignUpImageScreen}
+            />
+          </Stack.Group>
+          <Stack.Screen name="MainDashboard" component={DashboardRoute} />
+          {/* <Stack.Group screenOptions={{presentation: 'modal'}}></Stack.Group> */}
         </Stack.Navigator>
       </NavigationContainer>
     </SafeAreaProvider>

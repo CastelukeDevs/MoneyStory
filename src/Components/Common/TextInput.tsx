@@ -2,6 +2,7 @@ import React from 'react';
 import {
   Platform,
   StyleSheet,
+  TextInputProps,
   TextInput as TextInputReact,
   TextStyle,
   View,
@@ -13,31 +14,32 @@ import {textStyle} from '../../Utilities/Styles/GlobalStyle';
 
 // type ITextInputMode = 'Outlined' | 'Circled' | 'Underlined';
 
-type ITextInputBorderedType = {
+type ITextInputBordered = {
   mode?: 'Outlined' | 'Circled';
 };
-type ITextInputUnderlinedType = {
+type ITextInputUnderlined = {
   mode?: 'Underlined';
   lineColor?: string;
 };
 
-type MergedTextInputType = ITextInputBorderedType | ITextInputUnderlinedType;
+type IMergedTextInput = ITextInputBordered | ITextInputUnderlined;
 
-type ITextInputProp = {
+type ITextInputProps = {
   // mode?: string;
   label: string;
   value: string;
-  onTextChange: (str: string) => void;
+  onChange: (str: string) => void;
   iconLeading?: IIconProps;
   iconTrailing?: IIconProps;
   style?: ViewStyle;
-} & MergedTextInputType;
+  options?: TextInputProps;
+} & IMergedTextInput;
 
 /**
  *
  * @returns
  */
-const TextInput = (props: ITextInputProp) => {
+const TextInput = (props: ITextInputProps) => {
   const currentMode = props.mode || 'Circled';
 
   const inputPlatformStyle =
@@ -47,7 +49,7 @@ const TextInput = (props: ITextInputProp) => {
     <View
       style={[
         styles.CoreContainer,
-        getCodeStyle(currentMode),
+        getModeStyle(currentMode),
         props.mode === 'Underlined' && {
           borderColor: props.lineColor || GlobalColor.dark,
         },
@@ -59,6 +61,7 @@ const TextInput = (props: ITextInputProp) => {
         </View>
       )}
       <TextInputReact
+        {...props.options}
         style={[inputPlatformStyle, textStyle.SubTitle_Regular]}
         placeholder={props.label}
       />
@@ -75,7 +78,7 @@ const TextInput = (props: ITextInputProp) => {
 export default TextInput;
 
 //Style utilities
-const getCodeStyle = (mode: ITextInputProp['mode']): ViewStyle => {
+const getModeStyle = (mode: ITextInputProps['mode']): ViewStyle => {
   switch (mode) {
     case 'Underlined':
       return styles.ContainerUnderlinedMode;

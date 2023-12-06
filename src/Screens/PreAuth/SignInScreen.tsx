@@ -1,6 +1,6 @@
 import React, {FC} from 'react';
 import {View, Text} from 'react-native';
-import {IMainNavPropTypes} from '../Routes/RouteTypes';
+import {IMainNavPropTypes} from '../../Routes/RouteTypes';
 
 const SignInScreen: FC<IMainNavPropTypes<'SignInScreen'>> = props => {
   const {navigation, route} = props;
