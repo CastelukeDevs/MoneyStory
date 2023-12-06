@@ -32,10 +32,10 @@ const ForgotPasswordScreen = () => {
         </Text>
         <TextInput
           value={Email}
-          onChange={setEmail}
+          onChangeText={setEmail}
           label="Email"
           iconLeading={{name: 'mail-outline'}}
-          style={styles.InputSpacing}
+          containerStyle={styles.InputSpacing}
         />
       </KeyboardAvoidingView>
       <View style={styles.FooterContainer}>

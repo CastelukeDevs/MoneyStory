@@ -33,16 +33,6 @@ const Drawer = createDrawerNavigator<IDashNav>();
 
 const defaultScreenOptions: StackNavigationOptions = {headerShown: false};
 
-const DashboardRoute = () => {
-  return (
-    <Drawer.Navigator>
-      <Drawer.Screen name="HomeScreen" component={HomeScreen} />
-      <Drawer.Screen name="AboutScreen" component={AboutScreen} />
-      <Drawer.Screen name="DeveloperScreen2" component={Dev} />
-    </Drawer.Navigator>
-  );
-};
-
 const Route = () => {
   const routeNameRef = useRef<string | null>();
   const navigationRef = createNavigationContainerRef<IMainNav>();
@@ -55,8 +45,8 @@ const Route = () => {
     return authSub;
   }, []);
 
-  const onAuthStateChangeHandler = (FUser: any) => {
-    setUser(FUser);
+  const onAuthStateChangeHandler = (currentUser: any) => {
+    setUser(currentUser);
     if (initializing) {
       setInitializing(false);
     }
@@ -88,7 +78,7 @@ const Route = () => {
     routeNameRef.current = currentRouteName;
   };
 
-  //All Header below
+  //All Main Header below
   const preLoginHeader = (options: StackHeaderProps) => {
     return <Header onBackPressed={options.navigation.goBack} />;
   };
@@ -123,7 +113,7 @@ const Route = () => {
         onReady={onReadyHandler}
         onStateChange={onNavigationStateChangeHandler}>
         <Stack.Navigator screenOptions={defaultScreenOptions}>
-          <Stack.Screen name="SplashScreen" component={SplashScreen} />
+          {/* <Stack.Screen name="SplashScreen" component={SplashScreen} /> */}
           <Stack.Screen name="SignInScreen" component={SignInScreen} />
           <Stack.Group
             navigationKey="SignUp"
@@ -157,6 +147,16 @@ const Route = () => {
         </Stack.Navigator>
       </NavigationContainer>
     </SafeAreaProvider>
+  );
+};
+
+const DashboardRoute = () => {
+  return (
+    <Drawer.Navigator>
+      <Drawer.Screen name="HomeScreen" component={HomeScreen} />
+      <Drawer.Screen name="AboutScreen" component={AboutScreen} />
+      <Drawer.Screen name="DeveloperScreen2" component={Dev} />
+    </Drawer.Navigator>
   );
 };
 

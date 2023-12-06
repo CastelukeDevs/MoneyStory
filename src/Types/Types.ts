@@ -10,3 +10,8 @@ export type IErrorMessage = {
   isError: boolean;
   message: string | null;
 };
+
+export type IUserAuth = {
+  email: string;
+  password: string;
+};

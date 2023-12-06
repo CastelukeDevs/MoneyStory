@@ -35,31 +35,31 @@ const SignUpProfileScreen = (
       <KeyboardAvoidingView style={styles.InputGroupContainer}>
         <TextInput
           value={firstName}
-          onChange={setFirstName}
+          onChangeText={setFirstName}
           label="First Name"
           iconLeading={{name: 'person-outline'}}
-          style={styles.InputSpacing}
+          containerStyle={styles.InputSpacing}
         />
         <TextInput
           value={lastName}
-          onChange={setLastName}
+          onChangeText={setLastName}
           label="Last Name"
           iconLeading={{name: 'person-outline'}}
-          style={styles.InputSpacing}
+          containerStyle={styles.InputSpacing}
         />
         <TextInput
           value={dateOfBirth}
-          onChange={setDateOfBirth}
+          onChangeText={setDateOfBirth}
           label="Date of Birth"
           iconLeading={{name: 'calendar-outline'}}
-          style={styles.InputSpacing}
+          containerStyle={styles.InputSpacing}
         />
         <TextInput
           value={defaultCurrency}
-          onChange={setDefaultCurrency}
+          onChangeText={setDefaultCurrency}
           label="Default Currency"
           iconLeading={{name: 'logo-usd'}}
-          style={styles.InputSpacing}
+          containerStyle={styles.InputSpacing}
         />
       </KeyboardAvoidingView>
       <View style={styles.FooterContainer}>

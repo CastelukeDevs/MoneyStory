@@ -94,18 +94,18 @@ const ModalLayout = (prop: IModalLayoutPropType) => {
       <Text style={textStyle.Hero_Bold}>Login to your Account</Text>
       <TextInput
         label="Email"
-        onChange={() => {}}
+        onChangeText={() => {}}
         value={''}
         iconLeading={{name: 'mail-outline'}}
-        style={{marginTop: 12}}
+        containerStyle={{marginTop: 12}}
       />
       <TextInput
         label="Password"
-        onChange={() => {}}
+        onChangeText={() => {}}
         value={''}
         iconLeading={{name: 'lock-closed-outline'}}
         iconTrailing={{name: 'eye-outline'}}
-        style={{marginTop: 12}}
+        containerStyle={{marginTop: 12}}
       />
       <Button
         label="Login"

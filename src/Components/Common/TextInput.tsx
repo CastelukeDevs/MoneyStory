@@ -28,12 +28,13 @@ type ITextInputProps = {
   // mode?: string;
   label: string;
   value: string;
-  onChange: (str: string) => void;
+  onChangeText: (str: string) => void;
   iconLeading?: IIconProps;
   iconTrailing?: IIconProps;
-  style?: ViewStyle;
+  containerStyle?: ViewStyle;
   options?: TextInputProps;
-} & IMergedTextInput;
+} & IMergedTextInput &
+  TextInputProps;
 
 /**
  *
@@ -53,7 +54,7 @@ const TextInput = (props: ITextInputProps) => {
         props.mode === 'Underlined' && {
           borderColor: props.lineColor || GlobalColor.dark,
         },
-        props.style,
+        props.containerStyle,
       ]}>
       {props.iconLeading && (
         <View style={{marginRight: 10}}>
@@ -61,9 +62,12 @@ const TextInput = (props: ITextInputProps) => {
         </View>
       )}
       <TextInputReact
-        {...props.options}
+        // {...props.options}
+        {...props}
+        // value={props.value}
+        // onChangeText={props.onChangeText}
         style={[inputPlatformStyle, textStyle.SubTitle_Regular]}
-        placeholder={props.label}
+        placeholder={props.placeholder || props.label}
       />
 
       {props.iconTrailing && (
