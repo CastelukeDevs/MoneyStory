@@ -1,16 +1,14 @@
 import {StyleSheet, Text, View} from 'react-native';
 import React from 'react';
-import Header from '../Components/Common/Header';
 
-const SignUpScreen = () => {
+const SignUpImageScreen = () => {
   return (
     <View>
-      <Header />
-      <Text>SignUpScreen</Text>
+      <Text>SignUpImageScreen</Text>
     </View>
   );
 };
 
-export default SignUpScreen;
+export default SignUpImageScreen;
 
 const styles = StyleSheet.create({});

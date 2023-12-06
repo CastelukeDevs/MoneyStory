@@ -9,11 +9,11 @@ import React from 'react';
 import Icon, {IIconProps} from './Icon';
 import GlobalColor from '../../Utilities/Styles/GlobalColor';
 
-type IIconButtonModeType = 'contained' | 'bordered' | 'icon';
+type IIconButtonModeTypes = 'contained' | 'bordered' | 'icon';
 
-type IIconButtonPropType = {
+type IIconButtonPropTypes = {
   style?: ViewStyle;
-  mode?: IIconButtonModeType;
+  mode?: IIconButtonModeTypes;
   onPress: () => void;
 } & IIconProps;
 
@@ -24,7 +24,7 @@ type IIconButtonPropType = {
  * @param props
  * @returns
  */
-const IconButton = (props: IIconButtonPropType) => {
+const IconButton = (props: IIconButtonPropTypes) => {
   const currentMode = props.mode || 'contained';
   const currentLogoColor =
     currentMode === 'contained' ? GlobalColor.light : GlobalColor.accent;
@@ -48,7 +48,7 @@ const IconButton = (props: IIconButtonPropType) => {
   );
 };
 
-const selectedContainerStyle = (selectedMode: IIconButtonModeType) => {
+const selectedContainerStyle = (selectedMode: IIconButtonModeTypes) => {
   switch (selectedMode) {
     case 'bordered':
       return styles.ModeBorderedContainer;

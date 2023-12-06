@@ -4,7 +4,7 @@ import {textStyle} from '../../Utilities/Styles/GlobalStyle';
 import GlobalColor from '../../Utilities/Styles/GlobalColor';
 import Icon, {IIconProps} from './Icon';
 
-type IButtonProp = {
+type IButtonPropTypes = {
   label: string;
   onPress: () => void;
   containerStyle?: ViewStyle;
@@ -21,7 +21,7 @@ type IButtonProp = {
  * @param onPress function
  * Simple button
  */
-const Button = (props: IButtonProp) => {
+const Button = (props: IButtonPropTypes) => {
   const currentMode = props.mode || 'contained';
 
   return (

@@ -27,7 +27,7 @@ import GlobalColor from '../../Utilities/Styles/GlobalColor';
 const windowHeight = Dimensions.get('window').height;
 const AnimatedPressable = Animated.createAnimatedComponent(Pressable);
 
-type IModalProp = {
+type IModalPropTypes = {
   visible: boolean;
   onDismiss?: () => void;
   onChange?: (open: boolean) => void;
@@ -42,7 +42,7 @@ const defaultOverflowHeight = 50;
 
 /**
  * Simple Modal Components
- * @type IModalProp
+ * @type IModalPropTypes
  * @param visible *required
  * @param onDismiss
  * @param onChange
@@ -53,7 +53,7 @@ const defaultOverflowHeight = 50;
  * or drag the draglines down
  */
 
-const Modal = (props: IModalProp) => {
+const Modal = (props: IModalPropTypes) => {
   const {children, visible, onDismiss, onChange, addTopPadding, style} = props;
 
   const [isOpen, setIsOpen] = useState(false);

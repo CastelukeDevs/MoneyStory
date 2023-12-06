@@ -9,6 +9,9 @@ export type IMainNav = {
   SplashScreen: undefined;
   SignInScreen: undefined;
   SignUpScreen: undefined;
+  SignUpProfileScreen: undefined;
+  SignUpImageScreen: undefined;
+  ForgotPasswordScreen: undefined;
 
   MainDashboard: NavigatorScreenParams<IDashNav>;
 

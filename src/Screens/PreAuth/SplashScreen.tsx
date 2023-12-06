@@ -2,29 +2,24 @@ import React, {useState} from 'react';
 import {View, Text, Image, StyleSheet} from 'react-native';
 import {SafeAreaView} from 'react-native-safe-area-context';
 
-import {IMainNavPropTypes} from '../Routes/RouteTypes';
-import {textStyle, viewStyle} from '../Utilities/Styles/GlobalStyle';
-import GlobalColor from '../Utilities/Styles/GlobalColor';
-import getString from '../Utilities/String/LanguageTools';
+import {IMainNavPropTypes} from '../../Routes/RouteTypes';
+import {textStyle, viewStyle} from '../../Utilities/Styles/GlobalStyle';
+import GlobalColor from '../../Utilities/Styles/GlobalColor';
+import getString from '../../Utilities/String/LanguageTools';
 
-import Button from '../Components/Common/Button';
-import TextInput from '../Components/Common/TextInput';
-import Modal from '../Components/Common/Modal';
-import IconButton from '../Components/Common/IconButton';
-import Logo from '../Components/Logo';
+import Button from '../../Components/Common/Button';
+import TextInput from '../../Components/Common/TextInput';
+import Modal from '../../Components/Common/Modal';
+import IconButton from '../../Components/Common/IconButton';
+import Logo from '../../Components/Logo';
 
 const SplashScreen = (props: IMainNavPropTypes<'SplashScreen'>) => {
   const {navigation, route} = props;
 
   const [modalVisible, setModalVisible] = useState(false);
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
 
   const openModalHandler = () => {
-    // navigation.navigate('SignInScreen');
     setModalVisible(true);
-    console.log('press');
-    // handlePresentModalPress();
   };
 
   const signInHandler = () => {};
@@ -33,13 +28,15 @@ const SplashScreen = (props: IMainNavPropTypes<'SplashScreen'>) => {
     navigation.navigate('SignUpScreen');
   };
 
-  const forgotPasswordHandler = () => {};
+  const forgotPasswordHandler = () => {
+    navigation.navigate('ForgotPasswordScreen');
+  };
 
   return (
     <View style={viewStyle.Base}>
       <Image
         // source={require('../Resources/bg-1.jpg')}
-        source={require('../Resources/Gradient/01.RoyalHeath.png')}
+        source={require('../../Resources/Gradient/01.RoyalHeath.png')}
         style={[StyleSheet.absoluteFillObject, styles.CenterImage]}
       />
       <View
@@ -97,14 +94,14 @@ const ModalLayout = (prop: IModalLayoutPropType) => {
       <Text style={textStyle.Hero_Bold}>Login to your Account</Text>
       <TextInput
         label="Email"
-        onTextChange={() => {}}
+        onChange={() => {}}
         value={''}
         iconLeading={{name: 'mail-outline'}}
         style={{marginTop: 12}}
       />
       <TextInput
         label="Password"
-        onTextChange={() => {}}
+        onChange={() => {}}
         value={''}
         iconLeading={{name: 'lock-closed-outline'}}
         iconTrailing={{name: 'eye-outline'}}
