@@ -12,6 +12,7 @@ type IHeaderPropTypes = {
   onBackPressed?: () => void;
   // showProgressBar?: boolean;
   progressBar?: IProgressBarProp;
+  hideBackButton?: boolean;
 };
 
 const Header = (prop: IHeaderPropTypes) => {
@@ -20,7 +21,7 @@ const Header = (prop: IHeaderPropTypes) => {
   return (
     <>
       <View style={[{paddingTop: safeArea.top}, styles.RootContainer]}>
-        {currentMode === 'normal' ? (
+        {!prop.hideBackButton && currentMode === 'normal' ? (
           <Button
             label={prop.label || 'Back'}
             onPress={() => prop.onBackPressed?.()}

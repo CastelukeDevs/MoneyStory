@@ -11,6 +11,9 @@ import {IMainNavPropTypes} from '../../Routes/RouteTypes';
 import TextInput from '../../Components/Common/TextInput';
 import {textStyle} from '../../Utilities/Styles/GlobalStyle';
 import {useSafeAreaInsets} from 'react-native-safe-area-context';
+import auth from '@react-native-firebase/auth';
+import APICall from '../../Utilities/APIs/APIRequest';
+import firebase from '@react-native-firebase/app';
 
 const SignUpProfileScreen = (
   props: IMainNavPropTypes<'SignUpProfileScreen'>,
@@ -24,6 +27,13 @@ const SignUpProfileScreen = (
 
   const onNextHandler = () => {
     props.navigation.navigate('SignUpImageScreen');
+  };
+  const onLogoutHandler = () => {
+    auth().signOut();
+  };
+
+  const apiTest = () => {
+    APICall('GET_USER');
   };
   return (
     <View
@@ -63,6 +73,8 @@ const SignUpProfileScreen = (
         />
       </KeyboardAvoidingView>
       <View style={styles.FooterContainer}>
+        <Button label="API TEST" onPress={apiTest} />
+        <Button label="Logout" onPress={onLogoutHandler} />
         <Button label="Next" onPress={onNextHandler} />
       </View>
     </View>

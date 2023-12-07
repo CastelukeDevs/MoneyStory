@@ -1,19 +1,26 @@
+import auth from '@react-native-firebase/auth';
 import axios, {AxiosError} from 'axios';
 import {IAPIsCallOption, IEndpoint, getEndpoint} from './APIUtils';
-import {BASE_SERVICES_PORT, BASE_URL} from '@env';
+import {APP_API_KEY, BASE_SERVICES_PORT, BASE_URL} from '@env';
 
-const BaseURL = BASE_URL;
-const BasePort = BASE_SERVICES_PORT;
+const URL = BASE_URL + BASE_SERVICES_PORT + '/' + APP_API_KEY;
 
 const APICall = async (endpoint: IEndpoint, options?: IAPIsCallOption) => {
-  axios.defaults.baseURL = BaseURL + BasePort;
+  axios.defaults.baseURL = URL;
+
+  const token = await auth().currentUser?.getIdToken();
+
+  const selectEndpoint = getEndpoint(endpoint)!;
 
   console.log('new Api call with detail:', {
     endpoint,
     options: options,
+    endpointDetails: selectEndpoint,
   });
 
-  const selectEndpoint = getEndpoint(endpoint)!;
+  const requestHeader = selectEndpoint.auth
+    ? {Authorization: `Bearer ${token}`}
+    : {};
 
   return await axios({
     method: selectEndpoint.method,
@@ -21,8 +28,11 @@ const APICall = async (endpoint: IEndpoint, options?: IAPIsCallOption) => {
     data: options?.payload,
     params: options?.params,
     cancelToken: options?.cancelToken,
+    headers: {...requestHeader},
   })
     .then(result => {
+      console.log('axios request success', result);
+
       return result.data;
     })
     .catch((error: AxiosError) => {

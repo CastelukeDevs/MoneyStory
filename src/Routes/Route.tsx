@@ -24,8 +24,8 @@ import AboutScreen from '../Screens/Dashboard/AboutScreen';
 import SignInScreen from '../Screens/PreAuth/SignInScreen';
 import SignUpScreen from '../Screens/PreAuth/SignUpScreen';
 import Header from '../Components/Header';
-import SignUpProfileScreen from '../Screens/PreAuth/SignUpProfileScreen';
-import SignUpImageScreen from '../Screens/PreAuth/SignUpImageScreen';
+import SignUpProfileScreen from '../Screens/Profile/ProfileCompletionScreen';
+import SignUpImageScreen from '../Screens/Profile/ProfileImageScreen';
 import ForgotPasswordScreen from '../Screens/PreAuth/ForgotPasswordScreen';
 
 const Stack = createStackNavigator<IMainNav>();
@@ -91,9 +91,7 @@ const Route = () => {
   };
 
   const profileCompletionHeader = (options: StackHeaderProps) => {
-    console.log('current active', routeNameRef.current);
-
-    //trigger change to
+    //trigger progress bar indicator change
     const getProgress = () => {
       switch (routeNameRef.current) {
         case 'SignUpProfileScreen':
@@ -109,6 +107,7 @@ const Route = () => {
       <Header
         onBackPressed={options.navigation.goBack}
         progressBar={{indicatorCount: 2, indicatorActive: getProgress()}}
+        hideBackButton={options.back === undefined}
       />
     );
   };
@@ -121,35 +120,42 @@ const Route = () => {
         onStateChange={onNavigationStateChangeHandler}>
         <Stack.Navigator screenOptions={defaultScreenOptions}>
           {/* <Stack.Screen name="SplashScreen" component={SplashScreen} /> */}
-          <Stack.Screen name="SignInScreen" component={SignInScreen} />
-          <Stack.Group
-            navigationKey="SignUp"
-            screenOptions={{
-              header: props => preLoginHeader(props),
-              headerShown: true,
-            }}>
-            <Stack.Screen name="SignUpScreen" component={SignUpScreen} />
-            <Stack.Screen
-              name="ForgotPasswordScreen"
-              component={ForgotPasswordScreen}
-            />
-          </Stack.Group>
-          <Stack.Group
-            navigationKey="ProfileCompletion"
-            screenOptions={{
-              header: props => profileCompletionHeader(props),
-              headerShown: true,
-            }}>
-            <Stack.Screen
-              name="SignUpProfileScreen"
-              component={SignUpProfileScreen}
-            />
-            <Stack.Screen
-              name="SignUpImageScreen"
-              component={SignUpImageScreen}
-            />
-          </Stack.Group>
-          <Stack.Screen name="MainDashboard" component={DashboardRoute} />
+          {!user ? (
+            <>
+              <Stack.Screen name="SignInScreen" component={SignInScreen} />
+              <Stack.Group
+                navigationKey="SignUp"
+                screenOptions={{
+                  header: props => preLoginHeader(props),
+                  headerShown: true,
+                }}>
+                <Stack.Screen name="SignUpScreen" component={SignUpScreen} />
+                <Stack.Screen
+                  name="ForgotPasswordScreen"
+                  component={ForgotPasswordScreen}
+                />
+              </Stack.Group>
+            </>
+          ) : (
+            <>
+              <Stack.Group
+                navigationKey="ProfileCompletion"
+                screenOptions={{
+                  header: props => profileCompletionHeader(props),
+                  headerShown: true,
+                }}>
+                <Stack.Screen
+                  name="SignUpProfileScreen"
+                  component={SignUpProfileScreen}
+                />
+                <Stack.Screen
+                  name="SignUpImageScreen"
+                  component={SignUpImageScreen}
+                />
+              </Stack.Group>
+              <Stack.Screen name="MainDashboard" component={DashboardRoute} />
+            </>
+          )}
           {/* <Stack.Group screenOptions={{presentation: 'modal'}}></Stack.Group> */}
         </Stack.Navigator>
       </NavigationContainer>

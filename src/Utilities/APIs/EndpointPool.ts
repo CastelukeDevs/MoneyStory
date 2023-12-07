@@ -7,8 +7,9 @@ import {IEndpointPool} from './APIUtils';
 const EndpointPool = [
   {
     endpoint: 'GET_USER',
-    url: '/user',
+    url: '/auth/v1/test',
     method: 'get',
+    auth: true,
   },
 ] as const;
 
