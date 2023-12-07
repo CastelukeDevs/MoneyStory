@@ -19,6 +19,7 @@ import validatePassword, {
 import validateEmail, {
   stringProofEmail,
 } from '../../Utilities/String/ValidateEmail';
+import CreateUserEmailPassword from '../../Utilities/Authentication/CreateUserEmailPassword';
 
 const SignUpScreen = (prop: IMainNavPropTypes<'SignUpScreen'>) => {
   const inset = useSafeAreaInsets();
@@ -29,37 +30,22 @@ const SignUpScreen = (prop: IMainNavPropTypes<'SignUpScreen'>) => {
   const [confirmHide, setConfirmHide] = useState(true);
   const [error, setError] = useState<IValidationResult[]>([]);
 
-  console.log('error', error);
+  // console.log('error', error);
 
   const onRegisterHandler = () => {
     console.log('register attempted');
 
     const isPasswordValid = validatePassword(password);
-    const isEmailValid = stringProofEmail(email);
+    const isEmailValid = validateEmail(email);
+
     if (isPasswordValid.length > 0) return setError(isPasswordValid);
     if (password !== confirm)
       return setError([{description: 'Password not match', name: 'unmatch'}]);
+    if (!isEmailValid)
+      return setError([{description: 'Email is invalid', name: 'invalid'}]);
 
-    console.log('ready to sign up new user', {email: isEmailValid, password});
-
-    // prop.navigation.navigate('SignUpProfileScreen');
-    // auth()
-    //   .createUserWithEmailAndPassword(
-    //     'jane.doe@example.com',
-    //     'SuperSecretPassword!',
-    //   )
-    //   .then(() => {
-    //     console.log('User account created & signed in!');
-    //   })
-    //   .catch(error => {
-    //     if (error.code === 'auth/email-already-in-use') {
-    //       console.log('That email address is already in use!');
-    //     }
-    //     if (error.code === 'auth/invalid-email') {
-    //       console.log('That email address is invalid!');
-    //     }
-    //     console.error(error);
-    //   });
+    console.log('ready to sign up new user', {email, password});
+    CreateUserEmailPassword({email, password});
   };
 
   return (

@@ -38,19 +38,26 @@ const Route = () => {
   const navigationRef = createNavigationContainerRef<IMainNav>();
 
   const [user, setUser] = useState<FirebaseAuthTypes.User | null>(null);
-  const [initializing, setInitializing] = useState(false);
+  // const [initializing, setInitializing] = useState(false);
 
   useEffect(() => {
-    const authSub = auth().onAuthStateChanged(onAuthStateChangeHandler);
+    const authSub = auth().onAuthStateChanged(setUser);
     return authSub;
   }, []);
 
-  const onAuthStateChangeHandler = (currentUser: any) => {
-    setUser(currentUser);
-    if (initializing) {
-      setInitializing(false);
-    }
-  };
+  useEffect(() => {
+    console.log('CurrentUser', user);
+
+    return () => {};
+  }, [user]);
+
+  // Enable below when needed initialization phase
+  // const onAuthStateChangeHandler = (currentUser: any) => {
+  //   setUser(currentUser);
+  //   if (initializing) {
+  //     setInitializing(false);
+  //   }
+  // };
 
   const onReadyHandler = () => {
     if (navigationRef.current === null) {
