@@ -16,10 +16,11 @@ import auth from '@react-native-firebase/auth';
 import SignInModal from './SignInModal';
 import {IUserAuth} from '../../Types/Types';
 import SignInUserEmailPassword from '../../Utilities/Authentication/SignInUserEmailPassword';
-import validatePassword, {
+import {
   IValidationResult,
-} from '../../Utilities/String/ValidatePassword';
-import validateEmail from '../../Utilities/String/ValidateEmail';
+  validateEmail,
+  validatePassword,
+} from '../../Utilities/String/EmailPasswordValidation';
 
 const SignInScreen = (props: IMainNavPropTypes<'SignInScreen'>) => {
   const {navigation, route} = props;
@@ -35,8 +36,7 @@ const SignInScreen = (props: IMainNavPropTypes<'SignInScreen'>) => {
     const isPasswordValid = validatePassword(prop.password);
     const isEmailValid = validateEmail(prop.email);
     if (isPasswordValid.length > 0) return setError(isPasswordValid);
-    if (!isEmailValid)
-      return setError([{description: 'Email is invalid', name: 'invalid'}]);
+    if (isEmailValid.length > 0) return setError(isEmailValid);
 
     console.log('sign in attempt', prop);
 

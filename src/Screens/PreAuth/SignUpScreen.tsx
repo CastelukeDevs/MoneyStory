@@ -13,12 +13,11 @@ import TextInput from '../../Components/Common/TextInput';
 import Button from '../../Components/Common/Button';
 import {useSafeAreaInsets} from 'react-native-safe-area-context';
 import auth from '@react-native-firebase/auth';
-import validatePassword, {
+import {
   IValidationResult,
-} from '../../Utilities/String/ValidatePassword';
-import validateEmail, {
-  stringProofEmail,
-} from '../../Utilities/String/ValidateEmail';
+  validateEmail,
+  validatePassword,
+} from '../../Utilities/String/EmailPasswordValidation';
 import CreateUserEmailPassword from '../../Utilities/Authentication/CreateUserEmailPassword';
 
 const SignUpScreen = (prop: IMainNavPropTypes<'SignUpScreen'>) => {
@@ -41,8 +40,7 @@ const SignUpScreen = (prop: IMainNavPropTypes<'SignUpScreen'>) => {
     if (isPasswordValid.length > 0) return setError(isPasswordValid);
     if (password !== confirm)
       return setError([{description: 'Password not match', name: 'unmatch'}]);
-    if (!isEmailValid)
-      return setError([{description: 'Email is invalid', name: 'invalid'}]);
+    if (isEmailValid.length > 0) return setError(isEmailValid);
 
     console.log('ready to sign up new user', {email, password});
     CreateUserEmailPassword({email, password});

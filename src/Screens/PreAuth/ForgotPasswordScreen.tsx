@@ -10,8 +10,10 @@ import {useSafeAreaInsets} from 'react-native-safe-area-context';
 import TextInput from '../../Components/Common/TextInput';
 import Button from '../../Components/Common/Button';
 import {textStyle} from '../../Utilities/Styles/GlobalStyle';
-import validateEmail from '../../Utilities/String/ValidateEmail';
-import {IValidationResult} from '../../Utilities/String/ValidatePassword';
+import {
+  IValidationResult,
+  validateEmail,
+} from '../../Utilities/String/EmailPasswordValidation';
 import ForgetPassword from '../../Utilities/Authentication/ForgetPassword';
 
 const ForgotPasswordScreen = () => {
@@ -22,7 +24,7 @@ const ForgotPasswordScreen = () => {
 
   const onSendVerificationHandler = async () => {
     const isEmailValid = validateEmail(email);
-    if (!isEmailValid)
+    if (isEmailValid?.length > 0)
       return setError([{description: 'Email is invalid', name: 'invalid'}]);
 
     await ForgetPassword(email).catch(() => {
