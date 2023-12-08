@@ -1,19 +1,5 @@
-import {IUserAuth} from '../../Types/Types';
-import auth, {FirebaseAuthTypes} from '@react-native-firebase/auth';
-
-type IAuthSuccess = {
-  isSuccess: true;
-  user: FirebaseAuthTypes.User;
-};
-
-type IAuthError = {
-  isSuccess: false;
-  code: string;
-  message: string;
-  error: any;
-};
-
-type IUserAuthReturn = IAuthSuccess | IAuthError;
+import {IUserAuth, IUserAuthReturn} from '../../Types/Types';
+import auth from '@react-native-firebase/auth';
 
 const CreateUserEmailPassword = async (userAuth: IUserAuth) => {
   return await auth()

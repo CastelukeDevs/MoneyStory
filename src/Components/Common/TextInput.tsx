@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {forwardRef} from 'react';
 import {
   Platform,
   StyleSheet,
@@ -11,8 +11,6 @@ import {
 import Icon, {IIconProps} from './Icon';
 import GlobalColor from '../../Utilities/Styles/GlobalColor';
 import {textStyle} from '../../Utilities/Styles/GlobalStyle';
-
-// type ITextInputMode = 'Outlined' | 'Circled' | 'Underlined';
 
 type ITextInputBordered = {
   mode?: 'Outlined' | 'Circled';
@@ -40,7 +38,7 @@ type ITextInputProps = {
  *
  * @returns
  */
-const TextInput = (props: ITextInputProps) => {
+const TextInput = forwardRef<TextInputReact, ITextInputProps>((props, ref) => {
   const currentMode = props.mode || 'Circled';
 
   const inputPlatformStyle =
@@ -62,12 +60,10 @@ const TextInput = (props: ITextInputProps) => {
         </View>
       )}
       <TextInputReact
-        // {...props.options}
         {...props}
-        // value={props.value}
-        // onChangeText={props.onChangeText}
         style={[inputPlatformStyle, textStyle.SubTitle_Regular]}
         placeholder={props.placeholder || props.label}
+        ref={ref}
       />
 
       {props.iconTrailing && (
@@ -77,7 +73,7 @@ const TextInput = (props: ITextInputProps) => {
       )}
     </View>
   );
-};
+});
 
 export default TextInput;
 

@@ -15,18 +15,36 @@ import Logo from '../../Components/Logo';
 import auth from '@react-native-firebase/auth';
 import SignInModal from './SignInModal';
 import {IUserAuth} from '../../Types/Types';
+import SignInUserEmailPassword from '../../Utilities/Authentication/SignInUserEmailPassword';
+import validatePassword, {
+  IValidationResult,
+} from '../../Utilities/String/ValidatePassword';
+import validateEmail from '../../Utilities/String/ValidateEmail';
 
 const SignInScreen = (props: IMainNavPropTypes<'SignInScreen'>) => {
   const {navigation, route} = props;
 
   const [modalVisible, setModalVisible] = useState(false);
+  const [error, setError] = useState<IValidationResult[]>([]);
 
   const openModalHandler = () => {
     setModalVisible(true);
   };
 
-  const signInHandler = (prop: IUserAuth) => {
+  const signInHandler = async (prop: IUserAuth) => {
+    const isPasswordValid = validatePassword(prop.password);
+    const isEmailValid = validateEmail(prop.email);
+    if (isPasswordValid.length > 0) return setError(isPasswordValid);
+    if (!isEmailValid)
+      return setError([{description: 'Email is invalid', name: 'invalid'}]);
+
     console.log('sign in attempt', prop);
+
+    await SignInUserEmailPassword(prop).catch(() => {
+      return setError([
+        {description: 'Email or Password is invalid', name: 'error'},
+      ]);
+    });
   };
 
   const signUpHandler = () => {

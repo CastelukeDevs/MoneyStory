@@ -1,5 +1,5 @@
-import {Text, View} from 'react-native';
-import React, {useState} from 'react';
+import {Text, TextInput as RNTextInput, View} from 'react-native';
+import React, {useRef, useState} from 'react';
 import TextInput from '../../Components/Common/TextInput';
 import {textStyle} from '../../Utilities/Styles/GlobalStyle';
 import Button from '../../Components/Common/Button';
@@ -17,6 +17,8 @@ const SignInModal = (prop: ISignInModalProp) => {
   const [password, setPassword] = useState('');
   const [isPasswordHidden, setIsPasswordHidden] = useState(true);
 
+  const passwordRef = useRef<RNTextInput>(null);
+
   return (
     <View style={{padding: 18}}>
       <Text style={textStyle.Hero_Bold}>Login to your Account</Text>
@@ -26,8 +28,10 @@ const SignInModal = (prop: ISignInModalProp) => {
         value={email}
         iconLeading={{name: 'mail-outline'}}
         containerStyle={{marginTop: 12}}
+        onSubmitEditing={() => passwordRef.current?.focus()}
       />
       <TextInput
+        ref={passwordRef}
         label="Password"
         onChangeText={setPassword}
         value={password}
@@ -38,6 +42,7 @@ const SignInModal = (prop: ISignInModalProp) => {
         }}
         containerStyle={{marginTop: 12}}
         secureTextEntry={isPasswordHidden}
+        onSubmitEditing={() => prop.onSignIn({email, password})}
       />
       <Button
         label="Login"
