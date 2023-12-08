@@ -96,6 +96,7 @@ const SignInScreen = (props: IMainNavPropTypes<'SignInScreen'>) => {
           onSignIn={signInHandler}
           onForgotPassword={forgotPasswordHandler}
           onSignUp={signUpHandler}
+          error={error}
         />
       </Modal>
     </View>

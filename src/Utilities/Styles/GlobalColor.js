@@ -1,7 +1,8 @@
 export default {
   light: '#ffffff',
-  dark: '#000',
-  primary: '#000',
+  dark: '#000000',
+  primary: '#000000',
   accent: '#1573FE',
-  overlay: 'rgba(0,0,0,0.5)',
+  overlay: '#00000080',
+  error: '#ff6347',
 };

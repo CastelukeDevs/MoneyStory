@@ -17,12 +17,14 @@ type ISignInModalProp = {
   error?: IValidationResult[];
 };
 
-const SignInModal = (prop: ISignInModalProp) => {
+const SignInModal = (props: ISignInModalProp) => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [isPasswordHidden, setIsPasswordHidden] = useState(true);
 
   const passwordRef = useRef<RNTextInput>(null);
+
+  console.log('error', props.error);
 
   return (
     <View style={{padding: 18}}>
@@ -34,6 +36,7 @@ const SignInModal = (prop: ISignInModalProp) => {
         iconLeading={{name: 'mail-outline'}}
         containerStyle={{marginTop: 12}}
         onSubmitEditing={() => passwordRef.current?.focus()}
+        isError={props.error !== undefined && props.error?.length > 0}
       />
       <TextInput
         ref={passwordRef}
@@ -47,7 +50,8 @@ const SignInModal = (prop: ISignInModalProp) => {
         }}
         containerStyle={{marginTop: 12}}
         secureTextEntry={isPasswordHidden}
-        onSubmitEditing={() => prop.onSignIn({email, password})}
+        onSubmitEditing={() => props.onSignIn({email, password})}
+        isError={props.error !== undefined && props.error?.length > 0}
       />
       <Button
         label="Login"
@@ -55,14 +59,14 @@ const SignInModal = (prop: ISignInModalProp) => {
         onPress={() => {
           console.log({email, password});
 
-          prop.onSignIn({email, password});
+          props.onSignIn({email, password});
         }}
       />
       <Button
         label="Forgot your Password?"
         containerStyle={{marginTop: 12}}
         mode="text"
-        onPress={prop.onForgotPassword}
+        onPress={props.onForgotPassword}
       />
       <View style={{height: 50}} />
       <Text style={[textStyle.Content_Regular, {textAlign: 'center'}]}>
@@ -98,7 +102,7 @@ const SignInModal = (prop: ISignInModalProp) => {
         <Text style={textStyle.SubTitle_Regular}>Don't have an account? </Text>
         <Text
           style={[textStyle.SubTitle_Bold, textStyle.hyperlink]}
-          onPress={prop.onSignUp}>
+          onPress={props.onSignUp}>
           Sign up
         </Text>
       </Text>

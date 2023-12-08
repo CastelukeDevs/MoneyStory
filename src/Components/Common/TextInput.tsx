@@ -1,4 +1,4 @@
-import React, {forwardRef} from 'react';
+import React, {forwardRef, useEffect} from 'react';
 import {
   Platform,
   StyleSheet,
@@ -8,7 +8,15 @@ import {
   View,
   ViewStyle,
 } from 'react-native';
+import Animated, {
+  interpolateColor,
+  useAnimatedStyle,
+  useSharedValue,
+  withTiming,
+} from 'react-native-reanimated';
+
 import Icon, {IIconProps} from './Icon';
+
 import GlobalColor from '@Utilities/Styles/GlobalColor';
 import {textStyle} from '@Utilities/Styles/GlobalStyle';
 
@@ -31,6 +39,7 @@ type ITextInputProps = {
   iconTrailing?: IIconProps;
   containerStyle?: ViewStyle;
   options?: TextInputProps;
+  isError?: boolean | string;
 } & IMergedTextInput &
   TextInputProps;
 
@@ -40,18 +49,51 @@ type ITextInputProps = {
  */
 const TextInput = forwardRef<TextInputReact, ITextInputProps>((props, ref) => {
   const currentMode = props.mode || 'Circled';
+  const duration = 500;
 
   const inputPlatformStyle =
     Platform.OS === 'ios' ? styles.InputIOS : styles.InputAndroid;
 
+  /**
+   * State:
+   * - 0 = normal
+   * - 1 = focused
+   * - 2 = error
+   */
+  const inputState = useSharedValue(0);
+
+  const inputAnimationStyle = useAnimatedStyle(() => {
+    const colorInterpolation = interpolateColor(
+      inputState.value,
+      [0, 1, 2],
+      [GlobalColor.dark, GlobalColor.accent, GlobalColor.error],
+    );
+    return {
+      borderColor: colorInterpolation,
+    };
+  });
+
+  useEffect(() => {
+    if (props.isError) {
+      inputState.value = withTiming(2, {duration});
+    }
+  }, [props.isError]);
+
+  // const iconAnimationColor = useAnimatedProps(() => {
+  //   const colorInterpolation = interpolateColor(
+  //     inputState.value,
+  //     [0, 1, 2],
+  //     [GlobalColor.dark, GlobalColor.accent, GlobalColor.overlay],
+  //   );
+  //   return colorInterpolation;
+  // });
+
   return (
-    <View
+    <Animated.View
       style={[
         styles.CoreContainer,
         getModeStyle(currentMode),
-        props.mode === 'Underlined' && {
-          borderColor: props.lineColor || GlobalColor.dark,
-        },
+        inputAnimationStyle,
         props.containerStyle,
       ]}>
       {props.iconLeading && (
@@ -64,6 +106,13 @@ const TextInput = forwardRef<TextInputReact, ITextInputProps>((props, ref) => {
         style={[inputPlatformStyle, textStyle.SubTitle_Regular]}
         placeholder={props.placeholder || props.label}
         ref={ref}
+        onFocus={() => {
+          inputState.value = withTiming(1, {duration});
+        }}
+        onBlur={() => {
+          if (props.isError) inputState.value = withTiming(2, {duration});
+          inputState.value = withTiming(0, {duration});
+        }}
       />
 
       {props.iconTrailing && (
@@ -71,7 +120,7 @@ const TextInput = forwardRef<TextInputReact, ITextInputProps>((props, ref) => {
           <Icon {...props.iconTrailing} />
         </View>
       )}
-    </View>
+    </Animated.View>
   );
 });
 
