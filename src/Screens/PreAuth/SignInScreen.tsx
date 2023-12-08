@@ -2,25 +2,23 @@ import React, {useState} from 'react';
 import {View, Text, Image, StyleSheet} from 'react-native';
 import {SafeAreaView} from 'react-native-safe-area-context';
 
-import {IMainNavPropTypes} from '../../Routes/RouteTypes';
-import {textStyle, viewStyle} from '../../Utilities/Styles/GlobalStyle';
-import GlobalColor from '../../Utilities/Styles/GlobalColor';
-import getString from '../../Utilities/String/LanguageTools';
+import {IMainNavPropTypes} from '@Routes/RouteTypes';
 
-import Button from '../../Components/Common/Button';
-import TextInput from '../../Components/Common/TextInput';
-import Modal from '../../Components/Common/Modal';
-import IconButton from '../../Components/Common/IconButton';
-import Logo from '../../Components/Logo';
-import auth from '@react-native-firebase/auth';
-import SignInModal from './SignInModal';
-import {IUserAuth} from '../../Types/Types';
-import SignInUserEmailPassword from '../../Utilities/Authentication/SignInUserEmailPassword';
+import {textStyle, viewStyle} from '@Utilities/Styles/GlobalStyle';
+import GlobalColor from '@Utilities/Styles/GlobalColor';
+import getString from '@Utilities/String/LanguageTools';
+import {IUserAuth} from '@Types/Types';
+import SignInUserEmailPassword from '@Utilities/Authentication/SignInUserEmailPassword';
 import {
   IValidationResult,
   validateEmail,
   validatePassword,
-} from '../../Utilities/String/EmailPasswordValidation';
+} from '@Utilities/String/EmailPasswordValidation';
+
+import Button from '@Components/Common/Button';
+import Modal from '@Components/Common/Modal';
+import Logo from '@Components/Logo';
+import SignInModal from './SignInModal';
 
 const SignInScreen = (props: IMainNavPropTypes<'SignInScreen'>) => {
   const {navigation, route} = props;

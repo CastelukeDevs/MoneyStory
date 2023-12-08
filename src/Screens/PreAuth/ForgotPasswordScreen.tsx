@@ -1,3 +1,4 @@
+import React, {useState} from 'react';
 import {
   KeyboardAvoidingView,
   Platform,
@@ -5,16 +6,17 @@ import {
   Text,
   View,
 } from 'react-native';
-import React, {useState} from 'react';
 import {useSafeAreaInsets} from 'react-native-safe-area-context';
-import TextInput from '../../Components/Common/TextInput';
-import Button from '../../Components/Common/Button';
-import {textStyle} from '../../Utilities/Styles/GlobalStyle';
+
+import {textStyle} from '@Utilities/Styles/GlobalStyle';
+import ForgetPassword from '@Utilities/Authentication/ForgetPassword';
 import {
   IValidationResult,
   validateEmail,
-} from '../../Utilities/String/EmailPasswordValidation';
-import ForgetPassword from '../../Utilities/Authentication/ForgetPassword';
+} from '@Utilities/String/EmailPasswordValidation';
+
+import Button from '@Components/Common/Button';
+import TextInput from '@Components/Common/TextInput';
 
 const ForgotPasswordScreen = () => {
   const inset = useSafeAreaInsets();

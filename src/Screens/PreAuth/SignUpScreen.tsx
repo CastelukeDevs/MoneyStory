@@ -1,3 +1,4 @@
+import React, {useState} from 'react';
 import {
   KeyboardAvoidingView,
   Platform,
@@ -5,20 +6,20 @@ import {
   Text,
   View,
 } from 'react-native';
-import React, {useState} from 'react';
-import Header from '../../Components/Header';
-import {IMainNavPropTypes} from '../../Routes/RouteTypes';
-import {textStyle} from '../../Utilities/Styles/GlobalStyle';
-import TextInput from '../../Components/Common/TextInput';
-import Button from '../../Components/Common/Button';
 import {useSafeAreaInsets} from 'react-native-safe-area-context';
-import auth from '@react-native-firebase/auth';
+
+import {IMainNavPropTypes} from '@Routes/RouteTypes';
+
+import {textStyle} from '@Utilities/Styles/GlobalStyle';
 import {
   IValidationResult,
   validateEmail,
   validatePassword,
-} from '../../Utilities/String/EmailPasswordValidation';
-import CreateUserEmailPassword from '../../Utilities/Authentication/CreateUserEmailPassword';
+} from '@Utilities/String/EmailPasswordValidation';
+import CreateUserEmailPassword from '@Utilities/Authentication/CreateUserEmailPassword';
+
+import TextInput from '@Components/Common/TextInput';
+import Button from '@Components/Common/Button';
 
 const SignUpScreen = (prop: IMainNavPropTypes<'SignUpScreen'>) => {
   const inset = useSafeAreaInsets();

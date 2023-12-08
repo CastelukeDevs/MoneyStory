@@ -1,15 +1,20 @@
-import {Text, TextInput as RNTextInput, View} from 'react-native';
 import React, {useRef, useState} from 'react';
-import TextInput from '../../Components/Common/TextInput';
-import {textStyle} from '../../Utilities/Styles/GlobalStyle';
-import Button from '../../Components/Common/Button';
-import IconButton from '../../Components/Common/IconButton';
-import {IUserAuth} from '../../Types/Types';
+import {Text, TextInput as RNTextInput, View} from 'react-native';
+
+import {IUserAuth} from '@Types/Types';
+
+import {textStyle} from '@Utilities/Styles/GlobalStyle';
+import {IValidationResult} from '@Utilities/String/EmailPasswordValidation';
+
+import TextInput from '@Components/Common/TextInput';
+import Button from '@Components/Common/Button';
+import IconButton from '@Components/Common/IconButton';
 
 type ISignInModalProp = {
   onSignIn: (user: IUserAuth) => void;
   onSignUp: () => void;
   onForgotPassword: () => void;
+  error?: IValidationResult[];
 };
 
 const SignInModal = (prop: ISignInModalProp) => {

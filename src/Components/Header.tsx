@@ -1,9 +1,8 @@
-import {StyleSheet, Text, View} from 'react-native';
 import React from 'react';
+import {StyleSheet, View} from 'react-native';
 import {useSafeAreaInsets} from 'react-native-safe-area-context';
-import Button from './Common/Button';
-import IconButton from './Common/IconButton';
 import ProgressBar, {IProgressBarProp} from './Common/ProgressBar';
+import Button from './Common/Button';
 
 type IHeaderModeTypes = 'normal' | 'overlay';
 type IHeaderPropTypes = {

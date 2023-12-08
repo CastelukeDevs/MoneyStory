@@ -9,8 +9,8 @@ import {
   ViewStyle,
 } from 'react-native';
 import Icon, {IIconProps} from './Icon';
-import GlobalColor from '../../Utilities/Styles/GlobalColor';
-import {textStyle} from '../../Utilities/Styles/GlobalStyle';
+import GlobalColor from '@Utilities/Styles/GlobalColor';
+import {textStyle} from '@Utilities/Styles/GlobalStyle';
 
 type ITextInputBordered = {
   mode?: 'Outlined' | 'Circled';

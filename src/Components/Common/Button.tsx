@@ -1,8 +1,8 @@
 import React from 'react';
 import {Text, TextStyle, TouchableOpacity, ViewStyle} from 'react-native';
-import {textStyle} from '../../Utilities/Styles/GlobalStyle';
-import GlobalColor from '../../Utilities/Styles/GlobalColor';
-import Icon, {IIconProps} from './Icon';
+import Icon, {IIconProps} from '@Components/Common/Icon';
+import {textStyle} from '@Utilities/Styles/GlobalStyle';
+import GlobalColor from '@Utilities/Styles/GlobalColor';
 
 type IButtonPropTypes = {
   label: string;

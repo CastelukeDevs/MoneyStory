@@ -1,5 +1,5 @@
-import {IUserAuth, IUserAuthReturn} from '../../Types/Types';
 import auth from '@react-native-firebase/auth';
+import {IUserAuth, IUserAuthReturn} from '@Types/Types';
 
 const CreateUserEmailPassword = async (userAuth: IUserAuth) => {
   return await auth()

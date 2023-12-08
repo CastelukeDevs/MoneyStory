@@ -16,17 +16,16 @@ import {
 import {createDrawerNavigator} from '@react-navigation/drawer';
 
 import {IDashNav, IMainNav} from './RouteTypes';
+import Header from '@Components/Header';
 
-import SplashScreen from '../Screens/PreAuth/SplashScreen';
-import HomeScreen from '../Screens/Dashboard/HomeScreen';
-import Dev from '../Screens/Dev';
-import AboutScreen from '../Screens/Dashboard/AboutScreen';
-import SignInScreen from '../Screens/PreAuth/SignInScreen';
-import SignUpScreen from '../Screens/PreAuth/SignUpScreen';
-import Header from '../Components/Header';
-import SignUpProfileScreen from '../Screens/Profile/ProfileCompletionScreen';
-import SignUpImageScreen from '../Screens/Profile/ProfileImageScreen';
-import ForgotPasswordScreen from '../Screens/PreAuth/ForgotPasswordScreen';
+import SignInScreen from '@Screens/PreAuth/SignInScreen';
+import SignUpScreen from '@Screens/PreAuth/SignUpScreen';
+import ForgotPasswordScreen from '@Screens/PreAuth/ForgotPasswordScreen';
+import SignUpProfileScreen from '@Screens/Profile/ProfileCompletionScreen';
+import SignUpImageScreen from '@Screens/Profile/ProfileImageScreen';
+import HomeScreen from '@Screens/Dashboard/HomeScreen';
+import AboutScreen from '@Screens/Dashboard/AboutScreen';
+import Dev from '@Screens/Dev';
 
 const Stack = createStackNavigator<IMainNav>();
 const Drawer = createDrawerNavigator<IDashNav>();
