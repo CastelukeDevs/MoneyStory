@@ -1,9 +1,10 @@
-import React, {useState} from 'react';
+import React, {useRef, useState} from 'react';
 import {
   KeyboardAvoidingView,
   Platform,
   StyleSheet,
   Text,
+  TextInput as RNTextInput,
   View,
 } from 'react-native';
 import {useSafeAreaInsets} from 'react-native-safe-area-context';
@@ -28,7 +29,11 @@ const SignUpScreen = (prop: IMainNavPropTypes<'SignUpScreen'>) => {
   const [confirm, setConfirm] = useState('');
   const [passwordHide, setPasswordHide] = useState(true);
   const [confirmHide, setConfirmHide] = useState(true);
-  const [error, setError] = useState<IValidationResult[]>([]);
+  const [emailError, setEmailError] = useState<IValidationResult[]>([]);
+  const [passwordError, setPasswordError] = useState<IValidationResult[]>([]);
+
+  const passwordRef = useRef<RNTextInput>(null);
+  const confirmRef = useRef<RNTextInput>(null);
 
   // console.log('error', error);
 
@@ -38,13 +43,27 @@ const SignUpScreen = (prop: IMainNavPropTypes<'SignUpScreen'>) => {
     const isPasswordValid = validatePassword(password);
     const isEmailValid = validateEmail(email);
 
-    if (isPasswordValid.length > 0) return setError(isPasswordValid);
-    if (password !== confirm)
-      return setError([{description: 'Password not match', name: 'unmatch'}]);
-    if (isEmailValid.length > 0) return setError(isEmailValid);
+    if (isEmailValid.length > 0) return setEmailError(isEmailValid);
+    setEmailError([]);
+    if (isPasswordValid.length > 0) return setPasswordError(isPasswordValid);
+    if (password !== confirm) {
+      return setPasswordError([
+        {description: 'Password not match', name: 'unmatch'},
+      ]);
+    }
+    setPasswordError([]);
 
     console.log('ready to sign up new user', {email, password});
-    CreateUserEmailPassword({email, password});
+    CreateUserEmailPassword({email, password}).catch(() => {
+      const generalError: IValidationResult[] = [
+        {
+          description: 'General Error',
+          name: 'general',
+        },
+      ];
+      setEmailError(generalError);
+      setPasswordError(generalError);
+    });
   };
 
   return (
@@ -62,8 +81,10 @@ const SignUpScreen = (prop: IMainNavPropTypes<'SignUpScreen'>) => {
           iconLeading={{name: 'mail-outline'}}
           containerStyle={styles.InputSpacing}
           inputMode="email"
+          isError={emailError.length > 0}
         />
         <TextInput
+          ref={passwordRef}
           value={password}
           onChangeText={setPassword}
           label="Password"
@@ -74,8 +95,10 @@ const SignUpScreen = (prop: IMainNavPropTypes<'SignUpScreen'>) => {
           }}
           secureTextEntry={passwordHide}
           containerStyle={styles.InputSpacing}
+          isError={passwordError.length > 0}
         />
         <TextInput
+          ref={confirmRef}
           value={confirm}
           onChangeText={setConfirm}
           label="Confirm Password"
@@ -86,6 +109,7 @@ const SignUpScreen = (prop: IMainNavPropTypes<'SignUpScreen'>) => {
           }}
           containerStyle={styles.InputSpacing}
           secureTextEntry={confirmHide}
+          isError={passwordError.length > 0}
         />
       </KeyboardAvoidingView>
       <View style={styles.FooterContainer}>

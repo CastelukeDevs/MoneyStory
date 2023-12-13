@@ -24,7 +24,9 @@ const SignInScreen = (props: IMainNavPropTypes<'SignInScreen'>) => {
   const {navigation, route} = props;
 
   const [modalVisible, setModalVisible] = useState(false);
-  const [error, setError] = useState<IValidationResult[]>([]);
+  const [emailError, setEmailError] = useState<IValidationResult[]>([]);
+  const [passwordError, setPasswordError] = useState<IValidationResult[]>([]);
+  const [generalError, setGeneralError] = useState(false);
 
   const openModalHandler = () => {
     setModalVisible(true);
@@ -33,15 +35,17 @@ const SignInScreen = (props: IMainNavPropTypes<'SignInScreen'>) => {
   const signInHandler = async (prop: IUserAuth) => {
     const isPasswordValid = validatePassword(prop.password);
     const isEmailValid = validateEmail(prop.email);
-    if (isPasswordValid.length > 0) return setError(isPasswordValid);
-    if (isEmailValid.length > 0) return setError(isEmailValid);
+
+    if (isEmailValid.length > 0) return setEmailError(isEmailValid);
+    setEmailError([]);
+    if (isPasswordValid.length > 0) return setPasswordError(isPasswordValid);
+    setPasswordError([]);
 
     console.log('sign in attempt', prop);
 
     await SignInUserEmailPassword(prop).catch(() => {
-      return setError([
-        {description: 'Email or Password is invalid', name: 'error'},
-      ]);
+      setGeneralError(true);
+      return;
     });
   };
 
@@ -96,7 +100,10 @@ const SignInScreen = (props: IMainNavPropTypes<'SignInScreen'>) => {
           onSignIn={signInHandler}
           onForgotPassword={forgotPasswordHandler}
           onSignUp={signUpHandler}
-          error={error}
+          error={{
+            email: emailError.length > 0,
+            password: passwordError.length > 0,
+          }}
         />
       </Modal>
     </View>

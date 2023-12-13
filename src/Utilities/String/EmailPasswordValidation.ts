@@ -3,10 +3,6 @@ type IValidationEntries = {
   regex?: RegExp;
   test?: (e: string) => boolean;
 };
-export type IValidationResult = {
-  description: string;
-  name: string;
-};
 
 type IPasswordErrorCase = {
   uppercase: IValidationEntries;
@@ -14,12 +10,20 @@ type IPasswordErrorCase = {
   digit: IValidationEntries;
   special: IValidationEntries;
   length: IValidationEntries;
-  empty: IValidationEntries;
 };
 
 type IEmailErrorCase = {
   validity: IValidationEntries;
   empty: IValidationEntries;
+};
+
+type IErrorCase = IPasswordErrorCase & IEmailErrorCase;
+
+export type IErrorID = keyof IErrorCase;
+
+export type IValidationResult = {
+  description: string;
+  name: string;
 };
 
 const passwordMinLength = 8;
@@ -33,10 +37,6 @@ var passwordError: IPasswordErrorCase = {
     test: (e: string) => e.length > passwordMinLength,
     description: `Should be more than ${passwordMinLength} characters`,
   },
-  empty: {
-    test: (e: string) => e.length <= 0,
-    description: `Should not empty`,
-  },
 };
 
 export function validatePassword(password: string): IValidationResult[] {
@@ -47,15 +47,17 @@ export function validatePassword(password: string): IValidationResult[] {
     },
   );
 }
+const mailRegexValidation =
+  /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
 
 var emailError: IEmailErrorCase = {
   validity: {
-    regex:
-      /^(([^<>()[]\\.,;:s@"]+(.[^<>()[]\\.,;:s@"]+)*)|(".+"))@(([[0-9]{1,3}.[0-9]{1,3}.[0-9]{1,3}.[0-9]{1,3}])|(([a-zA-Z-0-9]+.)+[a-zA-Z]{2,}))$/,
+    test: (e: string) => mailRegexValidation.test(e),
+
     description: 'Email is invalid',
   },
   empty: {
-    test: (e: string) => e.length <= 0,
+    test: (e: string) => e.length >= 1,
     description: `Should not empty`,
   },
 };

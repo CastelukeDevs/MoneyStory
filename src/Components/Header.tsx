@@ -18,8 +18,9 @@ const Header = (prop: IHeaderPropTypes) => {
   const currentMode = prop.mode || 'normal';
   const safeArea = useSafeAreaInsets();
   return (
-    <>
-      <View style={[{paddingTop: safeArea.top}, styles.RootContainer]}>
+    <View style={{paddingTop: safeArea.top}}>
+      {prop.progressBar && <ProgressBar {...prop.progressBar} />}
+      <View style={[styles.ButtonGroupContainer]}>
         {!prop.hideBackButton && currentMode === 'normal' ? (
           <Button
             label={prop.label || 'Back'}
@@ -31,15 +32,14 @@ const Header = (prop: IHeaderPropTypes) => {
         {/* <IconButton name="chevron-back" onPress={() => {}} mode="icon" /> */}
         {/* <Text>Header</Text> */}
       </View>
-      {prop.progressBar && <ProgressBar {...prop.progressBar} />}
-    </>
+    </View>
   );
 };
 
 export default Header;
 
 const styles = StyleSheet.create({
-  RootContainer: {
+  ButtonGroupContainer: {
     flexDirection: 'row',
     alignItems: 'center',
   },

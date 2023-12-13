@@ -29,6 +29,10 @@ const ForgotPasswordScreen = () => {
     if (isEmailValid?.length > 0)
       return setError([{description: 'Email is invalid', name: 'invalid'}]);
 
+    setError([]);
+
+    console.log('error', error);
+
     await ForgetPassword(email).catch(() => {
       return setError([{description: 'email is invalid', name: 'error'}]);
     });
@@ -52,6 +56,7 @@ const ForgotPasswordScreen = () => {
           label="Email"
           iconLeading={{name: 'mail-outline'}}
           containerStyle={styles.InputSpacing}
+          isError={error.length >= 1}
         />
       </KeyboardAvoidingView>
       <View style={styles.FooterContainer}>

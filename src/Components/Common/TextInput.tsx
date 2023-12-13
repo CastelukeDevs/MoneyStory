@@ -2,6 +2,7 @@ import React, {forwardRef, useEffect} from 'react';
 import {
   Platform,
   StyleSheet,
+  Text,
   TextInputProps,
   TextInput as TextInputReact,
   TextStyle,
@@ -39,7 +40,7 @@ type ITextInputProps = {
   iconTrailing?: IIconProps;
   containerStyle?: ViewStyle;
   options?: TextInputProps;
-  isError?: boolean | string;
+  isError?: boolean;
 } & IMergedTextInput &
   TextInputProps;
 
@@ -55,8 +56,8 @@ const TextInput = forwardRef<TextInputReact, ITextInputProps>((props, ref) => {
     Platform.OS === 'ios' ? styles.InputIOS : styles.InputAndroid;
 
   /**
-   * State:
-   * - 0 = normal
+   * Note - State:
+   * - 0 = blur
    * - 1 = focused
    * - 2 = error
    */
@@ -73,54 +74,53 @@ const TextInput = forwardRef<TextInputReact, ITextInputProps>((props, ref) => {
     };
   });
 
+  const animateTo = (state: number) => {
+    inputState.value = withTiming(state, {duration});
+  };
+
   useEffect(() => {
+    console.log(`${props.label} is ${props.isError ? 'error' : 'ok'}`);
     if (props.isError) {
-      inputState.value = withTiming(2, {duration});
+      animateTo(2);
     }
   }, [props.isError]);
 
-  // const iconAnimationColor = useAnimatedProps(() => {
-  //   const colorInterpolation = interpolateColor(
-  //     inputState.value,
-  //     [0, 1, 2],
-  //     [GlobalColor.dark, GlobalColor.accent, GlobalColor.overlay],
-  //   );
-  //   return colorInterpolation;
-  // });
-
   return (
-    <Animated.View
-      style={[
-        styles.CoreContainer,
-        getModeStyle(currentMode),
-        inputAnimationStyle,
-        props.containerStyle,
-      ]}>
-      {props.iconLeading && (
-        <View style={{marginRight: 10}}>
-          <Icon {...props.iconLeading} />
-        </View>
-      )}
-      <TextInputReact
-        {...props}
-        style={[inputPlatformStyle, textStyle.SubTitle_Regular]}
-        placeholder={props.placeholder || props.label}
-        ref={ref}
-        onFocus={() => {
-          inputState.value = withTiming(1, {duration});
-        }}
-        onBlur={() => {
-          if (props.isError) inputState.value = withTiming(2, {duration});
-          inputState.value = withTiming(0, {duration});
-        }}
-      />
+    <>
+      <Animated.View
+        style={[
+          styles.CoreContainer,
+          getModeStyle(currentMode),
+          inputAnimationStyle,
+          props.containerStyle,
+        ]}>
+        {props.iconLeading && (
+          <View style={{marginRight: 10}}>
+            <Icon {...props.iconLeading} />
+          </View>
+        )}
 
-      {props.iconTrailing && (
-        <View style={{marginLeft: 10}}>
-          <Icon {...props.iconTrailing} />
-        </View>
-      )}
-    </Animated.View>
+        <TextInputReact
+          {...props}
+          style={[inputPlatformStyle, textStyle.SubTitle_Regular]}
+          placeholder={props.placeholder || props.label}
+          ref={ref}
+          onFocus={() => {
+            animateTo(1);
+          }}
+          onBlur={() => {
+            if (props.isError) return animateTo(2);
+            animateTo(0);
+          }}
+        />
+
+        {props.iconTrailing && (
+          <View style={{marginLeft: 10}}>
+            <Icon {...props.iconTrailing} />
+          </View>
+        )}
+      </Animated.View>
+    </>
   );
 });
 

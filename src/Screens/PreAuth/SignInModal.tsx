@@ -14,7 +14,10 @@ type ISignInModalProp = {
   onSignIn: (user: IUserAuth) => void;
   onSignUp: () => void;
   onForgotPassword: () => void;
-  error?: IValidationResult[];
+  error?: {
+    email: boolean;
+    password: boolean;
+  };
 };
 
 const SignInModal = (props: ISignInModalProp) => {
@@ -23,8 +26,6 @@ const SignInModal = (props: ISignInModalProp) => {
   const [isPasswordHidden, setIsPasswordHidden] = useState(true);
 
   const passwordRef = useRef<RNTextInput>(null);
-
-  console.log('error', props.error);
 
   return (
     <View style={{padding: 18}}>
@@ -36,7 +37,7 @@ const SignInModal = (props: ISignInModalProp) => {
         iconLeading={{name: 'mail-outline'}}
         containerStyle={{marginTop: 12}}
         onSubmitEditing={() => passwordRef.current?.focus()}
-        isError={props.error !== undefined && props.error?.length > 0}
+        isError={props.error?.email !== undefined && props.error?.email}
       />
       <TextInput
         ref={passwordRef}
@@ -51,7 +52,7 @@ const SignInModal = (props: ISignInModalProp) => {
         containerStyle={{marginTop: 12}}
         secureTextEntry={isPasswordHidden}
         onSubmitEditing={() => props.onSignIn({email, password})}
-        isError={props.error !== undefined && props.error?.length > 0}
+        isError={props.error?.password !== undefined && props.error?.password}
       />
       <Button
         label="Login"
