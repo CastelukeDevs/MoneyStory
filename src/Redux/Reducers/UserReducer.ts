@@ -9,10 +9,9 @@ export type IUserStateType = {
 } & IDefaultFetchState;
 
 export const userInitialState: IUserStateType = {
-  isLoading: false,
   error: null,
-  isSuccess: null,
   userProfileData: null,
+  status: 'idle',
 };
 
 const UserReducer = createSlice({

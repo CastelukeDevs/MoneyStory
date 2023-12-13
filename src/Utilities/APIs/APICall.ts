@@ -26,7 +26,7 @@ const APICall = async (endpoint: IEndpoint, options?: IAPIsCallOption) => {
     url: selectEndpoint.url,
     data: options?.payload,
     params: options?.params,
-    cancelToken: options?.cancelToken,
+    signal: options?.abortController?.signal,
     headers: {...requestHeader},
   })
     .then(result => {

@@ -1,15 +1,15 @@
 import {ActionReducerMapBuilder, createAsyncThunk} from '@reduxjs/toolkit';
-import APICall from '../../Utilities/APIs/APIRequest';
+import APICall from '../../Utilities/APIs/APICall';
 import {IEndpoint} from '../../Utilities/APIs/APIUtils';
 import {IDefaultState} from '../Reducers/DefaultReducer';
 
 const GetContactPrefix: IEndpoint = 'GET_USER';
 
-export const fetchUser = createAsyncThunk(GetContactPrefix, async () => {
-  const result = await APICall('GET_USER');
+// export const fetchUser = createAsyncThunk(GetContactPrefix, async () => {
+//   const result = await APICall('GET_USER');
 
-  return result;
-});
+//   return result;
+// });
 
 export default (builder: ActionReducerMapBuilder<IDefaultState>) => {
   // builder

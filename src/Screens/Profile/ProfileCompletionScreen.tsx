@@ -1,3 +1,4 @@
+import React, {useRef, useState} from 'react';
 import {
   KeyboardAvoidingView,
   Platform,
@@ -5,19 +6,28 @@ import {
   Text,
   View,
 } from 'react-native';
-import React, {useState} from 'react';
-import Button from '../../Components/Common/Button';
-import {IMainNavPropTypes} from '../../Routes/RouteTypes';
-import TextInput from '../../Components/Common/TextInput';
-import {textStyle} from '../../Utilities/Styles/GlobalStyle';
 import {useSafeAreaInsets} from 'react-native-safe-area-context';
 import auth from '@react-native-firebase/auth';
-import APICall from '../../Utilities/APIs/APIRequest';
+import {useDispatch, useSelector} from 'react-redux';
+import {IMainNavPropTypes} from '@Routes/RouteTypes';
+
+import APICall from '@Utilities/APIs/APICall';
+import {textStyle} from '@Utilities/Styles/GlobalStyle';
+
+import TextInput from '@Components/Common/TextInput';
+import Button from '@Components/Common/Button';
+import {getUserData} from '@Redux/Actions/UserAction';
+import {IRootStateType} from '@Redux/Store';
 
 const ProfileCompletionScreen = (
   props: IMainNavPropTypes<'ProfileCompletionScreen'>,
 ) => {
   const inset = useSafeAreaInsets();
+  const dispatch = useDispatch<any>();
+
+  const cancelRef = useRef<AbortController>();
+
+  const users = useSelector((state: IRootStateType) => state.user);
 
   const [firstName, setFirstName] = useState('');
   const [lastName, setLastName] = useState('');
@@ -32,7 +42,12 @@ const ProfileCompletionScreen = (
   };
 
   const apiTest = () => {
-    APICall('GET_USER');
+    // APICall('GET_USER');
+    cancelRef.current = new AbortController();
+    dispatch(getUserData({abortController: cancelRef.current}));
+  };
+  const abortHandler = () => {
+    cancelRef.current?.abort();
   };
   return (
     <View
@@ -73,6 +88,7 @@ const ProfileCompletionScreen = (
       </KeyboardAvoidingView>
       <View style={styles.FooterContainer}>
         <Button label="API TEST" onPress={apiTest} />
+        <Button label="ABORT API TEST" onPress={abortHandler} />
         <Button label="Logout" onPress={onLogoutHandler} />
         <Button label="Next" onPress={onNextHandler} />
       </View>
