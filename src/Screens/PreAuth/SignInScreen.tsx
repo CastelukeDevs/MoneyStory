@@ -7,7 +7,7 @@ import {IMainNavPropTypes} from '@Routes/RouteTypes';
 import {textStyle, viewStyle} from '@Utilities/Styles/GlobalStyle';
 import GlobalColor from '@Utilities/Styles/GlobalColor';
 import getString from '@Utilities/String/LanguageTools';
-import {IUserAuth} from '@Types/Types';
+import {IUserAuth} from '@Types/AuthTypes';
 import SignInUserEmailPassword from '@Utilities/Authentication/SignInUserEmailPassword';
 import {
   IValidationResult,

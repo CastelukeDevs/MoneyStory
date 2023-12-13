@@ -14,8 +14,6 @@ export type IEndpointPool = {
   endpoint: string;
   url: string;
   method: IEndpointMethod;
-  payload?: any;
-  params?: any;
   auth?: boolean;
 };
 

@@ -7,10 +7,16 @@ import {IEndpointPool} from './APIUtils';
 const EndpointPool = [
   {
     endpoint: 'GET_USER',
-    url: '/auth/v1/test',
+    url: '/auth/v1/user',
     method: 'get',
     auth: true,
   },
-] as const;
+  {
+    endpoint: 'CREATE_USER',
+    url: '/auth/v1/user',
+    method: 'post',
+    auth: true,
+  },
+] as const satisfies readonly IEndpointPool[];
 
 export default EndpointPool;

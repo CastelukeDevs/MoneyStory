@@ -1,5 +1,5 @@
 import auth from '@react-native-firebase/auth';
-import {IUserAuth, IUserAuthReturn} from '@Types/Types';
+import {IUserAuth, IUserAuthReturn} from '@Types/AuthTypes';
 
 export default async (loginDetail: IUserAuth) => {
   return await auth()

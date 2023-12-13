@@ -21,11 +21,12 @@ import Header from '@Components/Header';
 import SignInScreen from '@Screens/PreAuth/SignInScreen';
 import SignUpScreen from '@Screens/PreAuth/SignUpScreen';
 import ForgotPasswordScreen from '@Screens/PreAuth/ForgotPasswordScreen';
-import SignUpProfileScreen from '@Screens/Profile/ProfileCompletionScreen';
-import SignUpImageScreen from '@Screens/Profile/ProfileImageScreen';
+import ProfileCompletionScreen from '@Screens/Profile/ProfileCompletionScreen';
+import ProfileImageScreen from '@Screens/Profile/ProfileImageScreen';
 import HomeScreen from '@Screens/Dashboard/HomeScreen';
 import AboutScreen from '@Screens/Dashboard/AboutScreen';
 import Dev from '@Screens/Dev';
+import PostAuthTransitionScreen from '@Screens/Dashboard/PostAuthTransitionScreen';
 
 const Stack = createStackNavigator<IMainNav>();
 const Drawer = createDrawerNavigator<IDashNav>();
@@ -137,6 +138,10 @@ const Route = () => {
             </>
           ) : (
             <>
+              <Stack.Screen
+                name="PostAuthTransitionScreen"
+                component={PostAuthTransitionScreen}
+              />
               <Stack.Group
                 navigationKey="ProfileCompletion"
                 screenOptions={{
@@ -144,12 +149,12 @@ const Route = () => {
                   headerShown: true,
                 }}>
                 <Stack.Screen
-                  name="SignUpProfileScreen"
-                  component={SignUpProfileScreen}
+                  name="ProfileCompletionScreen"
+                  component={ProfileCompletionScreen}
                 />
                 <Stack.Screen
-                  name="SignUpImageScreen"
-                  component={SignUpImageScreen}
+                  name="ProfileImageScreen"
+                  component={ProfileImageScreen}
                 />
               </Stack.Group>
               <Stack.Screen name="MainDashboard" component={DashboardRoute} />

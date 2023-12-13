@@ -12,18 +12,18 @@ export const fetchUser = createAsyncThunk(GetContactPrefix, async () => {
 });
 
 export default (builder: ActionReducerMapBuilder<IDefaultState>) => {
-  builder
-    .addCase(fetchUser.pending, state => {
-      state.error = null;
-      state.isLoading = true;
-    })
-    .addCase(fetchUser.rejected, (state, action: any) => {
-      state.error = {isError: true, message: action.payload.message};
-      state.isLoading = false;
-    })
-    .addCase(fetchUser.fulfilled, (state, action) => {
-      state.error = {isError: false, message: null};
-      state.isLoading = false;
-      state.userData = action.payload;
-    });
+  // builder
+  //   .addCase(fetchUser.pending, state => {
+  //     state.error = null;
+  //     state.isLoading = true;
+  //   })
+  //   .addCase(fetchUser.rejected, (state, action: any) => {
+  //     state.error = {isError: true, message: action.payload.message};
+  //     state.isLoading = false;
+  //   })
+  //   .addCase(fetchUser.fulfilled, (state, action) => {
+  //     state.error = {isError: false, message: null};
+  //     state.isLoading = false;
+  //     state.userData = action.payload;
+  //   });
 };

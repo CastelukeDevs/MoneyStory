@@ -12,8 +12,7 @@ const APICall = async (endpoint: IEndpoint, options?: IAPIsCallOption) => {
 
   const selectEndpoint = getEndpoint(endpoint)!;
 
-  console.log('new Api call with detail:', {
-    endpoint,
+  console.log(`=> New API Call ${endpoint} with detail:`, {
     options: options,
     endpointDetails: selectEndpoint,
   });
@@ -31,14 +30,16 @@ const APICall = async (endpoint: IEndpoint, options?: IAPIsCallOption) => {
     headers: {...requestHeader},
   })
     .then(result => {
-      console.log('axios request success', result);
+      console.log(`=> axios request ${endpoint} success`, result);
 
       return result.data;
     })
     .catch((error: AxiosError) => {
-      console.error('axios error on request', error.config?.url);
-      console.error('axios error', error);
-      return error;
+      console.log(`axios request ${endpoint} error`, {
+        path: error.config?.url,
+        error,
+      });
+      throw error.response?.data;
     });
 };
 

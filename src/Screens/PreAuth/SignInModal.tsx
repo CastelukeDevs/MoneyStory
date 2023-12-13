@@ -1,7 +1,7 @@
 import React, {useRef, useState} from 'react';
 import {Text, TextInput as RNTextInput, View} from 'react-native';
 
-import {IUserAuth} from '@Types/Types';
+import {IUserAuth} from '@Types/AuthTypes';
 
 import {textStyle} from '@Utilities/Styles/GlobalStyle';
 import {IValidationResult} from '@Utilities/String/EmailPasswordValidation';

@@ -1,18 +1,5 @@
 import {FirebaseAuthTypes} from '@react-native-firebase/auth';
 
-export type IUser = {
-  id?: string | null;
-  firstName: string;
-  lastName: string;
-  age: number;
-  photo: string | null;
-};
-
-export type IErrorMessage = {
-  isError: boolean;
-  message: string | null;
-};
-
 export type IUserAuth = {
   email: string;
   password: string;

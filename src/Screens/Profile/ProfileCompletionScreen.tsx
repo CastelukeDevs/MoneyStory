@@ -13,10 +13,9 @@ import {textStyle} from '../../Utilities/Styles/GlobalStyle';
 import {useSafeAreaInsets} from 'react-native-safe-area-context';
 import auth from '@react-native-firebase/auth';
 import APICall from '../../Utilities/APIs/APIRequest';
-import firebase from '@react-native-firebase/app';
 
-const SignUpProfileScreen = (
-  props: IMainNavPropTypes<'SignUpProfileScreen'>,
+const ProfileCompletionScreen = (
+  props: IMainNavPropTypes<'ProfileCompletionScreen'>,
 ) => {
   const inset = useSafeAreaInsets();
 
@@ -26,7 +25,7 @@ const SignUpProfileScreen = (
   const [defaultCurrency, setDefaultCurrency] = useState('');
 
   const onNextHandler = () => {
-    props.navigation.navigate('SignUpImageScreen');
+    props.navigation.navigate('ProfileImageScreen');
   };
   const onLogoutHandler = () => {
     auth().signOut();
@@ -81,7 +80,7 @@ const SignUpProfileScreen = (
   );
 };
 
-export default SignUpProfileScreen;
+export default ProfileCompletionScreen;
 
 const styles = StyleSheet.create({
   RootContainer: {
