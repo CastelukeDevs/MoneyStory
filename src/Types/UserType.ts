@@ -19,10 +19,13 @@ export type IUserType = {
   //   __v: 0;
 };
 
-export type INewUserData = Pick<
-  IUserType,
-  'firstName' | 'lastName' | 'dateOfBirth'
->;
+export type INewUserData = {
+  firstName?: string;
+  lastName?: string;
+  dateOfBirth?: string;
+  avatar?: any;
+  avatarUrl?: string;
+};
 
 export type ICreateUserDataProps = {
   data: INewUserData;

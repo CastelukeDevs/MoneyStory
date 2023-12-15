@@ -10,6 +10,9 @@ import {IRootStateType} from '@Redux/Store';
 import {IMainNavPropTypes} from '@Routes/RouteTypes';
 
 import auth from '@react-native-firebase/auth';
+import Logo from '@Components/Logo';
+import GlobalColor from '@Utilities/Styles/GlobalColor';
+import {textStyle} from '@Utilities/Styles/GlobalStyle';
 
 const PostAuthTransitionScreen = (
   props: IMainNavPropTypes<'PostAuthTransitionScreen'>,
@@ -51,13 +54,21 @@ const PostAuthTransitionScreen = (
   };
 
   return (
-    <SafeAreaView>
-      <Text>PostAuthTransitionScreen</Text>
-      <Button label="test api" onPress={testApiHandler} />
+    <SafeAreaView style={styles.RootScreenContainer}>
+      <Logo />
+      <Text style={textStyle.Hero_Bold}>Money Story</Text>
+      {/* <Button label="test api" onPress={testApiHandler} /> */}
     </SafeAreaView>
   );
 };
 
 export default PostAuthTransitionScreen;
 
-const styles = StyleSheet.create({});
+const styles = StyleSheet.create({
+  RootScreenContainer: {
+    flex: 1,
+    backgroundColor: GlobalColor.accent,
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+});

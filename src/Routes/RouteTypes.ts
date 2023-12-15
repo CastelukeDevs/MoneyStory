@@ -8,7 +8,7 @@ import {INewUserData, IUserType} from '@Types/UserType';
 
 type IProfileParams = {
   mode: 'create' | 'edit';
-  data?: INewUserData | IUserType;
+  data?: IUserType | INewUserData;
 };
 
 export type IMainNav = {

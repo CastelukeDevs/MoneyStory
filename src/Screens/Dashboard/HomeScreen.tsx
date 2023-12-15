@@ -20,10 +20,18 @@ const HomeScreen = ({navigation}: IDashNavPropTypes<'HomeScreen'>) => {
     });
   };
 
+  const updateImageHandler = () => {
+    navigation.navigate('ProfileImageScreen', {
+      mode: 'edit',
+      data: userData.userProfileData!,
+    });
+  };
+
   return (
     <View style={[{paddingTop: inset.top}, styles.RootScreenContainer]}>
       <Text>HomeScreen</Text>
       <Button label="UpdateProfile" onPress={updateProfileHandler} />
+      <Button label="UpdateAvatar" onPress={updateImageHandler} />
     </View>
   );
 };

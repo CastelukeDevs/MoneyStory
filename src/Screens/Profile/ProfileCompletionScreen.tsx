@@ -37,6 +37,10 @@ const ProfileCompletionScreen = (
   const [dateOfBirth, setDateOfBirth] = useState(data?.dateOfBirth || '');
   const [defaultCurrency, setDefaultCurrency] = useState('');
 
+  const goBack = () => {
+    props.navigation.replace('MainDashboard', {screen: 'HomeScreen'});
+  };
+
   const onNextHandler = () => {
     const screenPayload = {firstName, lastName, dateOfBirth};
     props.navigation.navigate('ProfileImageScreen', {
@@ -52,12 +56,12 @@ const ProfileCompletionScreen = (
       dateOfBirth,
     };
     dispatch(updateUserData({data: updatePayload})).then(() => {
-      props.navigation.goBack();
+      goBack();
     });
   };
 
   const onCancelHandler = () => {
-    props.navigation.replace('MainDashboard', {screen: 'HomeScreen'});
+    goBack();
   };
 
   const onLogoutHandler = () => {
