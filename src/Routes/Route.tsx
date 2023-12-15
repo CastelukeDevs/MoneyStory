@@ -94,31 +94,6 @@ const Route = () => {
     return <Header onBackPressed={options.navigation.goBack} />;
   };
 
-  const profileCompletionHeader = (options: StackHeaderProps) => {
-    //trigger progress bar indicator change
-
-    // const getProgress = () => {
-    //   switch (routeNameRef.current) {
-    //     case 'SignUpProfileScreen':
-    //       return 1;
-    //     case 'SignUpImageScreen':
-    //       return 2;
-    //     default:
-    //       return 0;
-    //   }
-    // };
-
-    console.log('options back', options.back);
-
-    return (
-      <Header
-        onBackPressed={options.navigation.goBack}
-        // progressBar={{indicatorCount: 2, indicatorActive: getProgress()}}
-        hideBackButton={options.back === undefined}
-      />
-    );
-  };
-
   const headerBackButton = (props: HeaderBackButtonProps) => {
     const canGoBack = props.canGoBack;
     return (
@@ -201,7 +176,10 @@ const Route = () => {
 
 const DashboardRoute = () => {
   return (
-    <Drawer.Navigator>
+    <Drawer.Navigator
+      screenOptions={{
+        headerShown: false,
+      }}>
       <Drawer.Screen name="HomeScreen" component={HomeScreen} />
       <Drawer.Screen name="AboutScreen" component={AboutScreen} />
       <Drawer.Screen name="DeveloperScreen2" component={Dev} />

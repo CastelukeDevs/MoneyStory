@@ -1,25 +1,27 @@
 import React, {FC} from 'react';
-import {View, Text} from 'react-native';
+import {View, Text, StyleSheet} from 'react-native';
 import {useSelector} from 'react-redux';
-
 import {IRootStateType} from '@Redux/Store';
+import {useSafeAreaInsets} from 'react-native-safe-area-context';
 
 import {IDashNavPropTypes} from '@Routes/RouteTypes';
 
 import Button from '@Components/Common/Button';
 
-const HomeScreen: FC<IDashNavPropTypes<'HomeScreen'>> = props => {
+const HomeScreen = ({navigation}: IDashNavPropTypes<'HomeScreen'>) => {
+  const inset = useSafeAreaInsets();
+
   const userData = useSelector((state: IRootStateType) => state.user);
 
   const updateProfileHandler = () => {
-    props.navigation.navigate('ProfileCompletionScreen', {
+    navigation.navigate('ProfileCompletionScreen', {
       mode: 'edit',
       data: userData.userProfileData!,
     });
   };
 
   return (
-    <View>
+    <View style={[{paddingTop: inset.top}, styles.RootScreenContainer]}>
       <Text>HomeScreen</Text>
       <Button label="UpdateProfile" onPress={updateProfileHandler} />
     </View>
@@ -27,3 +29,9 @@ const HomeScreen: FC<IDashNavPropTypes<'HomeScreen'>> = props => {
 };
 
 export default HomeScreen;
+
+const styles = StyleSheet.create({
+  RootScreenContainer: {
+    flex: 1,
+  },
+});
