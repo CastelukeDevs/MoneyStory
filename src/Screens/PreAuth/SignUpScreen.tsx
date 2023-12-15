@@ -24,6 +24,7 @@ import Button from '@Components/Common/Button';
 
 const SignUpScreen = (prop: IMainNavPropTypes<'SignUpScreen'>) => {
   const inset = useSafeAreaInsets();
+
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [confirm, setConfirm] = useState('');
@@ -82,6 +83,7 @@ const SignUpScreen = (prop: IMainNavPropTypes<'SignUpScreen'>) => {
           containerStyle={styles.InputSpacing}
           inputMode="email"
           isError={emailError.length > 0}
+          onSubmitEditing={() => passwordRef.current?.focus()}
         />
         <TextInput
           ref={passwordRef}
@@ -96,6 +98,7 @@ const SignUpScreen = (prop: IMainNavPropTypes<'SignUpScreen'>) => {
           secureTextEntry={passwordHide}
           containerStyle={styles.InputSpacing}
           isError={passwordError.length > 0}
+          onSubmitEditing={() => confirmRef.current?.focus()}
         />
         <TextInput
           ref={confirmRef}
@@ -110,6 +113,7 @@ const SignUpScreen = (prop: IMainNavPropTypes<'SignUpScreen'>) => {
           containerStyle={styles.InputSpacing}
           secureTextEntry={confirmHide}
           isError={passwordError.length > 0}
+          onSubmitEditing={onRegisterHandler}
         />
       </KeyboardAvoidingView>
       <View style={styles.FooterContainer}>

@@ -4,13 +4,21 @@ import {
   NavigatorScreenParams,
 } from '@react-navigation/native';
 import {StackScreenProps} from '@react-navigation/stack';
+import {INewUserData, IUserType} from '@Types/UserType';
+
+type IProfileParams = {
+  mode: 'create' | 'edit';
+  data?: INewUserData | IUserType;
+};
 
 export type IMainNav = {
   SplashScreen: undefined;
   SignInScreen: undefined;
   SignUpScreen: undefined;
-  ProfileCompletionScreen: undefined;
-  ProfileImageScreen: undefined;
+
+  ProfileCompletionScreen: IProfileParams;
+  ProfileImageScreen: IProfileParams;
+
   ForgotPasswordScreen: undefined;
 
   PostAuthTransitionScreen: undefined;

@@ -4,58 +4,75 @@ import {
   Platform,
   StyleSheet,
   Text,
+  TextInput as RNInput,
   View,
 } from 'react-native';
 import {useSafeAreaInsets} from 'react-native-safe-area-context';
 import auth from '@react-native-firebase/auth';
-import {useDispatch, useSelector} from 'react-redux';
 import {IMainNavPropTypes} from '@Routes/RouteTypes';
 
-import APICall from '@Utilities/APIs/APICall';
 import {textStyle} from '@Utilities/Styles/GlobalStyle';
 
 import TextInput from '@Components/Common/TextInput';
 import Button from '@Components/Common/Button';
-import {getUserData} from '@Redux/Actions/UserAction';
-import {IRootStateType} from '@Redux/Store';
+import {useDispatch} from 'react-redux';
+import {updateUserData} from '@Redux/Actions/UserAction';
 
 const ProfileCompletionScreen = (
   props: IMainNavPropTypes<'ProfileCompletionScreen'>,
 ) => {
+  const {mode, data} = props.route.params;
+
   const inset = useSafeAreaInsets();
   const dispatch = useDispatch<any>();
 
-  const cancelRef = useRef<AbortController>();
+  const isCreate = mode === 'create';
 
-  const users = useSelector((state: IRootStateType) => state.user);
+  const lastNameRef = useRef<RNInput>(null);
+  const DOBRef = useRef<RNInput>(null);
+  const currencyRef = useRef<RNInput>(null);
 
-  const [firstName, setFirstName] = useState('');
-  const [lastName, setLastName] = useState('');
-  const [dateOfBirth, setDateOfBirth] = useState('');
+  const [firstName, setFirstName] = useState(data?.firstName || '');
+  const [lastName, setLastName] = useState(data?.lastName || '');
+  const [dateOfBirth, setDateOfBirth] = useState(data?.dateOfBirth || '');
   const [defaultCurrency, setDefaultCurrency] = useState('');
 
   const onNextHandler = () => {
-    props.navigation.navigate('ProfileImageScreen');
+    const screenPayload = {firstName, lastName, dateOfBirth};
+    props.navigation.navigate('ProfileImageScreen', {
+      mode: 'create',
+      data: screenPayload,
+    });
   };
+
+  const onSubmitHandler = () => {
+    const updatePayload = {
+      firstName,
+      lastName,
+      dateOfBirth,
+    };
+    dispatch(updateUserData({data: updatePayload})).then(() => {
+      props.navigation.goBack();
+    });
+  };
+
+  const onCancelHandler = () => {
+    props.navigation.replace('MainDashboard', {screen: 'HomeScreen'});
+  };
+
   const onLogoutHandler = () => {
     auth().signOut();
   };
 
-  const apiTest = () => {
-    // APICall('GET_USER');
-    cancelRef.current = new AbortController();
-    dispatch(getUserData({abortController: cancelRef.current}));
-  };
-  const abortHandler = () => {
-    cancelRef.current?.abort();
-  };
   return (
     <View
       style={[
         styles.RootContainer,
         Platform.OS === 'ios' && {paddingBottom: inset.bottom},
       ]}>
-      <Text style={textStyle.Hero_Bold}>Complete your Profile</Text>
+      <Text style={textStyle.Hero_Bold}>
+        {isCreate ? 'Complete your Profile' : 'Change your existing Profile'}
+      </Text>
       <KeyboardAvoidingView style={styles.InputGroupContainer}>
         <TextInput
           value={firstName}
@@ -63,34 +80,55 @@ const ProfileCompletionScreen = (
           label="First Name"
           iconLeading={{name: 'person-outline'}}
           containerStyle={styles.InputSpacing}
+          onSubmitEditing={() => {
+            lastNameRef.current?.focus();
+          }}
         />
         <TextInput
+          ref={lastNameRef}
           value={lastName}
           onChangeText={setLastName}
           label="Last Name"
           iconLeading={{name: 'person-outline'}}
           containerStyle={styles.InputSpacing}
+          onSubmitEditing={() => {
+            DOBRef.current?.focus();
+          }}
         />
         <TextInput
+          ref={DOBRef}
           value={dateOfBirth}
           onChangeText={setDateOfBirth}
           label="Date of Birth"
           iconLeading={{name: 'calendar-outline'}}
           containerStyle={styles.InputSpacing}
+          onSubmitEditing={() => {
+            currencyRef.current?.focus();
+          }}
         />
         <TextInput
+          ref={currencyRef}
           value={defaultCurrency}
           onChangeText={setDefaultCurrency}
           label="Default Currency"
           iconLeading={{name: 'logo-usd'}}
           containerStyle={styles.InputSpacing}
+          onSubmitEditing={() => {
+            if (isCreate) return onNextHandler();
+            onSubmitHandler();
+          }}
         />
       </KeyboardAvoidingView>
       <View style={styles.FooterContainer}>
-        <Button label="API TEST" onPress={apiTest} />
-        <Button label="ABORT API TEST" onPress={abortHandler} />
         <Button label="Logout" onPress={onLogoutHandler} />
-        <Button label="Next" onPress={onNextHandler} />
+        {isCreate ? (
+          <Button label="Next" onPress={onNextHandler} />
+        ) : (
+          <>
+            <Button label="Submit" onPress={onSubmitHandler} />
+            <Button label="Cancel" mode="text" onPress={onCancelHandler} />
+          </>
+        )}
       </View>
     </View>
   );

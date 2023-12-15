@@ -3,13 +3,13 @@ import {useDispatch, useSelector} from 'react-redux';
 import {StyleSheet, Text, View} from 'react-native';
 import {SafeAreaView} from 'react-native-safe-area-context';
 
-import APICall from '@Utilities/APIs/APICall';
-
 import Button from '@Components/Common/Button';
 import {getUserData} from '@Redux/Actions/UserAction';
 import {IUserStateType, resetAuth} from '@Redux/Reducers/UserReducer';
 import {IRootStateType} from '@Redux/Store';
 import {IMainNavPropTypes} from '@Routes/RouteTypes';
+
+import auth from '@react-native-firebase/auth';
 
 const PostAuthTransitionScreen = (
   props: IMainNavPropTypes<'PostAuthTransitionScreen'>,
@@ -19,6 +19,8 @@ const PostAuthTransitionScreen = (
   const user: IUserStateType = useSelector(
     (state: IRootStateType) => state.user,
   );
+
+  // auth().confirmPasswordReset()
 
   const [initializing, setInitializing] = useState(true);
 
@@ -31,23 +33,20 @@ const PostAuthTransitionScreen = (
   }, []);
 
   useEffect(() => {
-    console.log('load state', user.status);
-
-    if (!initializing && user.status === 'error') {
-      return props.navigation.replace('ProfileCompletionScreen');
-    } else if (!initializing && user.status === 'success') {
-      props.navigation.replace('MainDashboard', {screen: 'HomeScreen'});
-    }
-
-    // setTimeout(() => {
-    //   if (!user.isLoading && !user.isSuccess && user.userProfileData == null)
-    //     return props.navigation.replace('ProfileCompletionScreen');
-    //   props.navigation.replace('MainDashboard', {screen: 'HomeScreen'});
-    // }, 1000);
+    console.log('fetch user status', user.status);
+    setTimeout(() => {
+      if (!initializing && user.status === 'error') {
+        console.log('fetch user error', user.error);
+        return props.navigation.replace('ProfileCompletionScreen', {
+          mode: 'create',
+        });
+      } else if (!initializing && user.status === 'success') {
+        props.navigation.replace('MainDashboard', {screen: 'HomeScreen'});
+      }
+    }, 1000);
   }, [user.status]);
 
   const testApiHandler = async () => {
-    // await APICall('GET_USER');
     dispatch(resetAuth());
   };
 

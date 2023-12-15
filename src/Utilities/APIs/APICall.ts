@@ -24,7 +24,7 @@ const APICall = async (endpoint: IEndpoint, options?: IAPIsCallOption) => {
   return await axios({
     method: selectEndpoint.method,
     url: selectEndpoint.url,
-    data: options?.payload,
+    data: options?.data,
     params: options?.params,
     signal: options?.abortController?.signal,
     headers: {...requestHeader},

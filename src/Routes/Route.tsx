@@ -5,6 +5,7 @@ import auth, {FirebaseAuthTypes} from '@react-native-firebase/auth';
 
 import {SafeAreaProvider} from 'react-native-safe-area-context';
 import {
+  DefaultTheme,
   NavigationContainer,
   createNavigationContainerRef,
 } from '@react-navigation/native';
@@ -17,6 +18,7 @@ import {createDrawerNavigator} from '@react-navigation/drawer';
 
 import {IDashNav, IMainNav} from './RouteTypes';
 import Header from '@Components/Header';
+import Button from '@Components/Common/Button';
 
 import SignInScreen from '@Screens/PreAuth/SignInScreen';
 import SignUpScreen from '@Screens/PreAuth/SignUpScreen';
@@ -27,6 +29,8 @@ import HomeScreen from '@Screens/Dashboard/HomeScreen';
 import AboutScreen from '@Screens/Dashboard/AboutScreen';
 import Dev from '@Screens/Dev';
 import PostAuthTransitionScreen from '@Screens/Dashboard/PostAuthTransitionScreen';
+import {AnyAction} from 'redux';
+import {HeaderBackButtonProps} from '@react-navigation/elements';
 
 const Stack = createStackNavigator<IMainNav>();
 const Drawer = createDrawerNavigator<IDashNav>();
@@ -92,23 +96,44 @@ const Route = () => {
 
   const profileCompletionHeader = (options: StackHeaderProps) => {
     //trigger progress bar indicator change
-    const getProgress = () => {
-      switch (routeNameRef.current) {
-        case 'SignUpProfileScreen':
-          return 1;
-        case 'SignUpImageScreen':
-          return 2;
-        default:
-          return 0;
-      }
-    };
+
+    // const getProgress = () => {
+    //   switch (routeNameRef.current) {
+    //     case 'SignUpProfileScreen':
+    //       return 1;
+    //     case 'SignUpImageScreen':
+    //       return 2;
+    //     default:
+    //       return 0;
+    //   }
+    // };
+
+    console.log('options back', options.back);
 
     return (
       <Header
         onBackPressed={options.navigation.goBack}
-        progressBar={{indicatorCount: 2, indicatorActive: getProgress()}}
+        // progressBar={{indicatorCount: 2, indicatorActive: getProgress()}}
         hideBackButton={options.back === undefined}
       />
+    );
+  };
+
+  const headerBackButton = (props: HeaderBackButtonProps) => {
+    const canGoBack = props.canGoBack;
+    return (
+      <>
+        {canGoBack ? (
+          <Button
+            label={'Back'}
+            icon={{name: 'chevron-back'}}
+            mode="text"
+            onPress={() => props.onPress?.()}
+          />
+        ) : (
+          <></>
+        )}
+      </>
     );
   };
 
@@ -145,8 +170,15 @@ const Route = () => {
               <Stack.Group
                 navigationKey="ProfileCompletion"
                 screenOptions={{
-                  header: props => profileCompletionHeader(props),
+                  // header: props => profileCompletionHeader(props),
+                  headerLeft: props => headerBackButton(props),
                   headerShown: true,
+                  title: '',
+                  headerStyle: {
+                    backgroundColor: DefaultTheme.colors.background,
+                    elevation: 0,
+                    shadowOpacity: 0,
+                  },
                 }}>
                 <Stack.Screen
                   name="ProfileCompletionScreen"
