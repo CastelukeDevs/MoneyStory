@@ -1,4 +1,3 @@
-import {useLayout} from '@react-native-community/hooks';
 import React, {ReactNode, useEffect, useState} from 'react';
 import {
   Dimensions,
@@ -10,6 +9,7 @@ import {
   ViewStyle,
 } from 'react-native';
 import {Gesture, GestureDetector} from 'react-native-gesture-handler';
+import {useLayout} from '@react-native-community/hooks';
 import Animated, {
   Extrapolate,
   FadeIn,
@@ -22,7 +22,7 @@ import Animated, {
   useSharedValue,
   withSpring,
 } from 'react-native-reanimated';
-import GlobalColor from '../../Utilities/Styles/GlobalColor';
+import GlobalColor from '@Utilities/Styles/GlobalColor';
 
 const windowHeight = Dimensions.get('window').height;
 const AnimatedPressable = Animated.createAnimatedComponent(Pressable);

@@ -1,9 +1,8 @@
-import {StyleSheet, Text, View} from 'react-native';
 import React from 'react';
+import {StyleSheet, View} from 'react-native';
 import {useSafeAreaInsets} from 'react-native-safe-area-context';
-import Button from './Common/Button';
-import IconButton from './Common/IconButton';
 import ProgressBar, {IProgressBarProp} from './Common/ProgressBar';
+import Button from './Common/Button';
 
 type IHeaderModeTypes = 'normal' | 'overlay';
 type IHeaderPropTypes = {
@@ -12,15 +11,17 @@ type IHeaderPropTypes = {
   onBackPressed?: () => void;
   // showProgressBar?: boolean;
   progressBar?: IProgressBarProp;
+  hideBackButton?: boolean;
 };
 
 const Header = (prop: IHeaderPropTypes) => {
   const currentMode = prop.mode || 'normal';
   const safeArea = useSafeAreaInsets();
   return (
-    <>
-      <View style={[{paddingTop: safeArea.top}, styles.RootContainer]}>
-        {currentMode === 'normal' ? (
+    <View style={{paddingTop: safeArea.top}}>
+      {prop.progressBar && <ProgressBar {...prop.progressBar} />}
+      <View style={[styles.ButtonGroupContainer]}>
+        {!prop.hideBackButton && currentMode === 'normal' ? (
           <Button
             label={prop.label || 'Back'}
             onPress={() => prop.onBackPressed?.()}
@@ -31,15 +32,14 @@ const Header = (prop: IHeaderPropTypes) => {
         {/* <IconButton name="chevron-back" onPress={() => {}} mode="icon" /> */}
         {/* <Text>Header</Text> */}
       </View>
-      {prop.progressBar && <ProgressBar {...prop.progressBar} />}
-    </>
+    </View>
   );
 };
 
 export default Header;
 
 const styles = StyleSheet.create({
-  RootContainer: {
+  ButtonGroupContainer: {
     flexDirection: 'row',
     alignItems: 'center',
   },

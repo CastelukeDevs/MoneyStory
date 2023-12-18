@@ -1,3 +1,4 @@
+import React, {useState} from 'react';
 import {
   KeyboardAvoidingView,
   Platform,
@@ -5,18 +6,37 @@ import {
   Text,
   View,
 } from 'react-native';
-import React, {useState} from 'react';
 import {useSafeAreaInsets} from 'react-native-safe-area-context';
-import TextInput from '../../Components/Common/TextInput';
-import Button from '../../Components/Common/Button';
-import {textStyle} from '../../Utilities/Styles/GlobalStyle';
+
+import {textStyle} from '@Utilities/Styles/GlobalStyle';
+import ForgetPassword from '@Utilities/Authentication/ForgetPassword';
+import {
+  IValidationResult,
+  validateEmail,
+} from '@Utilities/String/EmailPasswordValidation';
+
+import Button from '@Components/Common/Button';
+import TextInput from '@Components/Common/TextInput';
 
 const ForgotPasswordScreen = () => {
   const inset = useSafeAreaInsets();
 
-  const [Email, setEmail] = useState('');
+  const [email, setEmail] = useState('');
+  const [error, setError] = useState<IValidationResult[]>([]);
 
-  const onSendVerificationHandler = () => {};
+  const onSendVerificationHandler = async () => {
+    const isEmailValid = validateEmail(email);
+    if (isEmailValid?.length > 0)
+      return setError([{description: 'Email is invalid', name: 'invalid'}]);
+
+    setError([]);
+
+    console.log('error', error);
+
+    await ForgetPassword(email).catch(() => {
+      return setError([{description: 'email is invalid', name: 'error'}]);
+    });
+  };
 
   return (
     <View
@@ -31,11 +51,12 @@ const ForgotPasswordScreen = () => {
           Instruction
         </Text>
         <TextInput
-          value={Email}
-          onChange={setEmail}
+          value={email}
+          onChangeText={setEmail}
           label="Email"
           iconLeading={{name: 'mail-outline'}}
-          style={styles.InputSpacing}
+          containerStyle={styles.InputSpacing}
+          isError={error.length >= 1}
         />
       </KeyboardAvoidingView>
       <View style={styles.FooterContainer}>

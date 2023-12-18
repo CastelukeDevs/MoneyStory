@@ -1,28 +1,70 @@
+import React, {useRef, useState} from 'react';
 import {
   KeyboardAvoidingView,
   Platform,
   StyleSheet,
   Text,
+  TextInput as RNTextInput,
   View,
 } from 'react-native';
-import React, {useState} from 'react';
-import Header from '../../Components/Header';
-import {IMainNavPropTypes} from '../../Routes/RouteTypes';
-import {textStyle} from '../../Utilities/Styles/GlobalStyle';
-import TextInput from '../../Components/Common/TextInput';
-import Button from '../../Components/Common/Button';
 import {useSafeAreaInsets} from 'react-native-safe-area-context';
+
+import {IMainNavPropTypes} from '@Routes/RouteTypes';
+
+import {textStyle} from '@Utilities/Styles/GlobalStyle';
+import {
+  IValidationResult,
+  validateEmail,
+  validatePassword,
+} from '@Utilities/String/EmailPasswordValidation';
+import CreateUserEmailPassword from '@Utilities/Authentication/CreateUserEmailPassword';
+
+import TextInput from '@Components/Common/TextInput';
+import Button from '@Components/Common/Button';
 
 const SignUpScreen = (prop: IMainNavPropTypes<'SignUpScreen'>) => {
   const inset = useSafeAreaInsets();
+
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [confirm, setConfirm] = useState('');
   const [passwordHide, setPasswordHide] = useState(true);
   const [confirmHide, setConfirmHide] = useState(true);
+  const [emailError, setEmailError] = useState<IValidationResult[]>([]);
+  const [passwordError, setPasswordError] = useState<IValidationResult[]>([]);
+
+  const passwordRef = useRef<RNTextInput>(null);
+  const confirmRef = useRef<RNTextInput>(null);
+
+  // console.log('error', error);
 
   const onRegisterHandler = () => {
-    prop.navigation.navigate('SignUpProfileScreen');
+    console.log('register attempted');
+
+    const isPasswordValid = validatePassword(password);
+    const isEmailValid = validateEmail(email);
+
+    if (isEmailValid.length > 0) return setEmailError(isEmailValid);
+    setEmailError([]);
+    if (isPasswordValid.length > 0) return setPasswordError(isPasswordValid);
+    if (password !== confirm) {
+      return setPasswordError([
+        {description: 'Password not match', name: 'unmatch'},
+      ]);
+    }
+    setPasswordError([]);
+
+    console.log('ready to sign up new user', {email, password});
+    CreateUserEmailPassword({email, password}).catch(() => {
+      const generalError: IValidationResult[] = [
+        {
+          description: 'General Error',
+          name: 'general',
+        },
+      ];
+      setEmailError(generalError);
+      setPasswordError(generalError);
+    });
   };
 
   return (
@@ -35,34 +77,43 @@ const SignUpScreen = (prop: IMainNavPropTypes<'SignUpScreen'>) => {
       <KeyboardAvoidingView style={styles.InputGroupContainer}>
         <TextInput
           value={email}
-          onChange={setEmail}
+          onChangeText={setEmail}
           label="Email"
           iconLeading={{name: 'mail-outline'}}
-          style={styles.InputSpacing}
+          containerStyle={styles.InputSpacing}
+          inputMode="email"
+          isError={emailError.length > 0}
+          onSubmitEditing={() => passwordRef.current?.focus()}
         />
         <TextInput
+          ref={passwordRef}
           value={password}
-          onChange={setPassword}
+          onChangeText={setPassword}
           label="Password"
           iconLeading={{name: 'lock-closed-outline'}}
           iconTrailing={{
             name: passwordHide ? 'eye-outline' : 'eye-off-outline',
             onPress: () => setPasswordHide(!passwordHide),
           }}
-          options={{secureTextEntry: passwordHide}}
-          style={styles.InputSpacing}
+          secureTextEntry={passwordHide}
+          containerStyle={styles.InputSpacing}
+          isError={passwordError.length > 0}
+          onSubmitEditing={() => confirmRef.current?.focus()}
         />
         <TextInput
+          ref={confirmRef}
           value={confirm}
-          onChange={setConfirm}
+          onChangeText={setConfirm}
           label="Confirm Password"
           iconLeading={{name: 'lock-closed-outline'}}
           iconTrailing={{
             name: confirmHide ? 'eye-outline' : 'eye-off-outline',
             onPress: () => setConfirmHide(!confirmHide),
           }}
-          options={{secureTextEntry: confirmHide}}
-          style={styles.InputSpacing}
+          containerStyle={styles.InputSpacing}
+          secureTextEntry={confirmHide}
+          isError={passwordError.length > 0}
+          onSubmitEditing={onRegisterHandler}
         />
       </KeyboardAvoidingView>
       <View style={styles.FooterContainer}>

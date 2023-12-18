@@ -1,18 +1,25 @@
-import React from 'react';
+import React, {forwardRef, useEffect} from 'react';
 import {
   Platform,
   StyleSheet,
+  Text,
   TextInputProps,
   TextInput as TextInputReact,
   TextStyle,
   View,
   ViewStyle,
 } from 'react-native';
-import Icon, {IIconProps} from './Icon';
-import GlobalColor from '../../Utilities/Styles/GlobalColor';
-import {textStyle} from '../../Utilities/Styles/GlobalStyle';
+import Animated, {
+  interpolateColor,
+  useAnimatedStyle,
+  useSharedValue,
+  withTiming,
+} from 'react-native-reanimated';
 
-// type ITextInputMode = 'Outlined' | 'Circled' | 'Underlined';
+import Icon, {IIconProps} from './Icon';
+
+import GlobalColor from '@Utilities/Styles/GlobalColor';
+import {textStyle} from '@Utilities/Styles/GlobalStyle';
 
 type ITextInputBordered = {
   mode?: 'Outlined' | 'Circled';
@@ -28,52 +35,94 @@ type ITextInputProps = {
   // mode?: string;
   label: string;
   value: string;
-  onChange: (str: string) => void;
+  onChangeText: (str: string) => void;
   iconLeading?: IIconProps;
   iconTrailing?: IIconProps;
-  style?: ViewStyle;
+  containerStyle?: ViewStyle;
   options?: TextInputProps;
-} & IMergedTextInput;
+  isError?: boolean;
+} & IMergedTextInput &
+  TextInputProps;
 
 /**
  *
  * @returns
  */
-const TextInput = (props: ITextInputProps) => {
+const TextInput = forwardRef<TextInputReact, ITextInputProps>((props, ref) => {
   const currentMode = props.mode || 'Circled';
+  const duration = 500;
 
   const inputPlatformStyle =
     Platform.OS === 'ios' ? styles.InputIOS : styles.InputAndroid;
 
-  return (
-    <View
-      style={[
-        styles.CoreContainer,
-        getModeStyle(currentMode),
-        props.mode === 'Underlined' && {
-          borderColor: props.lineColor || GlobalColor.dark,
-        },
-        props.style,
-      ]}>
-      {props.iconLeading && (
-        <View style={{marginRight: 10}}>
-          <Icon {...props.iconLeading} />
-        </View>
-      )}
-      <TextInputReact
-        {...props.options}
-        style={[inputPlatformStyle, textStyle.SubTitle_Regular]}
-        placeholder={props.label}
-      />
+  /**
+   * Note - State:
+   * - 0 = blur
+   * - 1 = focused
+   * - 2 = error
+   */
+  const inputState = useSharedValue(0);
 
-      {props.iconTrailing && (
-        <View style={{marginLeft: 10}}>
-          <Icon {...props.iconTrailing} />
-        </View>
-      )}
-    </View>
+  const inputAnimationStyle = useAnimatedStyle(() => {
+    const colorInterpolation = interpolateColor(
+      inputState.value,
+      [0, 1, 2],
+      [GlobalColor.dark, GlobalColor.accent, GlobalColor.error],
+    );
+    return {
+      borderColor: colorInterpolation,
+    };
+  });
+
+  const animateTo = (state: number) => {
+    inputState.value = withTiming(state, {duration});
+  };
+
+  useEffect(() => {
+    console.log(`${props.label} is ${props.isError ? 'error' : 'ok'}`);
+    if (props.isError) {
+      animateTo(2);
+    }
+  }, [props.isError]);
+
+  return (
+    <>
+      <Animated.View
+        style={[
+          styles.CoreContainer,
+          getModeStyle(currentMode),
+          inputAnimationStyle,
+          props.containerStyle,
+        ]}>
+        {props.iconLeading && (
+          <View style={{marginRight: 10}}>
+            <Icon {...props.iconLeading} />
+          </View>
+        )}
+
+        <TextInputReact
+          {...props}
+          style={[inputPlatformStyle, textStyle.SubTitle_Regular]}
+          placeholder={props.placeholder || props.label}
+          ref={ref}
+          onFocus={() => {
+            animateTo(1);
+          }}
+          onBlur={() => {
+            if (props.isError) return animateTo(2);
+            animateTo(0);
+          }}
+        />
+
+        {props.iconTrailing && (
+          <View style={{marginLeft: 10}}>
+            <Icon {...props.iconTrailing} />
+          </View>
+        )}
+      </Animated.View>
+    </>
   );
-};
+});
 
 export default TextInput;
 

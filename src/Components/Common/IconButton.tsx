@@ -1,13 +1,7 @@
-import {
-  StyleSheet,
-  Text,
-  TouchableOpacity,
-  View,
-  ViewStyle,
-} from 'react-native';
 import React from 'react';
+import {StyleSheet, TouchableOpacity, View, ViewStyle} from 'react-native';
 import Icon, {IIconProps} from './Icon';
-import GlobalColor from '../../Utilities/Styles/GlobalColor';
+import GlobalColor from '@Utilities/Styles/GlobalColor';
 
 type IIconButtonModeTypes = 'contained' | 'bordered' | 'icon';
 

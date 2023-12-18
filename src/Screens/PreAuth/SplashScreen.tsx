@@ -3,6 +3,7 @@ import {View, Text, Image, StyleSheet} from 'react-native';
 import {SafeAreaView} from 'react-native-safe-area-context';
 
 import {IMainNavPropTypes} from '../../Routes/RouteTypes';
+
 import {textStyle, viewStyle} from '../../Utilities/Styles/GlobalStyle';
 import GlobalColor from '../../Utilities/Styles/GlobalColor';
 import getString from '../../Utilities/String/LanguageTools';
@@ -94,18 +95,18 @@ const ModalLayout = (prop: IModalLayoutPropType) => {
       <Text style={textStyle.Hero_Bold}>Login to your Account</Text>
       <TextInput
         label="Email"
-        onChange={() => {}}
+        onChangeText={() => {}}
         value={''}
         iconLeading={{name: 'mail-outline'}}
-        style={{marginTop: 12}}
+        containerStyle={{marginTop: 12}}
       />
       <TextInput
         label="Password"
-        onChange={() => {}}
+        onChangeText={() => {}}
         value={''}
         iconLeading={{name: 'lock-closed-outline'}}
         iconTrailing={{name: 'eye-outline'}}
-        style={{marginTop: 12}}
+        containerStyle={{marginTop: 12}}
       />
       <Button
         label="Login"
