@@ -1,5 +1,6 @@
-import {CancelToken} from 'axios';
+import {CancelToken, GenericAbortSignal} from 'axios';
 import EndpointPool from './EndpointPool';
+import {INewUserData} from '@Types/UserType';
 
 enum EndpointMethod {
   get,
@@ -14,8 +15,6 @@ export type IEndpointPool = {
   endpoint: string;
   url: string;
   method: IEndpointMethod;
-  payload?: any;
-  params?: any;
   auth?: boolean;
 };
 
@@ -25,12 +24,15 @@ export const getEndpoint = (endpoint: IEndpoint) => {
   return EndpointPool.find(item => item.endpoint === endpoint);
 };
 
+export type ICancelSignal = {
+  abortController?: AbortController;
+};
+
 export type IAPIsCallOption = {
   params?: any;
-  payload?: any;
+  data?: INewUserData;
   auth?: boolean;
-  cancelToken?: CancelToken;
-};
+} & ICancelSignal;
 
 export const ActionPrefix: IEndpoint[] = EndpointPool.map(
   endpointItem => endpointItem.endpoint,
