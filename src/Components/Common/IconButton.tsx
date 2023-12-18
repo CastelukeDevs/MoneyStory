@@ -3,11 +3,13 @@ import {StyleSheet, TouchableOpacity, View, ViewStyle} from 'react-native';
 import Icon, {IIconProps} from './Icon';
 import GlobalColor from '@Utilities/Styles/GlobalColor';
 
-type IIconButtonModeTypes = 'contained' | 'bordered' | 'icon';
+type IIconButtonMode = 'contained' | 'bordered' | 'icon';
+type IIconButtonShape = 'box' | 'circle';
 
 type IIconButtonPropTypes = {
   style?: ViewStyle;
-  mode?: IIconButtonModeTypes;
+  mode?: IIconButtonMode;
+  shape?: IIconButtonShape;
   onPress: () => void;
 } & IIconProps;
 
@@ -20,6 +22,7 @@ type IIconButtonPropTypes = {
  */
 const IconButton = (props: IIconButtonPropTypes) => {
   const currentMode = props.mode || 'contained';
+  const currentShape = props.shape || 'box';
   const currentLogoColor =
     currentMode === 'contained' ? GlobalColor.light : GlobalColor.accent;
 
@@ -31,7 +34,7 @@ const IconButton = (props: IIconButtonPropTypes) => {
         style={[
           {
             padding: 12,
-            borderRadius: 12,
+            borderRadius: currentShape === 'box' ? 12 : 100,
           },
           selectedContainerStyle(currentMode),
           props.style,
@@ -42,7 +45,7 @@ const IconButton = (props: IIconButtonPropTypes) => {
   );
 };
 
-const selectedContainerStyle = (selectedMode: IIconButtonModeTypes) => {
+const selectedContainerStyle = (selectedMode: IIconButtonMode) => {
   switch (selectedMode) {
     case 'bordered':
       return styles.ModeBorderedContainer;

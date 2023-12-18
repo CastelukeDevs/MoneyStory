@@ -15,7 +15,7 @@ const Icon = (props: IIconProps) => {
   const iconName = props.name || 'home';
   const iconColor = props.color || GlobalColor.dark;
   const iconSize = props.size || 20;
-  const isDisabled = props.disabled || typeof props.onPress !== 'function';
+  const isDisabled = props.disabled || typeof props.onPress === 'undefined';
 
   return (
     <TouchableOpacity
