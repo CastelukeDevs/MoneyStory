@@ -1,5 +1,5 @@
 import React, {FC} from 'react';
-import {View, Text, StyleSheet} from 'react-native';
+import {View, Text, StyleSheet, ScrollView} from 'react-native';
 import {useSelector} from 'react-redux';
 import {IRootStateType} from '@Redux/Store';
 import {useSafeAreaInsets} from 'react-native-safe-area-context';
@@ -12,6 +12,9 @@ import IconButton from '@Components/Common/IconButton';
 import Icon from '@Components/Common/Icon';
 import GlobalColor from '@Utilities/Styles/GlobalColor';
 import {textStyle} from '@Utilities/Styles/GlobalStyle';
+import WalletCard from '@Components/WalletCard';
+import SearchBar from '@Components/SearchBar';
+import ActivityListCard from '@Components/ActivityListCard';
 
 const HomeScreen = ({navigation}: IDashNavPropTypes<'HomeScreen'>) => {
   const inset = useSafeAreaInsets();
@@ -62,7 +65,24 @@ const HomeScreen = ({navigation}: IDashNavPropTypes<'HomeScreen'>) => {
         <Text style={[textStyle.Content_Light]}>+0,0 (0,00%)</Text>
       </View>
       <View style={styles.SectionContainer}>
-        <Text style={textStyle.Title_Bold}>Your Wallet</Text>
+        <View style={styles.SectionHeader}>
+          <Text style={textStyle.Title_Bold}>Your Wallet</Text>
+          <Text style={textStyle.Content_Regular}>See All</Text>
+        </View>
+        <ScrollView horizontal>
+          <WalletCard isEmpty />
+          <WalletCard />
+        </ScrollView>
+      </View>
+      <View style={styles.SectionContainer}>
+        <View style={styles.SectionHeader}>
+          <Text style={textStyle.Title_Bold}>Your Activities</Text>
+          <Text style={textStyle.Content_Regular}>See All</Text>
+        </View>
+        <SearchBar />
+        <ActivityListCard />
+        <ActivityListCard />
+        <ActivityListCard />
       </View>
     </View>
   );
@@ -77,6 +97,11 @@ const styles = StyleSheet.create({
   },
   SectionContainer: {
     marginTop: 18,
+  },
+  SectionHeader: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-between',
   },
   HeroTextGey: {
     color: GlobalColor.overlay,

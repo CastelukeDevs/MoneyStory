@@ -10,7 +10,7 @@ type IIconButtonPropTypes = {
   style?: ViewStyle;
   mode?: IIconButtonMode;
   shape?: IIconButtonShape;
-  onPress: () => void;
+  onPress?: () => void;
 } & IIconProps;
 
 //TODO: add button disable function
@@ -27,21 +27,21 @@ const IconButton = (props: IIconButtonPropTypes) => {
     currentMode === 'contained' ? GlobalColor.light : GlobalColor.accent;
 
   return (
-    <TouchableOpacity
-      style={{flexDirection: 'row'}}
-      onPress={() => props.onPress()}>
-      <View
-        style={[
-          {
-            padding: 12,
-            borderRadius: currentShape === 'box' ? 12 : 100,
-          },
-          selectedContainerStyle(currentMode),
-          props.style,
-        ]}>
-        <Icon {...props} color={props.color || currentLogoColor} />
-      </View>
-    </TouchableOpacity>
+    <View style={{flexDirection: 'row'}}>
+      <TouchableOpacity onPress={() => props.onPress?.()}>
+        <View
+          style={[
+            {
+              padding: 12,
+              borderRadius: currentShape === 'box' ? 12 : 100,
+            },
+            selectedContainerStyle(currentMode),
+            props.style,
+          ]}>
+          <Icon {...props} color={props.color || currentLogoColor} />
+        </View>
+      </TouchableOpacity>
+    </View>
   );
 };
 
