@@ -8,12 +8,21 @@ import Icon from './Common/Icon';
 
 type IWalletCardProps = {
   isEmpty?: boolean;
+  onPress?: () => void;
+  disable?: boolean;
 };
+
 const WalletCard = (props: IWalletCardProps) => {
+  const isDisabled = props.disable || typeof props.onPress === 'undefined';
+  console.log('isDisabled', isDisabled);
+
   return (
     <View style={styles.RootComponentContainer}>
       {!props.isEmpty ? (
-        <TouchableOpacity style={styles.ComponentContainer}>
+        <TouchableOpacity
+          style={styles.ComponentContainer}
+          disabled={isDisabled}
+          onPress={props.onPress}>
           <View style={styles.HeaderContainer}>
             <IconButton />
             <View style={styles.HeaderTextContainer}>
@@ -35,7 +44,10 @@ const WalletCard = (props: IWalletCardProps) => {
           </View>
         </TouchableOpacity>
       ) : (
-        <TouchableOpacity style={styles.EmptyContainer}>
+        <TouchableOpacity
+          style={styles.EmptyContainer}
+          disabled={isDisabled}
+          onPress={props.onPress}>
           <Icon name="add-outline" color={GlobalColor.light} size={50} />
         </TouchableOpacity>
       )}
