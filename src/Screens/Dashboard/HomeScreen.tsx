@@ -1,27 +1,40 @@
-import React, {FC} from 'react';
+import React, {FC, useEffect, useMemo} from 'react';
 import {View, Text, StyleSheet, ScrollView} from 'react-native';
-import {useSelector} from 'react-redux';
+import {useDispatch, useSelector} from 'react-redux';
 import {IRootStateType} from '@Redux/Store';
+import {getUserAccount} from '@Redux/Actions/AccountAction';
+
 import {useSafeAreaInsets} from 'react-native-safe-area-context';
 
 import {IDashNavPropTypes} from '@Routes/RouteTypes';
 
-import Button from '@Components/Common/Button';
-import AvatarPills from '@Components/AvatarPills';
-import IconButton from '@Components/Common/IconButton';
-import Icon from '@Components/Common/Icon';
 import GlobalColor from '@Utilities/Styles/GlobalColor';
 import {textStyle} from '@Utilities/Styles/GlobalStyle';
+import FormatCurrency from '@Utilities/String/Currency/FormatCurrency';
+
+import Button from '@Components/Common/Button';
+import IconButton from '@Components/Common/IconButton';
+import Icon from '@Components/Common/Icon';
+import AvatarPills from '@Components/AvatarPills';
 import WalletCard from '@Components/WalletCard';
 import SearchBar from '@Components/SearchBar';
 import ActivityListCard from '@Components/ActivityListCard';
 
 const HomeScreen = ({navigation}: IDashNavPropTypes<'HomeScreen'>) => {
   const inset = useSafeAreaInsets();
+  const dispatch = useDispatch<any>();
 
   const userState = useSelector((state: IRootStateType) => state.user);
+  const {accountData, currency} = useSelector(
+    (state: IRootStateType) => state.account,
+  );
 
   const userData = userState.userProfileData;
+
+  useEffect(() => {
+    dispatch(getUserAccount());
+    return () => {};
+  }, []);
 
   const updateProfileHandler = () => {
     navigation.navigate('ProfileCompletionScreen', {
@@ -38,6 +51,11 @@ const HomeScreen = ({navigation}: IDashNavPropTypes<'HomeScreen'>) => {
   };
 
   const onNotificationPressHandler = () => {};
+
+  const balance = useMemo(
+    () => FormatCurrency(accountData?.totalBalance!, currency),
+    [accountData?.totalBalance],
+  );
 
   return (
     <View style={[{paddingTop: inset.top}, styles.RootScreenContainer]}>
@@ -58,9 +76,9 @@ const HomeScreen = ({navigation}: IDashNavPropTypes<'HomeScreen'>) => {
       <View style={styles.SectionContainer}>
         <Text style={textStyle.Title_Bold}>Your Wealth</Text>
         <Text style={textStyle.Hero_Bold}>
-          <Text style={styles.HeroTextGey}>Rp.</Text>
-          <Text>{userData?.points}</Text>
-          <Text style={styles.HeroTextGey}>,00</Text>
+          <Text style={styles.HeroTextGey}>{balance.symbol}</Text>
+          <Text>{' ' + balance.whole}</Text>
+          <Text style={styles.HeroTextGey}>{balance.decimal}</Text>
         </Text>
         <Text style={[textStyle.Content_Light]}>+0,0 (0,00%)</Text>
       </View>
