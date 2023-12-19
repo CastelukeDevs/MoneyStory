@@ -1,15 +1,20 @@
 import {IAccountStateType} from '@Redux/Reducers/AccountReducer';
-import {ActionReducerMapBuilder, createAsyncThunk} from '@reduxjs/toolkit';
+import {
+  ActionReducerMapBuilder,
+  PayloadAction,
+  createAsyncThunk,
+} from '@reduxjs/toolkit';
+import {IAccount} from '@Types/AccountTypes';
 
 import APICall from '@Utilities/APIs/APICall';
 import {ICancelSignal, IEndpoint} from '@Utilities/APIs/APIUtils';
 
-const GetContactPrefix: IEndpoint = 'GET_USER';
+const getAccountPrefix: IEndpoint = 'GET_ACCOUNT';
 
 export const getUserAccount = createAsyncThunk(
-  GetContactPrefix,
+  getAccountPrefix,
   async (props?: ICancelSignal) => {
-    const call = await APICall(GetContactPrefix, {
+    const call = await APICall(getAccountPrefix, {
       abortController: props?.abortController,
     });
     console.log('result', call);
@@ -28,8 +33,13 @@ export default (builder: ActionReducerMapBuilder<IAccountStateType>) => {
       state.status = 'error';
       state.error = {message: action.error.message!, error: action.error};
     })
-    .addCase(getUserAccount.fulfilled, (state, action) => {
-      state.status = 'success';
-      state.error = null;
-    });
+    .addCase(
+      getUserAccount.fulfilled,
+      (state, action: PayloadAction<IAccount>) => {
+        state.status = 'success';
+        state.error = null;
+        state.accountData = action.payload;
+        state.currency = action.payload.defaultCurrency;
+      },
+    );
 };

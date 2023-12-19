@@ -1,16 +1,20 @@
-import UserAction from '@Redux/Actions/UserAction';
+import AccountAction from '@Redux/Actions/AccountAction';
 import {createSlice} from '@reduxjs/toolkit';
+import {IAccount} from '@Types/AccountTypes';
+import {ICurrencyTypes} from '@Types/CommonTypes';
 
 import {IDefaultFetchState} from '@Types/FetchTypes';
 import {IUserType} from '@Types/UserType';
 
 export type IAccountStateType = {
-  accountData: null;
+  accountData: IAccount | null;
+  currency: ICurrencyTypes;
 } & IDefaultFetchState;
 
 export const accountInitialState: IAccountStateType = {
   error: null,
   accountData: null,
+  currency: 'IDR',
   status: 'idle',
 };
 
@@ -22,7 +26,7 @@ const AccountReducer = createSlice({
       return {...accountInitialState};
     },
   },
-  // extraReducers: UserAction,
+  extraReducers: AccountAction,
 });
 
 export const {resetAccount} = AccountReducer.actions;
