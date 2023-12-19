@@ -16,6 +16,7 @@ export type IWallet = {
   currency: ICurrencyTypes;
   transaction: String[];
   type: IWalletType;
+  imageUrl: string;
   createdAt: number;
   updatedAt: number;
 };
