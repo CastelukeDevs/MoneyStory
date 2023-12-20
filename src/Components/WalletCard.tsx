@@ -1,51 +1,104 @@
 import React from 'react';
-import {StyleSheet, Text, TouchableOpacity, View} from 'react-native';
+import {
+  Image,
+  StyleSheet,
+  Text,
+  TouchableOpacity,
+  View,
+  ViewStyle,
+} from 'react-native';
+import LinearGradient from 'react-native-linear-gradient';
 
-import IconButton from './Common/IconButton';
 import {textStyle} from '@Utilities/Styles/GlobalStyle';
 import GlobalColor from '@Utilities/Styles/GlobalColor';
+
+import {IWallet, IWalletCard} from '@Types/WalletTypes';
+
+import {defaultWalletData} from '@Utilities/DefaultData/walletData';
+
 import Icon from './Common/Icon';
+import IconButton from './Common/IconButton';
+import FormatCurrency from '@Utilities/String/Currency/FormatCurrency';
 
 type IWalletCardProps = {
   isEmpty?: boolean;
   onPress?: () => void;
   disable?: boolean;
   orientation?: 'portrait' | 'landscape';
+  wallet?: IWalletCard | IWallet;
+  style?: ViewStyle;
 };
 
 const WalletCard = (props: IWalletCardProps) => {
   const isDisabled = props.disable || typeof props.onPress === 'undefined';
   const orientation = props.orientation || 'portrait';
   const isPortrait = orientation === 'portrait';
+  const walletData = props.wallet || defaultWalletData; //TODO:Remove later
 
   return (
     <View
       style={[
-        isPortrait ? styles.CardPortrait : styles.CardLandscape,
         styles.RootComponentContainer,
+        isPortrait ? styles.CardPortrait : styles.CardLandscape,
+        props.style,
       ]}>
+      <Image
+        source={{uri: walletData.imageUrl}}
+        style={StyleSheet.absoluteFillObject}
+      />
+      <LinearGradient
+        style={StyleSheet.absoluteFillObject}
+        colors={[
+          GlobalColor.dark,
+          GlobalColor.dark,
+          GlobalColor.dark,
+          GlobalColor.overlay80,
+          GlobalColor.overlay80,
+          GlobalColor.overlay25,
+          // '#00000000',
+          // '#00000000',
+        ]}
+        useAngle={true}
+        angle={35}
+        angleCenter={{x: 0.5, y: 0.5}}
+      />
       {!props.isEmpty ? (
         <TouchableOpacity
           style={styles.ComponentContainer}
           disabled={isDisabled}
           onPress={props.onPress}>
           <View style={styles.HeaderContainer}>
-            <IconButton />
+            <IconButton name={walletData.logo} />
             <View style={styles.HeaderTextContainer}>
               <Text style={[textStyle.H2_Bold, styles.HeaderText]}>
-                Apple Inc.
+                {walletData.walletName}.
               </Text>
               <Text style={[textStyle.Title_Light, styles.HeaderText]}>
-                ( AAPL )
+                ( {walletData.walletAbbreviation} )
               </Text>
             </View>
           </View>
-          <View style={styles.ContentContainer}>
-            <Text style={[textStyle.H2_Regular, styles.ContentText]}>
-              Rp.7.820.300,00
+          <View style={styles.NumberContainer}>
+            <Text
+              style={[
+                isPortrait ? textStyle.H2_Bold : textStyle.H1_Bold,
+                styles.NumberText,
+              ]}>
+              {FormatCurrency(walletData.balance, walletData.currency).format}
             </Text>
-            <Text style={[textStyle.Content_Light, styles.ContentText]}>
-              +50.233 (5.25%)
+            <Text style={[textStyle.Content_Regular, styles.NumberText]}>
+              +{walletData.monthDiff} ({walletData.percentDiff}%)
+            </Text>
+          </View>
+          <View style={styles.PersonContainer}>
+            <Text style={[textStyle.SubTitle_Light, styles.CardNameText]}>
+              {walletData.type}
+            </Text>
+            <Text style={[textStyle.H3_Regular, styles.CardNumberText]}>
+              {walletData.holderName}
+            </Text>
+            <Text style={[textStyle.Title_Light, styles.CardNameText]}>
+              {walletData.holderNumber}
             </Text>
           </View>
         </TouchableOpacity>
@@ -71,6 +124,7 @@ const styles = StyleSheet.create({
     backgroundColor: 'skyblue',
     // justifyContent: 'space-between',
     padding: 12,
+    overflow: 'hidden',
   },
   CardPortrait: {
     width: 254,
@@ -89,7 +143,7 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
     alignItems: 'center',
   },
-  HeaderText: {textAlign: 'right'},
+  HeaderText: {textAlign: 'right', color: GlobalColor.light},
   HeaderTextContainer: {
     // transform: [{rotate: '90deg'}],
     // position: 'absolute',
@@ -97,11 +151,14 @@ const styles = StyleSheet.create({
     // top: 0,
     // backgroundColor: 'red',
   },
-  ContentContainer: {
-    padding: 12,
+  PersonContainer: {},
+  CardNumberText: {color: GlobalColor.light, letterSpacing: 4},
+  CardNameText: {color: GlobalColor.light},
+  NumberContainer: {
+    paddingVertical: 12,
     borderRadius: 12,
-    backgroundColor: GlobalColor.overlay,
+    // backgroundColor: GlobalColor.overlay,
   },
-  ContentText: {color: GlobalColor.light},
+  NumberText: {color: GlobalColor.light},
   EmptyContainer: {flex: 1, alignItems: 'center', justifyContent: 'center'},
 });
