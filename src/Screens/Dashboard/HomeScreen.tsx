@@ -52,6 +52,10 @@ const HomeScreen = ({navigation}: IDashNavPropTypes<'HomeScreen'>) => {
 
   const onNotificationPressHandler = () => {};
 
+  const onCardEmptyPressHandler = () => {
+    navigation.navigate('CreateCardScreen');
+  };
+
   const balance = useMemo(
     () => FormatCurrency(accountData?.totalBalance!, currency),
     [accountData?.totalBalance],
@@ -88,7 +92,7 @@ const HomeScreen = ({navigation}: IDashNavPropTypes<'HomeScreen'>) => {
           <Text style={textStyle.Content_Regular}>See All</Text>
         </View>
         <ScrollView horizontal>
-          <WalletCard isEmpty />
+          <WalletCard isEmpty onPress={onCardEmptyPressHandler} />
           <WalletCard />
         </ScrollView>
       </View>

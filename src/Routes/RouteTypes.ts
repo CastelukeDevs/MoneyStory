@@ -25,6 +25,7 @@ export type IMainNav = {
   MainDashboard: NavigatorScreenParams<IDashNav>;
 
   PasswordScreen: undefined;
+  CreateCardScreen: undefined;
 };
 
 export type IMainNavPropTypes<T extends keyof IMainNav> = StackScreenProps<
