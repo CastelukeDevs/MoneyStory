@@ -17,11 +17,6 @@ const WalletCard = (props: IWalletCardProps) => {
   const isDisabled = props.disable || typeof props.onPress === 'undefined';
   const isPortrait = props.orientation === 'portrait';
 
-  const widthSize = 254;
-  const heightSize = 355;
-
-  console.log('isDisabled', isDisabled);
-
   return (
     <View
       style={[
