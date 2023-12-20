@@ -5,10 +5,10 @@ import WalletCard from '@Components/WalletCard';
 import Button from '@Components/Common/Button';
 import {useSafeAreaInsets} from 'react-native-safe-area-context';
 
-type ICardImageFragmentProps = {
+type ICardCompletionFragmentProps = {
   onNextPress: () => void;
 };
-const CardImageFragment = (props: ICardImageFragmentProps) => {
+const CardCompletionFragment = (props: ICardCompletionFragmentProps) => {
   const width = useWindowDimensions().width;
   const inset = useSafeAreaInsets().bottom;
 
@@ -25,11 +25,11 @@ const CardImageFragment = (props: ICardImageFragmentProps) => {
       <View style={{alignItems: 'center', flex: 1}}>
         <WalletCard orientation="landscape" />
       </View>
-      <Button onPress={props.onNextPress} label="Next" mode="contained" />
+      <Button onPress={props.onNextPress} label="Finish" mode="contained" />
     </View>
   );
 };
 
-export default CardImageFragment;
+export default CardCompletionFragment;
 
 const styles = StyleSheet.create({});

@@ -92,7 +92,11 @@ const HomeScreen = ({navigation}: IDashNavPropTypes<'HomeScreen'>) => {
           <Text style={textStyle.Content_Regular}>See All</Text>
         </View>
         <ScrollView horizontal>
-          <WalletCard isEmpty onPress={onCardEmptyPressHandler} />
+          <WalletCard
+            isEmpty
+            onPress={onCardEmptyPressHandler}
+            orientation="portrait"
+          />
           <WalletCard />
         </ScrollView>
       </View>

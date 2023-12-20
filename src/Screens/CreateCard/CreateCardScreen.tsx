@@ -12,11 +12,13 @@ import {IMainNavPropTypes} from '@Routes/RouteTypes';
 
 import {textStyle} from '@Utilities/Styles/GlobalStyle';
 
-import Frag2 from './Fragment/Frag2';
+import CardLogoFragment from './Fragment/CardLogoFragment';
 import CardImageFragment from './Fragment/CardImageFragment';
 
 import ProgressBar from '@Components/Common/ProgressBar';
 import Header from '@Components/Header';
+import CardDetailsFragment from './Fragment/CardDetailsFragment';
+import CardCompletionFragment from './Fragment/CardCompletionFragment';
 
 const CreateCardScreen = (props: IMainNavPropTypes<'CreateCardScreen'>) => {
   const inset = useSafeAreaInsets();
@@ -51,9 +53,13 @@ const CreateCardScreen = (props: IMainNavPropTypes<'CreateCardScreen'>) => {
   const getSubHeaderTitle = () => {
     switch (page) {
       case 1:
-        return 'Add new card image';
+        return 'Add new wallet card image';
       case 2:
-        return 'Select card logo';
+        return 'Select wallet card logo';
+      case 3:
+        return 'Complete your wallet card details';
+      case 4:
+        return 'Confirm your new wallet card';
       default:
         return 'Create new card';
     }
@@ -65,7 +71,7 @@ const CreateCardScreen = (props: IMainNavPropTypes<'CreateCardScreen'>) => {
       <View style={styles.SubHeaderContainer}>
         <Text style={textStyle.H3_Bold}>{getSubHeaderTitle()}</Text>
         <View style={{height: 18}} />
-        <ProgressBar indicatorActive={page} />
+        <ProgressBar indicatorCount={4} indicatorActive={page} />
       </View>
 
       {/* <Button label="Back" onPress={() => props.navigation.goBack()} /> */}
@@ -85,7 +91,9 @@ const CreateCardScreen = (props: IMainNavPropTypes<'CreateCardScreen'>) => {
         bounces={false}
         scrollEventThrottle={16}>
         <CardImageFragment onNextPress={onNextHandler} />
-        <Frag2 />
+        <CardLogoFragment onNextPress={onNextHandler} />
+        <CardDetailsFragment onNextPress={onNextHandler} />
+        <CardCompletionFragment onNextPress={onNextHandler} />
       </ScrollView>
       {/* <Button label="Next" onPress={onNextHandler} /> */}
     </View>
