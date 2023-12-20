@@ -10,14 +10,24 @@ type IWalletCardProps = {
   isEmpty?: boolean;
   onPress?: () => void;
   disable?: boolean;
+  orientation?: 'portrait' | 'landscape';
 };
 
 const WalletCard = (props: IWalletCardProps) => {
   const isDisabled = props.disable || typeof props.onPress === 'undefined';
+  const isPortrait = props.orientation === 'portrait';
+
+  const widthSize = 254;
+  const heightSize = 355;
+
   console.log('isDisabled', isDisabled);
 
   return (
-    <View style={styles.RootComponentContainer}>
+    <View
+      style={[
+        isPortrait ? styles.CardPortrait : styles.CardLandscape,
+        styles.RootComponentContainer,
+      ]}>
       {!props.isEmpty ? (
         <TouchableOpacity
           style={styles.ComponentContainer}
@@ -59,12 +69,20 @@ export default WalletCard;
 
 const styles = StyleSheet.create({
   RootComponentContainer: {
-    width: 254,
-    height: 355,
+    // width: 254,
+    // height: 355,
     borderRadius: 12,
     backgroundColor: 'skyblue',
     // justifyContent: 'space-between',
     padding: 12,
+  },
+  CardPortrait: {
+    width: 254,
+    height: 355,
+  },
+  CardLandscape: {
+    width: 355,
+    height: 254,
   },
   ComponentContainer: {
     flex: 1,
