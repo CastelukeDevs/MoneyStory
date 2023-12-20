@@ -4,11 +4,11 @@ import {StyleSheet, Text, View, useWindowDimensions} from 'react-native';
 import WalletCard from '@Components/WalletCard';
 import Button from '@Components/Common/Button';
 import {useSafeAreaInsets} from 'react-native-safe-area-context';
-import {IWalletCard} from '@Types/WalletTypes';
+import {IWalletMain} from '@Types/WalletTypes';
 
 type ICardCompletionFragmentProps = {
   onNextPress: () => void;
-  cardData: IWalletCard;
+  cardData: IWalletMain;
 };
 const CardCompletionFragment = (props: ICardCompletionFragmentProps) => {
   const width = useWindowDimensions().width;

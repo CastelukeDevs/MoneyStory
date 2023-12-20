@@ -2,7 +2,7 @@ import React, {useEffect, useMemo, useState} from 'react';
 import {FlatList, StyleSheet, View, useWindowDimensions} from 'react-native';
 import {useSafeAreaInsets} from 'react-native-safe-area-context';
 
-import {IWalletCard} from '@Types/WalletTypes';
+import {IWalletMain} from '@Types/WalletTypes';
 import LogoList from '@Utilities/LogoList';
 
 import WalletCard from '@Components/WalletCard';
@@ -10,9 +10,9 @@ import Button from '@Components/Common/Button';
 import IconButton from '@Components/Common/IconButton';
 
 type ICardLogoFragmentProps = {
-  onNextPress: (cardData: IWalletCard) => void;
-  onDataChange: (cardData: IWalletCard) => void;
-  cardData: IWalletCard;
+  onNextPress: (cardData: IWalletMain) => void;
+  onDataChange: (cardData: IWalletMain) => void;
+  cardData: IWalletMain;
 };
 const CardLogoFragment = (props: ICardLogoFragmentProps) => {
   const width = useWindowDimensions().width;
@@ -24,7 +24,7 @@ const CardLogoFragment = (props: ICardLogoFragmentProps) => {
   const iconMargin =
     (componentWidth - iconSizeApproximate * iconColumns) / iconColumns / 2;
 
-  const [wallet, setWallet] = useState<IWalletCard>(props.cardData);
+  const [wallet, setWallet] = useState<IWalletMain>(props.cardData);
 
   useEffect(() => {
     setWallet(props.cardData);
@@ -58,7 +58,7 @@ const CardLogoFragment = (props: ICardLogoFragmentProps) => {
                 <IconButton
                   name={item.name}
                   onPress={() => {
-                    const newWallet: IWalletCard = {...wallet, logo: item.name};
+                    const newWallet: IWalletMain = {...wallet, logo: item.name};
                     props.onDataChange(newWallet);
                   }}
                 />

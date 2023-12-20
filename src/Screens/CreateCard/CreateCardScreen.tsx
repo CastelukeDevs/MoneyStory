@@ -21,7 +21,7 @@ import Header from '@Components/Header';
 
 import CardDetailsFragment from './Fragment/CardDetailsFragment';
 import CardCompletionFragment from './Fragment/CardCompletionFragment';
-import {IWalletCard} from '@Types/WalletTypes';
+import {IWalletMain} from '@Types/WalletTypes';
 
 const CreateCardScreen = (props: IMainNavPropTypes<'CreateCardScreen'>) => {
   const width = useWindowDimensions().width;
@@ -39,7 +39,7 @@ const CreateCardScreen = (props: IMainNavPropTypes<'CreateCardScreen'>) => {
     scrollViewRef.current?.scrollTo({x: targetPage * width - width});
   };
 
-  const onNextHandler = (walletPassed: IWalletCard) => {
+  const onNextHandler = (walletPassed: IWalletMain) => {
     goToPage(page + 1);
     setCardData(walletPassed);
 
@@ -72,7 +72,7 @@ const CreateCardScreen = (props: IMainNavPropTypes<'CreateCardScreen'>) => {
     }
   };
 
-  const onDataChangeHandler = (passedWallet: IWalletCard) => {
+  const onDataChangeHandler = (passedWallet: IWalletMain) => {
     setCardData(passedWallet);
   };
 

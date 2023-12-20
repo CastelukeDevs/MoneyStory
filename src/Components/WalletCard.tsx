@@ -12,7 +12,7 @@ import LinearGradient from 'react-native-linear-gradient';
 import {textStyle} from '@Utilities/Styles/GlobalStyle';
 import GlobalColor from '@Utilities/Styles/GlobalColor';
 
-import {IWallet, IWalletCard} from '@Types/WalletTypes';
+import {IWallet, IWalletMain} from '@Types/WalletTypes';
 
 import {defaultWalletData} from '@Utilities/DefaultData/walletData';
 
@@ -25,7 +25,7 @@ type IWalletCardProps = {
   onPress?: () => void;
   disable?: boolean;
   orientation?: 'portrait' | 'landscape';
-  wallet?: IWalletCard | IWallet;
+  wallet?: IWalletMain | IWallet;
   style?: ViewStyle;
 };
 

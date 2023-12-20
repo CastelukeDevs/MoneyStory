@@ -9,7 +9,7 @@ import {
 } from 'react-native';
 import {useSafeAreaInsets} from 'react-native-safe-area-context';
 
-import {IWalletCard} from '@Types/WalletTypes';
+import {IWalletMain} from '@Types/WalletTypes';
 
 import WalletCard from '@Components/WalletCard';
 import Button from '@Components/Common/Button';
@@ -17,9 +17,9 @@ import TextInput from '@Components/Common/TextInput';
 import {textStyle} from '@Utilities/Styles/GlobalStyle';
 
 type ICardDetailsFragmentProps = {
-  onNextPress: (cardData: IWalletCard) => void;
-  onDataChange: (cardData: IWalletCard) => void;
-  cardData: IWalletCard;
+  onNextPress: (cardData: IWalletMain) => void;
+  onDataChange: (cardData: IWalletMain) => void;
+  cardData: IWalletMain;
 };
 const CardDetailsFragment = (props: ICardDetailsFragmentProps) => {
   const width = useWindowDimensions().width;
@@ -59,7 +59,7 @@ const CardDetailsFragment = (props: ICardDetailsFragmentProps) => {
           <TextInput
             value={wallet.walletName}
             onChangeText={v => {
-              const newWallet: IWalletCard = {...wallet, walletName: v};
+              const newWallet: IWalletMain = {...wallet, walletName: v};
               props.onDataChange(newWallet);
             }}
             label="Card Name"
@@ -73,7 +73,7 @@ const CardDetailsFragment = (props: ICardDetailsFragmentProps) => {
             ref={abbrRef}
             value={wallet.walletAbbreviation}
             onChangeText={v => {
-              const newWallet: IWalletCard = {...wallet, walletAbbreviation: v};
+              const newWallet: IWalletMain = {...wallet, walletAbbreviation: v};
               props.onDataChange(newWallet);
             }}
             label="Card Abbreviation"
@@ -87,7 +87,7 @@ const CardDetailsFragment = (props: ICardDetailsFragmentProps) => {
             ref={balanceRef}
             value={wallet.balance.toString()}
             onChangeText={v => {
-              const newWallet: IWalletCard = {
+              const newWallet: IWalletMain = {
                 ...wallet,
                 balance: parseInt(v),
               };
@@ -106,7 +106,7 @@ const CardDetailsFragment = (props: ICardDetailsFragmentProps) => {
             ref={holderNameRef}
             value={wallet.holderName}
             onChangeText={v => {
-              const newWallet: IWalletCard = {
+              const newWallet: IWalletMain = {
                 ...wallet,
                 holderName: v,
               };
@@ -124,7 +124,7 @@ const CardDetailsFragment = (props: ICardDetailsFragmentProps) => {
             ref={holderNumberRef}
             value={wallet.holderNumber}
             onChangeText={v => {
-              const newWallet: IWalletCard = {
+              const newWallet: IWalletMain = {
                 ...wallet,
                 holderNumber: v,
               };

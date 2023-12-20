@@ -4,21 +4,21 @@ import {useSafeAreaInsets} from 'react-native-safe-area-context';
 import {Asset, launchImageLibrary} from 'react-native-image-picker';
 
 import {PickerOption} from '@Utilities/ImagePicker';
-import {IWallet, IWalletCard} from '@Types/WalletTypes';
+import {IWallet, IWalletMain} from '@Types/WalletTypes';
 
 import WalletCard from '@Components/WalletCard';
 import Button from '@Components/Common/Button';
 
 type ICardImageFragmentProps = {
-  onNextPress: (cardData: IWalletCard) => void;
-  onDataChange: (cardData: IWalletCard) => void;
-  cardData: IWalletCard;
+  onNextPress: (cardData: IWalletMain) => void;
+  onDataChange: (cardData: IWalletMain) => void;
+  cardData: IWalletMain;
 };
 const CardImageFragment = (props: ICardImageFragmentProps) => {
   const width = useWindowDimensions().width;
   const inset = useSafeAreaInsets().bottom;
 
-  const [wallet, setWallet] = useState<IWalletCard>(props.cardData);
+  const [wallet, setWallet] = useState<IWalletMain>(props.cardData);
 
   useEffect(() => {
     setWallet(props.cardData);
@@ -28,7 +28,7 @@ const CardImageFragment = (props: ICardImageFragmentProps) => {
     await launchImageLibrary(PickerOption).then(res => {
       const assets = res.assets?.[0];
 
-      const newWallet: IWalletCard = {...wallet, imageUrl: assets?.uri!};
+      const newWallet: IWalletMain = {...wallet, imageUrl: assets?.uri!};
       props.onDataChange(newWallet);
     });
   };

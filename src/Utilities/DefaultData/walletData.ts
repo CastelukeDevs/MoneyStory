@@ -1,6 +1,6 @@
-import {IWalletCard} from '@Types/WalletTypes';
+import {IWalletMain} from '@Types/WalletTypes';
 
-export const defaultWalletData: IWalletCard = {
+export const defaultWalletData: IWalletMain = {
   logo: 'logo-google',
   balance: 0,
   currency: 'IDR',
