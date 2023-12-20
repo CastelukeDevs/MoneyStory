@@ -41,6 +41,8 @@ type ITextInputProps = {
   containerStyle?: ViewStyle;
   options?: TextInputProps;
   isError?: boolean;
+  showLabel?: boolean;
+  labelStyle?: TextStyle;
 } & IMergedTextInput &
   TextInputProps;
 
@@ -87,6 +89,16 @@ const TextInput = forwardRef<TextInputReact, ITextInputProps>((props, ref) => {
 
   return (
     <>
+      {props.showLabel && (
+        <Text
+          style={[
+            textStyle.SubTitle_Regular,
+            styles.LabelText,
+            props.labelStyle,
+          ]}>
+          {props.label}
+        </Text>
+      )}
       <Animated.View
         style={[
           styles.CoreContainer,
@@ -175,6 +187,11 @@ const styles = StyleSheet.create({
   ContainerUnderlinedMode: {
     paddingBottom: 4,
     borderBottomWidth: 1,
+    marginBottom: 4,
+  },
+  LabelText: {
+    textAlign: 'left',
+    width: '100%',
     marginBottom: 4,
   },
 });
