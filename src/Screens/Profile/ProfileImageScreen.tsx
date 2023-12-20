@@ -18,6 +18,7 @@ import GlobalColor from '@Utilities/Styles/GlobalColor';
 
 import Button from '@Components/Common/Button';
 import {INewUserData} from '@Types/UserType';
+import {PickerOption} from '@Utilities/ImagePicker';
 
 const SignUpImageScreen = (props: IMainNavPropTypes<'ProfileImageScreen'>) => {
   const payload = props.route.params;
@@ -37,11 +38,7 @@ const SignUpImageScreen = (props: IMainNavPropTypes<'ProfileImageScreen'>) => {
   const imageSize = (width / 4) * 3;
 
   const onImagePress = async () => {
-    await launchImageLibrary({
-      mediaType: 'photo',
-      maxWidth: 1024,
-      maxHeight: 1024,
-    }).then(res => {
+    await launchImageLibrary(PickerOption).then(res => {
       console.log('image result', res);
       setImage(res.assets?.[0]);
     });
