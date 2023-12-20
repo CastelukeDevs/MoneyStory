@@ -8,15 +8,34 @@ export type ITransaction = {
 };
 
 export type IWallet = {
-  name: string;
+  id: string;
   ownerUID: string;
-  cardNumber: string;
-  logo?: string;
+  logo: string;
+  walletName: string;
+  walletAbbreviation: string;
+  holderName: string;
+  holderNumber: string;
   balance: number;
   currency: ICurrencyTypes;
   transaction: String[];
-  type: IWalletType;
   imageUrl: string;
-  createdAt: number;
-  updatedAt: number;
+  monthDiff: number;
+  percentDiff: number;
+  type: IWalletType;
+  createdAt: string;
+  updatedAt: string;
+};
+
+export type IWalletCard = {
+  logo: string;
+  walletName: string;
+  walletAbbreviation: string;
+  holderName: string;
+  holderNumber: string;
+  balance: number;
+  currency: ICurrencyTypes;
+  imageUrl: string;
+  monthDiff: number;
+  percentDiff: number;
+  type: IWalletType;
 };
