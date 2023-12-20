@@ -1,29 +1,45 @@
-import React, {useRef, useState} from 'react';
+import React, {useEffect, useRef, useState} from 'react';
 import {
   StyleSheet,
   TextInput as RNInput,
   View,
   useWindowDimensions,
+  Text,
+  ScrollView,
 } from 'react-native';
+import {useSafeAreaInsets} from 'react-native-safe-area-context';
+
+import {IWalletCard} from '@Types/WalletTypes';
 
 import WalletCard from '@Components/WalletCard';
 import Button from '@Components/Common/Button';
-import {useSafeAreaInsets} from 'react-native-safe-area-context';
 import TextInput from '@Components/Common/TextInput';
+import {textStyle} from '@Utilities/Styles/GlobalStyle';
 
 type ICardDetailsFragmentProps = {
-  onNextPress: () => void;
+  onNextPress: (cardData: IWalletCard) => void;
+  onDataChange: (cardData: IWalletCard) => void;
+  cardData: IWalletCard;
 };
 const CardDetailsFragment = (props: ICardDetailsFragmentProps) => {
   const width = useWindowDimensions().width;
   const inset = useSafeAreaInsets().bottom;
 
+  const nameRef = useRef<RNInput>(null);
   const abbrRef = useRef<RNInput>(null);
   const balanceRef = useRef<RNInput>(null);
+  const holderNameRef = useRef<RNInput>(null);
+  const holderNumberRef = useRef<RNInput>(null);
 
-  const [cardName, setCardName] = useState('');
-  const [cardAbbreviation, setCardAbbreviation] = useState('');
-  const [balance, setBalance] = useState('');
+  const [wallet, setWallet] = useState(props.cardData);
+
+  useEffect(() => {
+    setWallet(props.cardData);
+  }, [props.cardData]);
+
+  const onNextPressHandler = () => {
+    props.onNextPress(wallet);
+  };
 
   return (
     <View
@@ -34,46 +50,98 @@ const CardDetailsFragment = (props: ICardDetailsFragmentProps) => {
         paddingBottom: inset || 14,
       }}>
       <View style={{alignItems: 'center', flex: 1}}>
-        <WalletCard orientation="landscape" />
-        {/* <Text
-          style={[
-            textStyle.H3_Bold,
-            {textAlign: 'left', width: '100%', marginTop: 18},
-          ]}>
-          Card details
-        </Text> */}
-        <TextInput
-          value={cardName}
-          onChangeText={setCardName}
-          label="Card Name"
-          iconLeading={{name: 'card-outline'}}
-          containerStyle={{marginTop: 12}}
-          mode="Outlined"
-          onSubmitEditing={() => abbrRef.current?.focus()}
+        <WalletCard
+          orientation="landscape"
+          wallet={props.cardData}
+          style={{marginBottom: 18}}
         />
-        <TextInput
-          ref={abbrRef}
-          value={cardAbbreviation}
-          onChangeText={setCardAbbreviation}
-          label="Card Abbreviation"
-          iconLeading={{name: 'card-outline'}}
-          containerStyle={{marginTop: 12}}
-          mode="Outlined"
-          onSubmitEditing={() => balanceRef.current?.focus()}
-        />
-        <TextInput
-          ref={balanceRef}
-          value={balance}
-          onChangeText={setBalance}
-          label="Initial Balance"
-          iconLeading={{name: 'cash-outline'}}
-          containerStyle={{marginTop: 12}}
-          mode="Outlined"
-          inputMode="numeric"
-          onSubmitEditing={props.onNextPress}
-        />
+        <ScrollView style={{width: '100%'}} bounces={false}>
+          <TextInput
+            value={wallet.walletName}
+            onChangeText={v => {
+              const newWallet: IWalletCard = {...wallet, walletName: v};
+              props.onDataChange(newWallet);
+            }}
+            label="Card Name"
+            iconLeading={{name: 'card-outline'}}
+            containerStyle={{marginBottom: 12}}
+            mode="Outlined"
+            showLabel
+            onSubmitEditing={() => abbrRef.current?.focus()}
+          />
+          <TextInput
+            ref={abbrRef}
+            value={wallet.walletAbbreviation}
+            onChangeText={v => {
+              const newWallet: IWalletCard = {...wallet, walletAbbreviation: v};
+              props.onDataChange(newWallet);
+            }}
+            label="Card Abbreviation"
+            iconLeading={{name: 'card-outline'}}
+            containerStyle={{marginBottom: 12}}
+            mode="Outlined"
+            showLabel
+            onSubmitEditing={() => balanceRef.current?.focus()}
+          />
+          <TextInput
+            ref={balanceRef}
+            value={wallet.balance.toString()}
+            onChangeText={v => {
+              const newWallet: IWalletCard = {
+                ...wallet,
+                balance: parseInt(v),
+              };
+              props.onDataChange(newWallet);
+            }}
+            label="Initial Balance"
+            iconLeading={{name: 'cash-outline'}}
+            containerStyle={{marginBottom: 12}}
+            mode="Outlined"
+            inputMode="numeric"
+            showLabel
+            onSubmitEditing={() => holderNameRef.current?.focus()}
+            // onSubmitEditing={onNextPressHandler}
+          />
+          <TextInput
+            ref={holderNameRef}
+            value={wallet.holderName}
+            onChangeText={v => {
+              const newWallet: IWalletCard = {
+                ...wallet,
+                holderName: v,
+              };
+              props.onDataChange(newWallet);
+            }}
+            label="Holder Name"
+            iconLeading={{name: 'card-outline'}}
+            containerStyle={{marginBottom: 12}}
+            mode="Outlined"
+            showLabel
+            onSubmitEditing={() => holderNumberRef.current?.focus()}
+            // showLabel
+          />
+          <TextInput
+            ref={holderNumberRef}
+            value={wallet.holderNumber}
+            onChangeText={v => {
+              const newWallet: IWalletCard = {
+                ...wallet,
+                holderNumber: v,
+              };
+              props.onDataChange(newWallet);
+            }}
+            label="Holder Number"
+            iconLeading={{name: 'card-outline'}}
+            containerStyle={{marginBottom: 12}}
+            mode="Outlined"
+            inputMode="numeric"
+            showLabel
+            // showLabel
+            onSubmitEditing={onNextPressHandler}
+          />
+        </ScrollView>
       </View>
-      <Button onPress={props.onNextPress} label="Next" mode="contained" />
+      <Button onPress={onNextPressHandler} label="Next" mode="contained" />
     </View>
   );
 };

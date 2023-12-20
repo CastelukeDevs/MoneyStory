@@ -1,4 +1,4 @@
-import React, {useRef, useState} from 'react';
+import React, {useEffect, useRef, useState} from 'react';
 import {
   ScrollView,
   StyleSheet,
@@ -6,34 +6,43 @@ import {
   View,
   useWindowDimensions,
 } from 'react-native';
-import {useSafeAreaInsets} from 'react-native-safe-area-context';
 
 import {IMainNavPropTypes} from '@Routes/RouteTypes';
+import {Asset} from 'react-native-image-picker';
 
 import {textStyle} from '@Utilities/Styles/GlobalStyle';
+import {defaultWalletData} from '@Utilities/DefaultData/walletData';
 
 import CardLogoFragment from './Fragment/CardLogoFragment';
 import CardImageFragment from './Fragment/CardImageFragment';
 
 import ProgressBar from '@Components/Common/ProgressBar';
 import Header from '@Components/Header';
+
 import CardDetailsFragment from './Fragment/CardDetailsFragment';
 import CardCompletionFragment from './Fragment/CardCompletionFragment';
+import {IWalletCard} from '@Types/WalletTypes';
 
 const CreateCardScreen = (props: IMainNavPropTypes<'CreateCardScreen'>) => {
-  const inset = useSafeAreaInsets();
   const width = useWindowDimensions().width;
 
-  const [page, setPage] = useState(1);
-
   const scrollViewRef = useRef<ScrollView>(null);
+
+  const [page, setPage] = useState(1);
+  const [cardData, setCardData] = useState(defaultWalletData);
+
+  useEffect(() => {
+    console.log('card data updated');
+  }, [cardData]);
 
   const goToPage = (targetPage: number) => {
     scrollViewRef.current?.scrollTo({x: targetPage * width - width});
   };
 
-  const onNextHandler = () => {
+  const onNextHandler = (walletPassed: IWalletCard) => {
     goToPage(page + 1);
+    setCardData(walletPassed);
+
     // scrollViewRef.current?.scrollTo({x: (page + 1) * width});
     // setPage(page + 1);
   };
@@ -48,8 +57,6 @@ const CreateCardScreen = (props: IMainNavPropTypes<'CreateCardScreen'>) => {
     }
   };
 
-  console.log('current page', page);
-
   const getSubHeaderTitle = () => {
     switch (page) {
       case 1:
@@ -63,6 +70,10 @@ const CreateCardScreen = (props: IMainNavPropTypes<'CreateCardScreen'>) => {
       default:
         return 'Create new card';
     }
+  };
+
+  const onDataChangeHandler = (passedWallet: IWalletCard) => {
+    setCardData(passedWallet);
   };
 
   return (
@@ -81,6 +92,7 @@ const CreateCardScreen = (props: IMainNavPropTypes<'CreateCardScreen'>) => {
         horizontal
         snapToInterval={width}
         // disableScrollViewPanResponder
+        scrollEnabled={false}
         onMomentumScrollEnd={ev => {
           const scroll = ev.nativeEvent.contentOffset.x;
           const currentPage = (scroll + width) / width;
@@ -90,10 +102,22 @@ const CreateCardScreen = (props: IMainNavPropTypes<'CreateCardScreen'>) => {
         showsHorizontalScrollIndicator={false}
         bounces={false}
         scrollEventThrottle={16}>
-        <CardImageFragment onNextPress={onNextHandler} />
-        <CardLogoFragment onNextPress={onNextHandler} />
-        <CardDetailsFragment onNextPress={onNextHandler} />
-        <CardCompletionFragment onNextPress={onNextHandler} />
+        <CardImageFragment
+          cardData={cardData}
+          onNextPress={onNextHandler}
+          onDataChange={onDataChangeHandler}
+        />
+        <CardLogoFragment
+          cardData={cardData}
+          onNextPress={onNextHandler}
+          onDataChange={onDataChangeHandler}
+        />
+        <CardDetailsFragment
+          onNextPress={onNextHandler}
+          cardData={cardData}
+          onDataChange={onDataChangeHandler}
+        />
+        <CardCompletionFragment cardData={cardData} onNextPress={() => {}} />
       </ScrollView>
       {/* <Button label="Next" onPress={onNextHandler} /> */}
     </View>

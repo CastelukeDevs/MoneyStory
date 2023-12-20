@@ -1,18 +1,45 @@
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import {StyleSheet, Text, View, useWindowDimensions} from 'react-native';
+import {useSafeAreaInsets} from 'react-native-safe-area-context';
+import {Asset, launchImageLibrary} from 'react-native-image-picker';
+
+import {PickerOption} from '@Utilities/ImagePicker';
+import {IWallet, IWalletCard} from '@Types/WalletTypes';
 
 import WalletCard from '@Components/WalletCard';
 import Button from '@Components/Common/Button';
-import {useSafeAreaInsets} from 'react-native-safe-area-context';
 
 type ICardImageFragmentProps = {
-  onNextPress: () => void;
+  onNextPress: (cardData: IWalletCard) => void;
+  onDataChange: (cardData: IWalletCard) => void;
+  cardData: IWalletCard;
 };
 const CardImageFragment = (props: ICardImageFragmentProps) => {
   const width = useWindowDimensions().width;
   const inset = useSafeAreaInsets().bottom;
 
-  const [keyword, setKeyword] = useState('');
+  const [wallet, setWallet] = useState<IWalletCard>(props.cardData);
+
+  useEffect(() => {
+    setWallet(props.cardData);
+  }, [props.cardData]);
+
+  const onImagePress = async () => {
+    await launchImageLibrary(PickerOption).then(res => {
+      const assets = res.assets?.[0];
+
+      const newWallet: IWalletCard = {...wallet, imageUrl: assets?.uri!};
+      props.onDataChange(newWallet);
+    });
+  };
+
+  useEffect(() => {
+    setWallet(props.cardData);
+  }, [props.cardData]);
+
+  const onNextPressHandler = () => {
+    props.onNextPress(wallet);
+  };
 
   return (
     <View
@@ -23,9 +50,13 @@ const CardImageFragment = (props: ICardImageFragmentProps) => {
         paddingBottom: inset || 14,
       }}>
       <View style={{alignItems: 'center', flex: 1}}>
-        <WalletCard orientation="landscape" />
+        <WalletCard
+          wallet={props.cardData}
+          orientation="landscape"
+          onPress={onImagePress}
+        />
       </View>
-      <Button onPress={props.onNextPress} label="Next" mode="contained" />
+      <Button onPress={onNextPressHandler} label="Next" mode="contained" />
     </View>
   );
 };

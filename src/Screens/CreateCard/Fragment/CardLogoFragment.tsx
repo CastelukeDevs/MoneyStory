@@ -1,22 +1,18 @@
-import React from 'react';
-import {
-  FlatList,
-  ScrollView,
-  StyleSheet,
-  Text,
-  View,
-  useWindowDimensions,
-} from 'react-native';
+import React, {useEffect, useMemo, useState} from 'react';
+import {FlatList, StyleSheet, View, useWindowDimensions} from 'react-native';
+import {useSafeAreaInsets} from 'react-native-safe-area-context';
+
+import {IWalletCard} from '@Types/WalletTypes';
+import LogoList from '@Utilities/LogoList';
 
 import WalletCard from '@Components/WalletCard';
 import Button from '@Components/Common/Button';
-import {useSafeAreaInsets} from 'react-native-safe-area-context';
-import LogoList from '@Utilities/LogoList';
-import Icon from '@Components/Common/Icon';
 import IconButton from '@Components/Common/IconButton';
 
 type ICardLogoFragmentProps = {
-  onNextPress: () => void;
+  onNextPress: (cardData: IWalletCard) => void;
+  onDataChange: (cardData: IWalletCard) => void;
+  cardData: IWalletCard;
 };
 const CardLogoFragment = (props: ICardLogoFragmentProps) => {
   const width = useWindowDimensions().width;
@@ -28,6 +24,17 @@ const CardLogoFragment = (props: ICardLogoFragmentProps) => {
   const iconMargin =
     (componentWidth - iconSizeApproximate * iconColumns) / iconColumns / 2;
 
+  const [wallet, setWallet] = useState<IWalletCard>(props.cardData);
+
+  useEffect(() => {
+    setWallet(props.cardData);
+  }, [props.cardData]);
+
+  const onNextPressHandler = () => {
+    props.onNextPress(wallet);
+    // props.onIconPress(wallet);
+  };
+
   return (
     <View
       style={{
@@ -37,7 +44,7 @@ const CardLogoFragment = (props: ICardLogoFragmentProps) => {
         paddingBottom: inset || 14,
       }}>
       <View style={{alignItems: 'center', flex: 1}}>
-        <WalletCard orientation="landscape" />
+        <WalletCard orientation="landscape" wallet={props.cardData} />
         <FlatList
           style={{marginVertical: 12}}
           data={LogoList}
@@ -51,7 +58,8 @@ const CardLogoFragment = (props: ICardLogoFragmentProps) => {
                 <IconButton
                   name={item.name}
                   onPress={() => {
-                    console.log('pressed', item.name);
+                    const newWallet: IWalletCard = {...wallet, logo: item.name};
+                    props.onDataChange(newWallet);
                   }}
                 />
               </View>
@@ -59,7 +67,7 @@ const CardLogoFragment = (props: ICardLogoFragmentProps) => {
           }}
         />
       </View>
-      <Button onPress={props.onNextPress} label="Next" mode="contained" />
+      <Button onPress={onNextPressHandler} label="Next" mode="contained" />
     </View>
   );
 };
