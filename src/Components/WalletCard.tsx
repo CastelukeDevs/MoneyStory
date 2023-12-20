@@ -15,7 +15,8 @@ type IWalletCardProps = {
 
 const WalletCard = (props: IWalletCardProps) => {
   const isDisabled = props.disable || typeof props.onPress === 'undefined';
-  const isPortrait = props.orientation === 'portrait';
+  const orientation = props.orientation || 'portrait';
+  const isPortrait = orientation === 'portrait';
 
   return (
     <View
