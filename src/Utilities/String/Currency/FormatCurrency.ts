@@ -4,7 +4,7 @@ import CurrencyList from './CurrencyList';
 const getCurrencyByAbbr = (abbr: ICurrencyTypes) => {
   return CurrencyList.find(currency => currency.abbreviation === abbr);
 };
-const formatter = (amount: number, code: ICurrencyTypes) => {
+const FormatCurrency = (amount: number, code: ICurrencyTypes) => {
   const [wholeNum, decimalNum] = amount.toString().split('.');
   const selectedCurrency = getCurrencyByAbbr(code);
 
@@ -25,4 +25,4 @@ const formatter = (amount: number, code: ICurrencyTypes) => {
   return {symbol, whole, decimal, format};
 };
 
-export default formatter;
+export default FormatCurrency;
