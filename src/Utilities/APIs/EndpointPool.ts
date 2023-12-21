@@ -1,7 +1,5 @@
 import {IEndpointPool} from './APIUtils';
 
-// import {IEndpointMethod} from './APIUtils';
-
 /**
  * This endpoint pool types accepts
  * @type IEndpointPool
@@ -58,6 +56,6 @@ const EndpointPool = [
     method: 'put',
     auth: true,
   },
-] as const satisfies readonly IEndpointPool[];
+] as const satisfies IEndpointPool[];
 
 export default EndpointPool;
