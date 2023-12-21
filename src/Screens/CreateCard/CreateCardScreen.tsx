@@ -39,24 +39,6 @@ const CreateCardScreen = (props: IMainNavPropTypes<'CreateCardScreen'>) => {
     scrollViewRef.current?.scrollTo({x: targetPage * width - width});
   };
 
-  const onNextHandler = (walletPassed: IWalletMain) => {
-    goToPage(page + 1);
-    setCardData(walletPassed);
-
-    // scrollViewRef.current?.scrollTo({x: (page + 1) * width});
-    // setPage(page + 1);
-  };
-
-  const onHeaderBackPressHandler = () => {
-    console.log('back');
-
-    if (page === 1) {
-      props.navigation.goBack();
-    } else {
-      goToPage(page - 1);
-    }
-  };
-
   const getSubHeaderTitle = () => {
     switch (page) {
       case 1:
@@ -72,9 +54,28 @@ const CreateCardScreen = (props: IMainNavPropTypes<'CreateCardScreen'>) => {
     }
   };
 
-  const onDataChangeHandler = (passedWallet: IWalletMain) => {
-    setCardData(passedWallet);
+  const onNextHandler = (walletPassed: IWalletMain) => {
+    goToPage(page + 1);
+    setCardData(walletPassed);
   };
+
+  const onHeaderBackPressHandler = () => {
+    console.log('back');
+
+    if (page === 1) {
+      props.navigation.goBack();
+    } else {
+      goToPage(page - 1);
+    }
+  };
+
+  const onDataChangeHandler = (passedWallet: IWalletMain) => {
+    console.log('triggered');
+
+    setCardData(prev => (prev = passedWallet));
+  };
+
+  const onSubmitDataHandler = () => {};
 
   return (
     <View style={{flex: 1}}>
@@ -117,7 +118,10 @@ const CreateCardScreen = (props: IMainNavPropTypes<'CreateCardScreen'>) => {
           cardData={cardData}
           onDataChange={onDataChangeHandler}
         />
-        <CardCompletionFragment cardData={cardData} onNextPress={() => {}} />
+        <CardCompletionFragment
+          cardData={cardData}
+          onNextPress={onSubmitDataHandler}
+        />
       </ScrollView>
       {/* <Button label="Next" onPress={onNextHandler} /> */}
     </View>

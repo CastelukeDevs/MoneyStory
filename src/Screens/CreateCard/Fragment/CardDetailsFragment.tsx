@@ -4,7 +4,6 @@ import {
   TextInput as RNInput,
   View,
   useWindowDimensions,
-  Text,
   ScrollView,
 } from 'react-native';
 import {useSafeAreaInsets} from 'react-native-safe-area-context';
@@ -14,7 +13,6 @@ import {IWalletMain} from '@Types/WalletTypes';
 import WalletCard from '@Components/WalletCard';
 import Button from '@Components/Common/Button';
 import TextInput from '@Components/Common/TextInput';
-import {textStyle} from '@Utilities/Styles/GlobalStyle';
 
 type ICardDetailsFragmentProps = {
   onNextPress: (cardData: IWalletMain) => void;
@@ -25,7 +23,6 @@ const CardDetailsFragment = (props: ICardDetailsFragmentProps) => {
   const width = useWindowDimensions().width;
   const inset = useSafeAreaInsets().bottom;
 
-  const nameRef = useRef<RNInput>(null);
   const abbrRef = useRef<RNInput>(null);
   const balanceRef = useRef<RNInput>(null);
   const holderNameRef = useRef<RNInput>(null);
@@ -49,7 +46,7 @@ const CardDetailsFragment = (props: ICardDetailsFragmentProps) => {
         paddingHorizontal: 14,
         paddingBottom: inset || 14,
       }}>
-      <View style={{alignItems: 'center', flex: 1}}>
+      <View style={styles.CardContainer}>
         <WalletCard
           orientation="landscape"
           wallet={props.cardData}
@@ -60,6 +57,7 @@ const CardDetailsFragment = (props: ICardDetailsFragmentProps) => {
             value={wallet.walletName}
             onChangeText={v => {
               const newWallet: IWalletMain = {...wallet, walletName: v};
+              console.log('text change', newWallet);
               props.onDataChange(newWallet);
             }}
             label="Card Name"
@@ -85,7 +83,7 @@ const CardDetailsFragment = (props: ICardDetailsFragmentProps) => {
           />
           <TextInput
             ref={balanceRef}
-            value={wallet.balance.toString()}
+            value={wallet.balance!.toString()}
             onChangeText={v => {
               const newWallet: IWalletMain = {
                 ...wallet,
@@ -100,7 +98,6 @@ const CardDetailsFragment = (props: ICardDetailsFragmentProps) => {
             inputMode="numeric"
             showLabel
             onSubmitEditing={() => holderNameRef.current?.focus()}
-            // onSubmitEditing={onNextPressHandler}
           />
           <TextInput
             ref={holderNameRef}
@@ -118,7 +115,6 @@ const CardDetailsFragment = (props: ICardDetailsFragmentProps) => {
             mode="Outlined"
             showLabel
             onSubmitEditing={() => holderNumberRef.current?.focus()}
-            // showLabel
           />
           <TextInput
             ref={holderNumberRef}
@@ -136,7 +132,6 @@ const CardDetailsFragment = (props: ICardDetailsFragmentProps) => {
             mode="Outlined"
             inputMode="numeric"
             showLabel
-            // showLabel
             onSubmitEditing={onNextPressHandler}
           />
         </ScrollView>
@@ -148,4 +143,6 @@ const CardDetailsFragment = (props: ICardDetailsFragmentProps) => {
 
 export default CardDetailsFragment;
 
-const styles = StyleSheet.create({});
+const styles = StyleSheet.create({
+  CardContainer: {alignItems: 'center', flex: 1},
+});

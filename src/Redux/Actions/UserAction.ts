@@ -1,5 +1,4 @@
 import {ActionReducerMapBuilder, createAsyncThunk} from '@reduxjs/toolkit';
-
 import APICall from '@Utilities/APIs/APICall';
 import {ICancelSignal, IEndpoint} from '@Utilities/APIs/APIUtils';
 

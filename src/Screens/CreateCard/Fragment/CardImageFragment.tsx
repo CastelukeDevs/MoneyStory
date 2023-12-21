@@ -49,7 +49,7 @@ const CardImageFragment = (props: ICardImageFragmentProps) => {
         paddingHorizontal: 14,
         paddingBottom: inset || 14,
       }}>
-      <View style={{alignItems: 'center', flex: 1}}>
+      <View style={styles.CardContainer}>
         <WalletCard
           wallet={props.cardData}
           orientation="landscape"
@@ -63,4 +63,6 @@ const CardImageFragment = (props: ICardImageFragmentProps) => {
 
 export default CardImageFragment;
 
-const styles = StyleSheet.create({});
+const styles = StyleSheet.create({
+  CardContainer: {alignItems: 'center', flex: 1},
+});

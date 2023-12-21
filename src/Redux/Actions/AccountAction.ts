@@ -4,10 +4,10 @@ import {
   PayloadAction,
   createAsyncThunk,
 } from '@reduxjs/toolkit';
-import {IAccount} from '@Types/AccountTypes';
-
 import APICall from '@Utilities/APIs/APICall';
 import {ICancelSignal, IEndpoint} from '@Utilities/APIs/APIUtils';
+
+import {IAccount} from '@Types/AccountTypes';
 
 const getAccountPrefix: IEndpoint = 'GET_ACCOUNT';
 

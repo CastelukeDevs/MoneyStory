@@ -43,7 +43,7 @@ const CardLogoFragment = (props: ICardLogoFragmentProps) => {
         paddingHorizontal: 14,
         paddingBottom: inset || 14,
       }}>
-      <View style={{alignItems: 'center', flex: 1}}>
+      <View style={styles.CardContainer}>
         <WalletCard orientation="landscape" wallet={props.cardData} />
         <FlatList
           style={{marginVertical: 12}}
@@ -74,4 +74,6 @@ const CardLogoFragment = (props: ICardLogoFragmentProps) => {
 
 export default CardLogoFragment;
 
-const styles = StyleSheet.create({});
+const styles = StyleSheet.create({
+  CardContainer: {alignItems: 'center', flex: 1},
+});

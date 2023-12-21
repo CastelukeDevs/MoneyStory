@@ -1,6 +1,7 @@
 import {CancelToken, GenericAbortSignal} from 'axios';
 import EndpointPool from './EndpointPool';
-import {IUserMain} from '@Types/UserType';
+import {IUserCreateUpdateData, IUserMain} from '@Types/UserType';
+import {IWalletCreateUpdateData} from '@Types/WalletTypes';
 
 enum EndpointMethod {
   get,
@@ -30,7 +31,7 @@ export type ICancelSignal = {
 
 export type IAPIsCallOption = {
   params?: any;
-  data?: IUserMain;
+  data?: any;
   auth?: boolean;
 } & ICancelSignal;
 
