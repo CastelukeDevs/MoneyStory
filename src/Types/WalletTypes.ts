@@ -15,7 +15,7 @@ export type IWalletMain = {
   holderName: string;
   holderNumber: string;
   balance: number | string;
-  currency?: ICurrencyTypes;
+  currency: ICurrencyTypes;
   imageUrl?: string;
   monthDiff?: number;
   percentDiff?: number;
