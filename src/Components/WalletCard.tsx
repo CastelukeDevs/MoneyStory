@@ -81,10 +81,6 @@ const WalletCard = (props: IWalletCardProps) => {
             </View>
           </View>
           <View style={styles.NumberContainer}>
-            {/* <Text
-              style={[textStyle.SubTitle_Light, styles.CardHolderNumberText]}>
-              Balance
-            </Text> */}
             <Text
               style={[
                 isPortrait ? textStyle.H2_Bold : textStyle.H1_Bold,
@@ -135,11 +131,8 @@ export const WalletCardSize = {width: CardWidth, height: CardHeight};
 
 const styles = StyleSheet.create({
   RootComponentContainer: {
-    // width: 254,
-    // height: 355,
     borderRadius: 12,
-    backgroundColor: 'skyblue',
-    // justifyContent: 'space-between',
+    backgroundColor: GlobalColor.accent,
     padding: 12,
     overflow: 'hidden',
   },
