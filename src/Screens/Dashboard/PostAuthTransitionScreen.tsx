@@ -15,52 +15,45 @@ import GlobalColor from '@Utilities/Styles/GlobalColor';
 import {textStyle} from '@Utilities/Styles/GlobalStyle';
 import {getUserWallets} from '@Redux/Actions/WalletAction';
 import {getUserAccount} from '@Redux/Actions/AccountAction';
+import useInitializeEntry from '@Utilities/Hooks/useInitializeEntry';
 
 const PostAuthTransitionScreen = (
   props: IMainNavPropTypes<'PostAuthTransitionScreen'>,
 ) => {
   const dispatch = useDispatch<any>();
 
-  const user: IUserStateType = useSelector(
-    (state: IRootStateType) => state.user,
-  );
+  const init = useInitializeEntry();
 
-  // auth().confirmPasswordReset()
-
-  const [initializing, setInitializing] = useState(true);
+  const {error, processName} = init;
 
   useEffect(() => {
-    if (initializing) {
-      dispatch(getUserData());
-      dispatch(getUserAccount());
-      dispatch(getUserWallets());
-      setInitializing(false);
+    if (init.errorList.includes('user_data')) {
+      return props.navigation.replace('ProfileCompletionScreen', {
+        mode: 'create',
+      });
     }
-    return () => {};
-  }, []);
-
-  useEffect(() => {
-    console.log('fetch user status', user.status);
-    setTimeout(() => {
-      if (!initializing && user.status === 'error') {
-        console.log('fetch user error', user.error);
-        return props.navigation.replace('ProfileCompletionScreen', {
-          mode: 'create',
-        });
-      } else if (!initializing && user.status === 'success') {
-        props.navigation.replace('MainDashboard', {screen: 'HomeScreen'});
-      }
-    }, 1000);
-  }, [user.status]);
-
-  const testApiHandler = async () => {
-    dispatch(resetAuth());
-  };
+    if (init.total === init.progress && init.errorList.length < 1) {
+      props.navigation.replace('MainDashboard', {screen: 'HomeScreen'});
+    }
+  }, [init]);
 
   return (
     <SafeAreaView style={styles.RootScreenContainer}>
       <Logo />
       <Text style={textStyle.Hero_Bold}>Money Story</Text>
+      <Text style={textStyle.H3_Light}>
+        getting {processName.replace('_', ' ')}
+      </Text>
+      {error && (
+        <>
+          <Text style={[textStyle.H3_Light, {color: GlobalColor.error}]}>
+            error {error}
+          </Text>
+          <Text style={[textStyle.H3_Light, {color: GlobalColor.error}]}>
+            Please try again later
+          </Text>
+        </>
+      )}
       {/* <Button label="test api" onPress={testApiHandler} /> */}
     </SafeAreaView>
   );
