@@ -19,15 +19,16 @@ import AvatarPills from '@Components/AvatarPills';
 import WalletCard from '@Components/WalletCard';
 import SearchBar from '@Components/SearchBar';
 import ActivityListCard from '@Components/ActivityListCard';
+import useUserBalance from '@Utilities/Hooks/useUserBalance';
 
 const HomeScreen = ({navigation}: IDashNavPropTypes<'HomeScreen'>) => {
   const inset = useSafeAreaInsets();
   const dispatch = useDispatch<any>();
 
   const userState = useSelector((state: IRootStateType) => state.user);
-  const {accountData, currency} = useSelector(
-    (state: IRootStateType) => state.account,
-  );
+  const totalBalance = useUserBalance();
+
+  const {currency} = useSelector((state: IRootStateType) => state.account);
   const userWallets = useSelector(
     (state: IRootStateType) => state.wallet,
   ).wallets;
@@ -60,8 +61,8 @@ const HomeScreen = ({navigation}: IDashNavPropTypes<'HomeScreen'>) => {
   };
 
   const balance = useMemo(
-    () => FormatCurrency(accountData?.totalBalance!, currency),
-    [accountData?.totalBalance],
+    () => FormatCurrency(totalBalance, currency),
+    [totalBalance],
   );
 
   return (
@@ -122,6 +123,16 @@ const HomeScreen = ({navigation}: IDashNavPropTypes<'HomeScreen'>) => {
             <Text style={textStyle.Content_Regular}>See All</Text>
           </View>
           <SearchBar />
+          <ActivityListCard />
+          <ActivityListCard />
+          <ActivityListCard />
+          <ActivityListCard />
+          <ActivityListCard />
+          <ActivityListCard />
+          <ActivityListCard />
+          <ActivityListCard />
+          <ActivityListCard />
+          <ActivityListCard />
           <ActivityListCard />
           <ActivityListCard />
           <ActivityListCard />
