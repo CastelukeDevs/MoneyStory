@@ -42,10 +42,12 @@ const WalletCard = (props: IWalletCardProps) => {
         isPortrait ? styles.CardPortrait : styles.CardLandscape,
         props.style,
       ]}>
-      <Image
-        source={{uri: walletData.imageUrl}}
-        style={StyleSheet.absoluteFillObject}
-      />
+      {walletData.imageUrl && (
+        <Image
+          source={{uri: walletData.imageUrl}}
+          style={StyleSheet.absoluteFillObject}
+        />
+      )}
       <LinearGradient
         style={StyleSheet.absoluteFillObject}
         colors={[
@@ -79,25 +81,35 @@ const WalletCard = (props: IWalletCardProps) => {
             </View>
           </View>
           <View style={styles.NumberContainer}>
+            {/* <Text
+              style={[textStyle.SubTitle_Light, styles.CardHolderNumberText]}>
+              Balance
+            </Text> */}
             <Text
               style={[
                 isPortrait ? textStyle.H2_Bold : textStyle.H1_Bold,
                 styles.NumberText,
               ]}>
-              {FormatCurrency(walletData.balance, walletData.currency).format}
+              {
+                FormatCurrency(
+                  walletData.balance as number,
+                  walletData.currency,
+                ).format
+              }
             </Text>
             <Text style={[textStyle.Content_Regular, styles.NumberText]}>
               +{walletData.monthDiff} ({walletData.percentDiff}%)
             </Text>
           </View>
           <View style={styles.PersonContainer}>
-            <Text style={[textStyle.SubTitle_Light, styles.CardNameText]}>
+            <Text
+              style={[textStyle.SubTitle_Light, styles.CardHolderNumberText]}>
               {walletData.type}
             </Text>
-            <Text style={[textStyle.H3_Regular, styles.CardNumberText]}>
+            <Text style={[textStyle.H3_Regular, styles.CardHolderNameText]}>
               {walletData.holderName}
             </Text>
-            <Text style={[textStyle.Title_Light, styles.CardNameText]}>
+            <Text style={[textStyle.Title_Light, styles.CardHolderNumberText]}>
               {walletData.holderNumber}
             </Text>
           </View>
@@ -116,6 +128,11 @@ const WalletCard = (props: IWalletCardProps) => {
 
 export default WalletCard;
 
+const CardWidth = 254;
+const CardHeight = 355;
+
+export const WalletCardSize = {width: CardWidth, height: CardHeight};
+
 const styles = StyleSheet.create({
   RootComponentContainer: {
     // width: 254,
@@ -127,12 +144,12 @@ const styles = StyleSheet.create({
     overflow: 'hidden',
   },
   CardPortrait: {
-    width: 254,
-    height: 355,
+    width: CardWidth,
+    height: CardHeight,
   },
   CardLandscape: {
-    width: 355,
-    height: 254,
+    width: CardHeight,
+    height: CardWidth,
   },
   ComponentContainer: {
     flex: 1,
@@ -141,23 +158,20 @@ const styles = StyleSheet.create({
   HeaderContainer: {
     flexDirection: 'row',
     justifyContent: 'space-between',
-    alignItems: 'center',
+    alignItems: 'flex-start',
+    flex: 1,
   },
   HeaderText: {textAlign: 'right', color: GlobalColor.light},
   HeaderTextContainer: {
-    // transform: [{rotate: '90deg'}],
-    // position: 'absolute',
-    // right: 0,
-    // top: 0,
-    // backgroundColor: 'red',
+    flex: 1,
   },
   PersonContainer: {},
-  CardNumberText: {color: GlobalColor.light, letterSpacing: 4},
-  CardNameText: {color: GlobalColor.light},
+  CardHolderNameText: {color: GlobalColor.light, letterSpacing: 4},
+  CardHolderNumberText: {color: GlobalColor.light, letterSpacing: 2},
   NumberContainer: {
     paddingVertical: 12,
     borderRadius: 12,
-    // backgroundColor: GlobalColor.overlay,
+    marginBottom: 18,
   },
   NumberText: {color: GlobalColor.light},
   EmptyContainer: {flex: 1, alignItems: 'center', justifyContent: 'center'},
