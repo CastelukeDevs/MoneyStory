@@ -21,6 +21,7 @@ import Icon, {IIconProps} from './Icon';
 import GlobalColor from '@Utilities/Styles/GlobalColor';
 import {textStyle} from '@Utilities/Styles/GlobalStyle';
 import {getCurrencySymbol} from '@Utilities/String/Currency/FormatCurrency';
+import {ICurrencyTypes} from '@Types/CommonTypes';
 
 type ITextInputBordered = {
   mode?: 'Outlined' | 'Circled';
@@ -44,7 +45,7 @@ type ITextInputProps = {
   isError?: boolean;
   showLabel?: boolean;
   labelStyle?: TextStyle;
-  isMoney?: string;
+  isMoney?: ICurrencyTypes;
 } & IMergedTextInput &
   TextInputProps;
 

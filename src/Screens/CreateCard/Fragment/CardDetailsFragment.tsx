@@ -13,6 +13,8 @@ import {IWalletMain} from '@Types/WalletTypes';
 import WalletCard from '@Components/WalletCard';
 import Button from '@Components/Common/Button';
 import TextInput from '@Components/Common/TextInput';
+import {useSelector} from 'react-redux';
+import {IRootStateType} from '@Redux/Store';
 
 type ICardDetailsFragmentProps = {
   onNextPress: (cardData: IWalletMain) => void;
@@ -22,6 +24,10 @@ type ICardDetailsFragmentProps = {
 const CardDetailsFragment = (props: ICardDetailsFragmentProps) => {
   const width = useWindowDimensions().width;
   const inset = useSafeAreaInsets().bottom;
+
+  const account = useSelector(
+    (state: IRootStateType) => state.account,
+  ).currency;
 
   const abbrRef = useRef<RNInput>(null);
   const balanceRef = useRef<RNInput>(null);
@@ -94,7 +100,7 @@ const CardDetailsFragment = (props: ICardDetailsFragmentProps) => {
             inputMode="decimal"
             showLabel
             onSubmitEditing={() => holderNameRef.current?.focus()}
-            isMoney
+            isMoney={'IDR'}
           />
           <TextInput
             ref={holderNameRef}
