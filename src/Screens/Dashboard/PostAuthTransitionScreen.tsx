@@ -13,6 +13,8 @@ import auth from '@react-native-firebase/auth';
 import Logo from '@Components/Logo';
 import GlobalColor from '@Utilities/Styles/GlobalColor';
 import {textStyle} from '@Utilities/Styles/GlobalStyle';
+import {getUserWallets} from '@Redux/Actions/WalletAction';
+import {getUserAccount} from '@Redux/Actions/AccountAction';
 
 const PostAuthTransitionScreen = (
   props: IMainNavPropTypes<'PostAuthTransitionScreen'>,
@@ -30,6 +32,8 @@ const PostAuthTransitionScreen = (
   useEffect(() => {
     if (initializing) {
       dispatch(getUserData());
+      dispatch(getUserAccount());
+      dispatch(getUserWallets());
       setInitializing(false);
     }
     return () => {};
