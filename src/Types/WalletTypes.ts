@@ -29,6 +29,10 @@ export type IWallet = {
   updatedAt: string;
 } & IWalletMain;
 
+export type IWalletCreateUpdateData = {
+  image: any;
+} & IWalletMain;
+
 export type ICreateWalletDataProps = {
-  data: IWalletMain;
+  data: IWalletCreateUpdateData;
 } & ICancelSignal;

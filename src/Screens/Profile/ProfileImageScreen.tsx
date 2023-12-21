@@ -17,7 +17,6 @@ import {textStyle} from '@Utilities/Styles/GlobalStyle';
 import GlobalColor from '@Utilities/Styles/GlobalColor';
 
 import Button from '@Components/Common/Button';
-import {INewUserData} from '@Types/UserType';
 import {PickerOption} from '@Utilities/ImagePicker';
 
 const SignUpImageScreen = (props: IMainNavPropTypes<'ProfileImageScreen'>) => {

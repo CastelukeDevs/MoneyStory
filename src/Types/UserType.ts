@@ -1,32 +1,29 @@
 import {ICancelSignal} from '@Utilities/APIs/APIUtils';
 import {ICurrencyTypes} from './CommonTypes';
 
+export type IUserMain = {
+  firstName?: string;
+  lastName?: string;
+  dateOfBirth?: string;
+  avatarUrl?: string;
+};
+
 export type IUserType = {
   lastSignIn: Date;
   level: number;
   points: number;
-  wallet: []; //TODO: update wallet type later
+  wallet: string[];
   defaultCurrency: ICurrencyTypes;
-  //   _id: string;
   firebaseUID: string;
   email: string;
-  firstName: string;
-  lastName: string;
-  dateOfBirth: string;
-  avatarUrl: string;
   createdAt: Date;
   updatedAt: Date;
-  //   __v: 0;
-};
+} & IUserMain;
 
-export type INewUserData = {
-  firstName?: string;
-  lastName?: string;
-  dateOfBirth?: string;
+export type IUserCreateUpdateData = {
   avatar?: any;
-  avatarUrl?: string;
-};
+} & IUserMain;
 
 export type ICreateUserDataProps = {
-  data: INewUserData;
+  data: IUserCreateUpdateData;
 } & ICancelSignal;

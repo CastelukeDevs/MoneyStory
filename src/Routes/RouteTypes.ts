@@ -4,11 +4,11 @@ import {
   NavigatorScreenParams,
 } from '@react-navigation/native';
 import {StackScreenProps} from '@react-navigation/stack';
-import {INewUserData, IUserType} from '@Types/UserType';
+import {IUserMain, IUserType} from '@Types/UserType';
 
 type IProfileParams = {
   mode: 'create' | 'edit';
-  data?: IUserType | INewUserData;
+  data?: IUserType | IUserMain;
 };
 
 export type IMainNav = {
