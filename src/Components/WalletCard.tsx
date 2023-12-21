@@ -72,7 +72,13 @@ const WalletCard = (props: IWalletCardProps) => {
           <View style={styles.HeaderContainer}>
             <IconButton name={walletData.logo} />
             <View style={styles.HeaderTextContainer}>
-              <Text style={[textStyle.H2_Bold, styles.HeaderText]}>
+              <Text
+                style={[
+                  textStyle.H2_Bold,
+                  styles.HeaderText,
+                  {paddingLeft: 12},
+                ]}
+                numberOfLines={3}>
                 {walletData.walletName}.
               </Text>
               <Text style={[textStyle.Title_Light, styles.HeaderText]}>
@@ -137,12 +143,15 @@ const styles = StyleSheet.create({
     overflow: 'hidden',
   },
   CardPortrait: {
+    aspectRatio: 9 / 13,
+
     width: CardWidth,
-    height: CardHeight,
+    // height: CardHeight,
   },
   CardLandscape: {
+    aspectRatio: 13 / 9,
     width: CardHeight,
-    height: CardWidth,
+    // height: CardWidth,
   },
   ComponentContainer: {
     flex: 1,
