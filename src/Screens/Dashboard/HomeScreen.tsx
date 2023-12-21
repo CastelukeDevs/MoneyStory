@@ -1,5 +1,5 @@
 import React, {FC, useEffect, useMemo} from 'react';
-import {View, Text, StyleSheet, ScrollView} from 'react-native';
+import {View, Text, StyleSheet, ScrollView, FlatList} from 'react-native';
 import {useDispatch, useSelector} from 'react-redux';
 import {IRootStateType} from '@Redux/Store';
 import {getUserAccount} from '@Redux/Actions/AccountAction';
@@ -28,13 +28,16 @@ const HomeScreen = ({navigation}: IDashNavPropTypes<'HomeScreen'>) => {
   const {accountData, currency} = useSelector(
     (state: IRootStateType) => state.account,
   );
+  const userWallets = useSelector(
+    (state: IRootStateType) => state.wallet,
+  ).wallets;
 
   const userData = userState.userProfileData;
 
-  useEffect(() => {
-    dispatch(getUserAccount());
-    return () => {};
-  }, []);
+  // useEffect(() => {
+  //   dispatch(getUserAccount());
+  //   return () => {};
+  // }, []);
 
   const updateProfileHandler = () => {
     navigation.navigate('ProfileCompletionScreen', {
@@ -63,7 +66,7 @@ const HomeScreen = ({navigation}: IDashNavPropTypes<'HomeScreen'>) => {
 
   return (
     <View style={[{paddingTop: inset.top}, styles.RootScreenContainer]}>
-      <View style={{flexDirection: 'row', alignItems: 'center'}}>
+      <View style={styles.HeaderContainer}>
         <AvatarPills user={userData!} />
         <View>
           <Icon
@@ -74,42 +77,56 @@ const HomeScreen = ({navigation}: IDashNavPropTypes<'HomeScreen'>) => {
           />
         </View>
       </View>
-      {/**
-       * //Todo: Populate properly later
-       */}
-      <View style={styles.SectionContainer}>
-        <Text style={textStyle.Title_Bold}>Your Wealth</Text>
-        <Text style={textStyle.Hero_Bold}>
-          <Text style={styles.HeroTextGey}>{balance.symbol}</Text>
-          <Text>{' ' + balance.whole}</Text>
-          <Text style={styles.HeroTextGey}>{balance.decimal}</Text>
-        </Text>
-        <Text style={[textStyle.Content_Light]}>+0,0 (0,00%)</Text>
-      </View>
-      <View style={styles.SectionContainer}>
-        <View style={styles.SectionHeader}>
-          <Text style={textStyle.Title_Bold}>Your Wallet</Text>
-          <Text style={textStyle.Content_Regular}>See All</Text>
+      <ScrollView bounces={false}>
+        <View style={styles.SectionContainer}>
+          <Text style={textStyle.Title_Bold}>Your Wealth</Text>
+          <Text style={textStyle.Hero_Bold}>
+            <Text style={styles.HeroTextGey}>{balance.symbol}</Text>
+            <Text>{' ' + balance.whole}</Text>
+            <Text style={styles.HeroTextGey}>{balance.decimal}</Text>
+          </Text>
+          <Text style={[textStyle.Content_Light]}>+0,0 (0,00%)</Text>
         </View>
-        <ScrollView horizontal>
-          <WalletCard
-            isEmpty
-            onPress={onCardEmptyPressHandler}
-            orientation="portrait"
+
+        <View style={[styles.SectionContainer, {paddingHorizontal: 0}]}>
+          <View style={[styles.SectionHeader, {paddingHorizontal: 14}]}>
+            <Text style={textStyle.Title_Bold}>Your Wallet</Text>
+            <Text style={textStyle.Content_Regular}>See All</Text>
+          </View>
+          <FlatList
+            data={userWallets}
+            keyExtractor={item => item.id}
+            horizontal
+            // style={{backgroundColor: 'tomato'}}
+            contentContainerStyle={{paddingHorizontal: 14}}
+            showsHorizontalScrollIndicator={false}
+            bounces={false}
+            renderItem={({item, index}) => (
+              <WalletCard
+                orientation="portrait"
+                wallet={item}
+                style={styles.CardStyle}
+              />
+            )}
+            ListFooterComponent={WalletCard({
+              orientation: 'portrait',
+              isEmpty: true,
+              onPress: onCardEmptyPressHandler,
+            })}
           />
-          <WalletCard />
-        </ScrollView>
-      </View>
-      <View style={styles.SectionContainer}>
-        <View style={styles.SectionHeader}>
-          <Text style={textStyle.Title_Bold}>Your Activities</Text>
-          <Text style={textStyle.Content_Regular}>See All</Text>
         </View>
-        <SearchBar />
-        <ActivityListCard />
-        <ActivityListCard />
-        <ActivityListCard />
-      </View>
+
+        <View style={styles.SectionContainer}>
+          <View style={styles.SectionHeader}>
+            <Text style={textStyle.Title_Bold}>Your Activities</Text>
+            <Text style={textStyle.Content_Regular}>See All</Text>
+          </View>
+          <SearchBar />
+          <ActivityListCard />
+          <ActivityListCard />
+          <ActivityListCard />
+        </View>
+      </ScrollView>
     </View>
   );
 };
@@ -119,17 +136,26 @@ export default HomeScreen;
 const styles = StyleSheet.create({
   RootScreenContainer: {
     flex: 1,
-    paddingHorizontal: 12,
+  },
+  HeaderContainer: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    paddingHorizontal: 14,
   },
   SectionContainer: {
-    marginTop: 18,
+    marginTop: 24,
+    paddingHorizontal: 14,
   },
   SectionHeader: {
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'space-between',
+    marginBottom: 12,
   },
   HeroTextGey: {
     color: GlobalColor.overlay,
+  },
+  CardStyle: {
+    marginRight: 12,
   },
 });
