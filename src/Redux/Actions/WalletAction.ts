@@ -28,11 +28,13 @@ export const getUserWallets = createAsyncThunk(
 export const createUserWallets = createAsyncThunk(
   createWalletPrefix,
   async (props: ICreateWalletDataProps) => {
+    const data = {...props.data};
+    delete data.imageUrl; //remove image url for new wallet, populated later in backend
+
     const call = await APICall(createWalletPrefix, {
       abortController: props?.abortController,
-      data: props.data,
+      data,
     });
-    console.log('result', call);
 
     return call;
   },
@@ -55,5 +57,22 @@ export default (builder: ActionReducerMapBuilder<IWalletStateType>) => {
         state.error = null;
         state.wallets = action.payload;
       },
-    );
+    )
+    .addCase(createUserWallets.pending, state => {
+      state.status = 'fetching';
+      state.error = null;
+    })
+    .addCase(createUserWallets.rejected, (state, action) => {
+      state.status = 'error';
+      state.error = {message: action.error.message!, error: action.error};
+    })
+    .addCase(createUserWallets.fulfilled, (state, action) => {
+      console.log('payload', action.payload);
+      console.log('state', state);
+      const newWallet = action.payload;
+
+      state.status = 'success';
+      state.error = null;
+      state.wallets.push(newWallet.data);
+    });
 };
