@@ -1,9 +1,18 @@
 import {ICurrencyTypes} from '@Types/CommonTypes';
 import CurrencyList from './CurrencyList';
 
+export const getCurrencySymbol = (abbr: ICurrencyTypes | string) => {
+  const sign = CurrencyList.find(
+    currency => currency.abbreviation === abbr,
+  )?.sign;
+  if (sign) return sign;
+  return abbr;
+};
+
 const getCurrencyByAbbr = (abbr: ICurrencyTypes) => {
   return CurrencyList.find(currency => currency.abbreviation === abbr);
 };
+
 const FormatCurrency = (amount: number, code: ICurrencyTypes) => {
   const [wholeNum, decimalNum] = amount.toString().split('.');
   const selectedCurrency = getCurrencyByAbbr(code);

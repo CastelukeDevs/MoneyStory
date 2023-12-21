@@ -20,6 +20,7 @@ import Icon, {IIconProps} from './Icon';
 
 import GlobalColor from '@Utilities/Styles/GlobalColor';
 import {textStyle} from '@Utilities/Styles/GlobalStyle';
+import {getCurrencySymbol} from '@Utilities/String/Currency/FormatCurrency';
 
 type ITextInputBordered = {
   mode?: 'Outlined' | 'Circled';
@@ -43,7 +44,7 @@ type ITextInputProps = {
   isError?: boolean;
   showLabel?: boolean;
   labelStyle?: TextStyle;
-  isMoney?: boolean;
+  isMoney?: string;
 } & IMergedTextInput &
   TextInputProps;
 
@@ -114,7 +115,7 @@ const TextInput = forwardRef<TextInputReact, ITextInputProps>((props, ref) => {
             <Icon {...props.iconLeading} />
           </View>
         )}
-
+        {props.isMoney && <Text>{getCurrencySymbol(props.isMoney) + ' '}</Text>}
         <TextInputReact
           {...props}
           value={value}
@@ -148,7 +149,7 @@ const TextInput = forwardRef<TextInputReact, ITextInputProps>((props, ref) => {
               }}
               style={[
                 inputPlatformStyle,
-                {flex: 1},
+                {flex: 0},
                 textStyle.SubTitle_Regular,
               ]}
               placeholder="00"
@@ -190,7 +191,8 @@ const getModeStyle = (mode: ITextInputProps['mode']): ViewStyle => {
 };
 
 const baseInputStyle: TextStyle = {
-  flex: 4,
+  flex: 1,
+  // backgroundColor: 'red',
 };
 
 const baseBorderedContainerStyle: ViewStyle = {
