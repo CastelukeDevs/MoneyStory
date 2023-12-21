@@ -19,7 +19,7 @@ export const getUserWallets = createAsyncThunk(
       abortController: props?.abortController,
       params: props?.id,
     });
-    console.log('result', call);
+    // console.log('result', call);
 
     return call;
   },

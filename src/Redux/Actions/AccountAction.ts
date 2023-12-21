@@ -17,7 +17,7 @@ export const getUserAccount = createAsyncThunk(
     const call = await APICall(getAccountPrefix, {
       abortController: props?.abortController,
     });
-    console.log('result', call);
+    // console.log('result', call);
 
     return call;
   },
