@@ -1,4 +1,4 @@
-import React, {useEffect, useMemo, useState} from 'react';
+import React from 'react';
 import {FlatList, StyleSheet, View, useWindowDimensions} from 'react-native';
 import {useSafeAreaInsets} from 'react-native-safe-area-context';
 
@@ -20,19 +20,12 @@ const CardLogoFragment = (props: ICardLogoFragmentProps) => {
 
   const iconSizeApproximate = 42;
   const iconColumns = 6;
-  const componentWidth = width - 60;
+  const componentWidth = width - 28;
   const iconMargin =
-    (componentWidth - iconSizeApproximate * iconColumns) / iconColumns / 2;
-
-  // const [wallet, setWallet] = useState<IWalletMain>(props.cardData);
-
-  // useEffect(() => {
-  //   setWallet(props.cardData);
-  // }, [props.cardData]);
+    (componentWidth - iconSizeApproximate * iconColumns) / iconColumns;
 
   const onNextPressHandler = () => {
     props.onNextPress(props.cardData);
-    // props.onIconPress(wallet);
   };
 
   return (
@@ -52,9 +45,11 @@ const CardLogoFragment = (props: ICardLogoFragmentProps) => {
           numColumns={6}
           bounces={false}
           showsVerticalScrollIndicator={false}
+          contentContainerStyle={{gap: iconMargin}}
+          columnWrapperStyle={{gap: iconMargin}}
           renderItem={({item}) => {
             return (
-              <View style={{margin: iconMargin}}>
+              <View style={{margin: 0}}>
                 <IconButton
                   name={item.name}
                   onPress={() => {

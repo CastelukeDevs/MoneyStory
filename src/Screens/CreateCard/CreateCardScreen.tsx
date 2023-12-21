@@ -1,4 +1,4 @@
-import React, {useEffect, useRef, useState} from 'react';
+import React, {useRef, useState} from 'react';
 import {
   ScrollView,
   StyleSheet,
@@ -6,31 +6,31 @@ import {
   View,
   useWindowDimensions,
 } from 'react-native';
-import {useDispatch} from 'react-redux';
+import {useDispatch, useSelector} from 'react-redux';
+import {IRootStateType} from '@Redux/Store';
+import {createUserWallets} from '@Redux/Actions/WalletAction';
 
 import {IMainNavPropTypes} from '@Routes/RouteTypes';
-import {Asset} from 'react-native-image-picker';
+import {IWalletMain} from '@Types/WalletTypes';
 
 import {textStyle} from '@Utilities/Styles/GlobalStyle';
 import {defaultWalletData} from '@Utilities/DefaultData/walletData';
 
-import CardLogoFragment from './Fragment/CardLogoFragment';
-import CardImageFragment from './Fragment/CardImageFragment';
-
 import ProgressBar from '@Components/Common/ProgressBar';
 import Header from '@Components/Header';
 
+import CardImageFragment from './Fragment/CardImageFragment';
+import CardLogoFragment from './Fragment/CardLogoFragment';
 import CardDetailsFragment from './Fragment/CardDetailsFragment';
 import CardCompletionFragment from './Fragment/CardCompletionFragment';
-import {IWalletMain} from '@Types/WalletTypes';
-import {createUserWallets} from '@Redux/Actions/WalletAction';
-import {resetWallet} from '@Redux/Reducers/WalletReducer';
 
 const CreateCardScreen = (props: IMainNavPropTypes<'CreateCardScreen'>) => {
   const width = useWindowDimensions().width;
   const dispatch = useDispatch<any>();
 
   const scrollViewRef = useRef<ScrollView>(null);
+
+  const wallet = useSelector((state: IRootStateType) => state.wallet);
 
   const [page, setPage] = useState(1);
   const [cardData, setCardData] = useState(defaultWalletData);
@@ -74,6 +74,8 @@ const CreateCardScreen = (props: IMainNavPropTypes<'CreateCardScreen'>) => {
   };
 
   const onSubmitDataHandler = async () => {
+    if (wallet.status === 'fetching') return;
+
     const image = {
       uri: cardData?.imageUrl,
       type: 'image/jpeg',

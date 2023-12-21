@@ -1,4 +1,4 @@
-import React, {useEffect, useRef, useState} from 'react';
+import React, {useRef} from 'react';
 import {
   StyleSheet,
   TextInput as RNInput,
@@ -27,12 +27,6 @@ const CardDetailsFragment = (props: ICardDetailsFragmentProps) => {
   const balanceRef = useRef<RNInput>(null);
   const holderNameRef = useRef<RNInput>(null);
   const holderNumberRef = useRef<RNInput>(null);
-
-  // const [wallet, setWallet] = useState(props.cardData);
-
-  // useEffect(() => {
-  //   setWallet(props.cardData);
-  // }, [props.cardData]);
 
   const onNextPressHandler = () => {
     props.onNextPress(props.cardData);

@@ -1,10 +1,10 @@
-import React, {useEffect, useState} from 'react';
-import {StyleSheet, Text, View, useWindowDimensions} from 'react-native';
+import React from 'react';
+import {StyleSheet, View, useWindowDimensions} from 'react-native';
 import {useSafeAreaInsets} from 'react-native-safe-area-context';
-import {Asset, launchImageLibrary} from 'react-native-image-picker';
+import {launchImageLibrary} from 'react-native-image-picker';
 
 import {PickerOption} from '@Utilities/ImagePicker';
-import {IWallet, IWalletMain} from '@Types/WalletTypes';
+import {IWalletMain} from '@Types/WalletTypes';
 
 import WalletCard from '@Components/WalletCard';
 import Button from '@Components/Common/Button';
@@ -17,12 +17,6 @@ type ICardImageFragmentProps = {
 const CardImageFragment = (props: ICardImageFragmentProps) => {
   const width = useWindowDimensions().width;
   const inset = useSafeAreaInsets().bottom;
-
-  // const [wallet, setWallet] = useState<IWalletMain>(props.cardData);
-
-  // useEffect(() => {
-  //   setWallet(props.cardData);
-  // }, [props.cardData]);
 
   const onImagePress = async () => {
     await launchImageLibrary(PickerOption).then(res => {

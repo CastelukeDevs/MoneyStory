@@ -1,10 +1,11 @@
-import React, {useEffect, useMemo, useState} from 'react';
+import React from 'react';
 import {StyleSheet, Text, View, useWindowDimensions} from 'react-native';
+import {useSafeAreaInsets} from 'react-native-safe-area-context';
+
+import {IWalletMain} from '@Types/WalletTypes';
 
 import WalletCard from '@Components/WalletCard';
 import Button from '@Components/Common/Button';
-import {useSafeAreaInsets} from 'react-native-safe-area-context';
-import {IWalletMain} from '@Types/WalletTypes';
 
 type ICardCompletionFragmentProps = {
   onNextPress: () => void;
