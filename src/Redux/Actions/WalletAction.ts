@@ -67,12 +67,8 @@ export default (builder: ActionReducerMapBuilder<IWalletStateType>) => {
       state.error = {message: action.error.message!, error: action.error};
     })
     .addCase(createUserWallets.fulfilled, (state, action) => {
-      console.log('payload', action.payload);
-      console.log('state', state);
-      const newWallet = action.payload;
-
       state.status = 'success';
       state.error = null;
-      state.wallets.push(newWallet.data);
+      state.wallets.push(action.payload);
     });
 };
