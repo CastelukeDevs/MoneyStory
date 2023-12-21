@@ -18,27 +18,26 @@ const CardImageFragment = (props: ICardImageFragmentProps) => {
   const width = useWindowDimensions().width;
   const inset = useSafeAreaInsets().bottom;
 
-  const [wallet, setWallet] = useState<IWalletMain>(props.cardData);
+  // const [wallet, setWallet] = useState<IWalletMain>(props.cardData);
 
-  useEffect(() => {
-    setWallet(props.cardData);
-  }, [props.cardData]);
+  // useEffect(() => {
+  //   setWallet(props.cardData);
+  // }, [props.cardData]);
 
   const onImagePress = async () => {
     await launchImageLibrary(PickerOption).then(res => {
       const assets = res.assets?.[0];
 
-      const newWallet: IWalletMain = {...wallet, imageUrl: assets?.uri!};
+      const newWallet: IWalletMain = {
+        ...props.cardData,
+        imageUrl: assets?.uri!,
+      };
       props.onDataChange(newWallet);
     });
   };
 
-  useEffect(() => {
-    setWallet(props.cardData);
-  }, [props.cardData]);
-
   const onNextPressHandler = () => {
-    props.onNextPress(wallet);
+    props.onNextPress(props.cardData);
   };
 
   return (

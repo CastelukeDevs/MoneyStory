@@ -28,14 +28,14 @@ const CardDetailsFragment = (props: ICardDetailsFragmentProps) => {
   const holderNameRef = useRef<RNInput>(null);
   const holderNumberRef = useRef<RNInput>(null);
 
-  const [wallet, setWallet] = useState(props.cardData);
+  // const [wallet, setWallet] = useState(props.cardData);
 
-  useEffect(() => {
-    setWallet(props.cardData);
-  }, [props.cardData]);
+  // useEffect(() => {
+  //   setWallet(props.cardData);
+  // }, [props.cardData]);
 
   const onNextPressHandler = () => {
-    props.onNextPress(wallet);
+    props.onNextPress(props.cardData);
   };
 
   return (
@@ -54,14 +54,13 @@ const CardDetailsFragment = (props: ICardDetailsFragmentProps) => {
         />
         <ScrollView style={{width: '100%'}} bounces={false}>
           <TextInput
-            value={wallet.walletName}
+            value={props.cardData.walletName}
             onChangeText={v => {
-              const newWallet: IWalletMain = {...wallet, walletName: v};
-              console.log('text change', newWallet);
+              const newWallet: IWalletMain = {...props.cardData, walletName: v};
               props.onDataChange(newWallet);
             }}
             label="Card Name"
-            iconLeading={{name: 'card-outline'}}
+            iconLeading={{name: 'wallet-outline'}}
             containerStyle={{marginBottom: 12}}
             mode="Outlined"
             showLabel
@@ -69,9 +68,12 @@ const CardDetailsFragment = (props: ICardDetailsFragmentProps) => {
           />
           <TextInput
             ref={abbrRef}
-            value={wallet.walletAbbreviation}
+            value={props.cardData.walletAbbreviation}
             onChangeText={v => {
-              const newWallet: IWalletMain = {...wallet, walletAbbreviation: v};
+              const newWallet: IWalletMain = {
+                ...props.cardData,
+                walletAbbreviation: v,
+              };
               props.onDataChange(newWallet);
             }}
             label="Card Abbreviation"
@@ -83,11 +85,11 @@ const CardDetailsFragment = (props: ICardDetailsFragmentProps) => {
           />
           <TextInput
             ref={balanceRef}
-            value={wallet.balance!.toString()}
+            value={props.cardData.balance as string}
             onChangeText={v => {
               const newWallet: IWalletMain = {
-                ...wallet,
-                balance: parseInt(v),
+                ...props.cardData,
+                balance: v,
               };
               props.onDataChange(newWallet);
             }}
@@ -95,22 +97,23 @@ const CardDetailsFragment = (props: ICardDetailsFragmentProps) => {
             iconLeading={{name: 'cash-outline'}}
             containerStyle={{marginBottom: 12}}
             mode="Outlined"
-            inputMode="numeric"
+            inputMode="decimal"
             showLabel
             onSubmitEditing={() => holderNameRef.current?.focus()}
+            isMoney
           />
           <TextInput
             ref={holderNameRef}
-            value={wallet.holderName}
+            value={props.cardData.holderName}
             onChangeText={v => {
               const newWallet: IWalletMain = {
-                ...wallet,
+                ...props.cardData,
                 holderName: v,
               };
               props.onDataChange(newWallet);
             }}
             label="Holder Name"
-            iconLeading={{name: 'card-outline'}}
+            iconLeading={{name: 'person-outline'}}
             containerStyle={{marginBottom: 12}}
             mode="Outlined"
             showLabel
@@ -118,10 +121,10 @@ const CardDetailsFragment = (props: ICardDetailsFragmentProps) => {
           />
           <TextInput
             ref={holderNumberRef}
-            value={wallet.holderNumber}
+            value={props.cardData.holderNumber}
             onChangeText={v => {
               const newWallet: IWalletMain = {
-                ...wallet,
+                ...props.cardData,
                 holderNumber: v,
               };
               props.onDataChange(newWallet);

@@ -24,14 +24,14 @@ const CardLogoFragment = (props: ICardLogoFragmentProps) => {
   const iconMargin =
     (componentWidth - iconSizeApproximate * iconColumns) / iconColumns / 2;
 
-  const [wallet, setWallet] = useState<IWalletMain>(props.cardData);
+  // const [wallet, setWallet] = useState<IWalletMain>(props.cardData);
 
-  useEffect(() => {
-    setWallet(props.cardData);
-  }, [props.cardData]);
+  // useEffect(() => {
+  //   setWallet(props.cardData);
+  // }, [props.cardData]);
 
   const onNextPressHandler = () => {
-    props.onNextPress(wallet);
+    props.onNextPress(props.cardData);
     // props.onIconPress(wallet);
   };
 
@@ -58,7 +58,10 @@ const CardLogoFragment = (props: ICardLogoFragmentProps) => {
                 <IconButton
                   name={item.name}
                   onPress={() => {
-                    const newWallet: IWalletMain = {...wallet, logo: item.name};
+                    const newWallet: IWalletMain = {
+                      ...props.cardData,
+                      logo: item.name,
+                    };
                     props.onDataChange(newWallet);
                   }}
                 />

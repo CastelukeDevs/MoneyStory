@@ -6,6 +6,7 @@ import {
   View,
   useWindowDimensions,
 } from 'react-native';
+import {useDispatch} from 'react-redux';
 
 import {IMainNavPropTypes} from '@Routes/RouteTypes';
 import {Asset} from 'react-native-image-picker';
@@ -22,18 +23,17 @@ import Header from '@Components/Header';
 import CardDetailsFragment from './Fragment/CardDetailsFragment';
 import CardCompletionFragment from './Fragment/CardCompletionFragment';
 import {IWalletMain} from '@Types/WalletTypes';
+import {createUserWallets} from '@Redux/Actions/WalletAction';
+import {resetWallet} from '@Redux/Reducers/WalletReducer';
 
 const CreateCardScreen = (props: IMainNavPropTypes<'CreateCardScreen'>) => {
   const width = useWindowDimensions().width;
+  const dispatch = useDispatch<any>();
 
   const scrollViewRef = useRef<ScrollView>(null);
 
   const [page, setPage] = useState(1);
   const [cardData, setCardData] = useState(defaultWalletData);
-
-  useEffect(() => {
-    console.log('card data updated');
-  }, [cardData]);
 
   const goToPage = (targetPage: number) => {
     scrollViewRef.current?.scrollTo({x: targetPage * width - width});
@@ -70,12 +70,23 @@ const CreateCardScreen = (props: IMainNavPropTypes<'CreateCardScreen'>) => {
   };
 
   const onDataChangeHandler = (passedWallet: IWalletMain) => {
-    console.log('triggered');
-
     setCardData(prev => (prev = passedWallet));
   };
 
-  const onSubmitDataHandler = () => {};
+  const onSubmitDataHandler = async () => {
+    const image = {
+      uri: cardData?.imageUrl,
+      type: 'image/jpeg',
+      name: 'avatar.jpg',
+    };
+    // dispatch(resetWallet());
+
+    await dispatch(createUserWallets({data: {...cardData, image}}))
+      .unwrap()
+      .then(() => {
+        props.navigation.goBack();
+      });
+  };
 
   return (
     <View style={{flex: 1}}>
@@ -86,13 +97,11 @@ const CreateCardScreen = (props: IMainNavPropTypes<'CreateCardScreen'>) => {
         <ProgressBar indicatorCount={4} indicatorActive={page} />
       </View>
 
-      {/* <Button label="Back" onPress={() => props.navigation.goBack()} /> */}
       <ScrollView
         ref={scrollViewRef}
         style={{flex: 1}}
         horizontal
         snapToInterval={width}
-        // disableScrollViewPanResponder
         scrollEnabled={false}
         onMomentumScrollEnd={ev => {
           const scroll = ev.nativeEvent.contentOffset.x;
@@ -108,16 +117,19 @@ const CreateCardScreen = (props: IMainNavPropTypes<'CreateCardScreen'>) => {
           onNextPress={onNextHandler}
           onDataChange={onDataChangeHandler}
         />
+
         <CardLogoFragment
           cardData={cardData}
           onNextPress={onNextHandler}
           onDataChange={onDataChangeHandler}
         />
+
         <CardDetailsFragment
           onNextPress={onNextHandler}
           cardData={cardData}
           onDataChange={onDataChangeHandler}
         />
+
         <CardCompletionFragment
           cardData={cardData}
           onNextPress={onSubmitDataHandler}
