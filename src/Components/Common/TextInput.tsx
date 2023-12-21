@@ -43,6 +43,7 @@ type ITextInputProps = {
   isError?: boolean;
   showLabel?: boolean;
   labelStyle?: TextStyle;
+  isMoney?: boolean;
 } & IMergedTextInput &
   TextInputProps;
 
@@ -56,6 +57,8 @@ const TextInput = forwardRef<TextInputReact, ITextInputProps>((props, ref) => {
 
   const inputPlatformStyle =
     Platform.OS === 'ios' ? styles.InputIOS : styles.InputAndroid;
+
+  const [value, decimalValue] = props.value.toString().split('.');
 
   /**
    * Note - State:
@@ -114,6 +117,16 @@ const TextInput = forwardRef<TextInputReact, ITextInputProps>((props, ref) => {
 
         <TextInputReact
           {...props}
+          value={value}
+          onChangeText={v => {
+            props.isMoney
+              ? props.onChangeText(
+                  parseFloat(v || '0.0').toString() +
+                    '.' +
+                    (decimalValue || ''),
+                )
+              : props.onChangeText(v);
+          }}
           style={[inputPlatformStyle, textStyle.SubTitle_Regular]}
           placeholder={props.placeholder || props.label}
           ref={ref}
@@ -125,6 +138,32 @@ const TextInput = forwardRef<TextInputReact, ITextInputProps>((props, ref) => {
             animateTo(0);
           }}
         />
+        {props.isMoney && (
+          <>
+            <Text>.</Text>
+            <TextInputReact
+              value={decimalValue || ''}
+              onChangeText={v => {
+                props.onChangeText(value + '.' + v);
+              }}
+              style={[
+                inputPlatformStyle,
+                {flex: 1},
+                textStyle.SubTitle_Regular,
+              ]}
+              placeholder="00"
+              maxLength={2}
+              // ref={ref}
+              onFocus={() => {
+                animateTo(1);
+              }}
+              onBlur={() => {
+                if (props.isError) return animateTo(2);
+                animateTo(0);
+              }}
+            />
+          </>
+        )}
 
         {props.iconTrailing && (
           <View style={{marginLeft: 10}}>
@@ -151,7 +190,7 @@ const getModeStyle = (mode: ITextInputProps['mode']): ViewStyle => {
 };
 
 const baseInputStyle: TextStyle = {
-  flex: 1,
+  flex: 4,
 };
 
 const baseBorderedContainerStyle: ViewStyle = {
