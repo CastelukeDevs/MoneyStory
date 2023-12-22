@@ -56,6 +56,12 @@ const EndpointPool = [
     method: 'put',
     auth: true,
   },
+  {
+    endpoint: 'CREATE_TRANSACTION',
+    url: authSubUrl + '/transaction',
+    method: 'post',
+    auth: true,
+  },
 ] as const satisfies IEndpointPool[];
 
 export default EndpointPool;
