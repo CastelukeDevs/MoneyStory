@@ -1,3 +1,4 @@
+import {ICancelSignal} from '@Utilities/APIs/APIUtils';
 import {CategoryList} from '@Utilities/CategoryList';
 
 export type ITransactionType = (typeof CategoryList)[number]['type'];
@@ -46,3 +47,13 @@ export type ITransactionMini = {
   transactionType: ITransactionType;
   date: Date;
 };
+
+type ITransactionParams = {
+  walletId?: string;
+  transactionId?: string;
+  transactionType?: ITransactionType;
+};
+export type ICreateUserDataProps = {
+  data?: ITransactionMain;
+  params?: ITransactionParams;
+} & ICancelSignal;

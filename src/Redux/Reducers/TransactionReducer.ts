@@ -1,11 +1,11 @@
 import AccountAction from '@Redux/Actions/AccountAction';
+import TransactionAction from '@Redux/Actions/TransactionAction';
 import {createSlice} from '@reduxjs/toolkit';
 import {IAccount} from '@Types/AccountTypes';
 import {ICurrencyTypes} from '@Types/CommonTypes';
 
 import {IDefaultFetchState} from '@Types/FetchTypes';
 import {ITransaction} from '@Types/TransactionTypes';
-import {IUserType} from '@Types/UserType';
 
 export type ITransactionStateType = {
   allTransaction: ITransaction[];
@@ -25,7 +25,7 @@ const TransactionReducer = createSlice({
       return {...transactionInitialState};
     },
   },
-  // extraReducers: AccountAction,
+  extraReducers: TransactionAction,
 });
 
 export const {resetTransaction: resetAccount} = TransactionReducer.actions;
