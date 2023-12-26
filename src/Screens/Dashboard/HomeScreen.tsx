@@ -20,37 +20,42 @@ import WalletCard from '@Components/WalletCard';
 import SearchBar from '@Components/SearchBar';
 import ActivityListCard from '@Components/ActivityListCard';
 import useUserBalance from '@Utilities/Hooks/useUserBalance';
+import APICall from '@Utilities/APIs/APICall';
+import transformObject from '@Utilities/transformObject';
+import {firebase} from '@react-native-firebase/auth';
 
 const HomeScreen = ({navigation}: IDashNavPropTypes<'HomeScreen'>) => {
   const inset = useSafeAreaInsets();
   const dispatch = useDispatch<any>();
 
-  const userState = useSelector((state: IRootStateType) => state.user);
   const totalBalance = useUserBalance();
 
+  const userState = useSelector(
+    (state: IRootStateType) => state.user,
+  ).userProfileData;
   const {currency} = useSelector((state: IRootStateType) => state.account);
   const userWallets = useSelector(
     (state: IRootStateType) => state.wallet,
   ).wallets;
 
-  const userData = userState.userProfileData;
+  const balance = useMemo(
+    () => FormatCurrency(totalBalance, currency),
+    [totalBalance],
+  );
 
-  // useEffect(() => {
-  //   dispatch(getUserAccount());
-  //   return () => {};
-  // }, []);
+  const userData = userState;
 
   const updateProfileHandler = () => {
     navigation.navigate('ProfileCompletionScreen', {
       mode: 'edit',
-      data: userState.userProfileData!,
+      data: userState!,
     });
   };
 
   const updateImageHandler = () => {
     navigation.navigate('ProfileImageScreen', {
       mode: 'edit',
-      data: userState.userProfileData!,
+      data: userState!,
     });
   };
 
@@ -60,13 +65,15 @@ const HomeScreen = ({navigation}: IDashNavPropTypes<'HomeScreen'>) => {
     navigation.navigate('CreateCardScreen');
   };
 
-  const balance = useMemo(
-    () => FormatCurrency(totalBalance, currency),
-    [totalBalance],
-  );
+  const test = async () => {};
+
+  const onLogoutHandler = () => {
+    firebase.auth().signOut();
+  };
 
   return (
     <View style={[{paddingTop: inset.top}, styles.RootScreenContainer]}>
+      {/* <Button label="api test" onPress={test} /> */}
       <View style={styles.HeaderContainer}>
         <AvatarPills user={userData!} />
         <View>
@@ -137,6 +144,7 @@ const HomeScreen = ({navigation}: IDashNavPropTypes<'HomeScreen'>) => {
           <ActivityListCard />
           <ActivityListCard />
         </View>
+        <Button label="Sign Out" onPress={onLogoutHandler} />
       </ScrollView>
     </View>
   );
