@@ -122,6 +122,7 @@ const ProfileCompletionScreen = (
             if (isCreate) return onNextHandler();
             onSubmitHandler();
           }}
+          maxLength={3}
         />
       </KeyboardAvoidingView>
       <View style={styles.FooterContainer}>
