@@ -132,7 +132,11 @@ const HomeScreen = ({navigation}: IDashNavPropTypes<'HomeScreen'>) => {
           <SearchBar />
           <View>
             {transactionList.map((item, index) => (
-              <ActivityListCard key={item.id} />
+              <ActivityListCard
+                key={item.id}
+                containerStyle={styles.ActivityList}
+                transaction={item}
+              />
             ))}
           </View>
         </View>
@@ -168,5 +172,9 @@ const styles = StyleSheet.create({
   },
   CardStyle: {
     marginRight: 12,
+  },
+  ActivityList: {
+    paddingVertical: 6,
+    paddingHorizontal: 0,
   },
 });
