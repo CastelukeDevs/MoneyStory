@@ -57,9 +57,33 @@ const EndpointPool = [
     auth: true,
   },
   {
+    endpoint: 'DELETE_WALLET',
+    url: authSubUrl + '/wallet',
+    method: 'delete',
+    auth: true,
+  },
+  {
     endpoint: 'CREATE_TRANSACTION',
     url: authSubUrl + '/transaction',
     method: 'post',
+    auth: true,
+  },
+  {
+    endpoint: 'GET_TRANSACTION',
+    url: authSubUrl + '/transaction',
+    method: 'get',
+    auth: true,
+  },
+  {
+    endpoint: 'UPDATE_TRANSACTION',
+    url: authSubUrl + '/transaction',
+    method: 'put',
+    auth: true,
+  },
+  {
+    endpoint: 'DELETE_TRANSACTION',
+    url: authSubUrl + '/transaction',
+    method: 'delete',
     auth: true,
   },
 ] as const satisfies IEndpointPool[];
