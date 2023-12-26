@@ -3,11 +3,6 @@ import {ICurrencyTypes} from './CommonTypes';
 
 export type IWalletType = 'wallet' | 'debit' | 'credit';
 
-export type ITransaction = {
-  value: number;
-  note: string;
-};
-
 export type IWalletMain = {
   logo: string;
   walletName: string;
