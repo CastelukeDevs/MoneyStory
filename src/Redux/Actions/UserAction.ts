@@ -1,5 +1,4 @@
 import {ActionReducerMapBuilder, createAsyncThunk} from '@reduxjs/toolkit';
-
 import APICall from '@Utilities/APIs/APICall';
 import {ICancelSignal, IEndpoint} from '@Utilities/APIs/APIUtils';
 
@@ -16,7 +15,7 @@ export const getUserData = createAsyncThunk(
     const call = await APICall(GetContactPrefix, {
       abortController: props?.abortController,
     });
-    console.log('result', call);
+    // console.log('result', call);
 
     return call;
   },
@@ -29,7 +28,7 @@ export const createUserData = createAsyncThunk(
       abortController: props.abortController,
       data: props.data,
     });
-    console.log('result', call);
+    // console.log('result', call);
 
     return call;
   },
@@ -41,7 +40,7 @@ export const updateUserData = createAsyncThunk(
       abortController: props.abortController,
       data: props.data,
     });
-    console.log('result', call);
+    // console.log('result', call);
 
     return call;
   },

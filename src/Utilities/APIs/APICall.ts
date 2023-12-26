@@ -1,6 +1,6 @@
 import auth from '@react-native-firebase/auth';
 import axios, {AxiosError} from 'axios';
-import {IAPIsCallOption, IEndpoint, getEndpoint} from './APIUtils';
+import {IAPIError, IAPIsCallOption, IEndpoint, getEndpoint} from './APIUtils';
 import {APP_API_KEY, BASE_SERVICES_PORT, BASE_URL} from '@env';
 import transformObject from '@Utilities/transformObject';
 
@@ -13,17 +13,15 @@ const APICall = async (endpoint: IEndpoint, options?: IAPIsCallOption) => {
 
   const selectEndpoint = getEndpoint(endpoint)!;
 
-  console.log(`=> New API Call ${endpoint} with detail:`, {
-    options: options,
-    endpointDetails: selectEndpoint,
-  });
-
   const requestHeader = selectEndpoint.auth
     ? {Authorization: `Bearer ${token}`}
     : {};
 
   const payloadData = transformObject(options?.data);
-  console.log(`=> ${endpoint} payload:`, payloadData);
+  console.log(`=> New API Call ${endpoint} with detail:`, {
+    options,
+    payloadData,
+  });
 
   return await axios({
     method: selectEndpoint.method,
@@ -34,16 +32,20 @@ const APICall = async (endpoint: IEndpoint, options?: IAPIsCallOption) => {
     headers: {...requestHeader},
   })
     .then(result => {
-      console.log(`=> axios request ${endpoint} success`, result);
+      console.log(`=> [O] axios request ${endpoint} success`, result);
 
       return result.data;
     })
-    .catch((error: AxiosError) => {
-      console.log(`axios request ${endpoint} error`, {
-        path: error.config?.url,
-        error,
-      });
-      throw error.response?.data;
+    .catch((error: AxiosError<IAPIError>) => {
+      const errorPayload = {
+        message: error.response?.data?.message || error.message,
+        code: `${error.response?.status}`,
+        response: error.response,
+      };
+      console.log(
+        `=> [X] axios request ${endpoint} error with code: ${errorPayload.code} //message: ${errorPayload.message}`,
+      );
+      throw errorPayload;
     });
 };
 

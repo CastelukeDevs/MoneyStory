@@ -20,7 +20,7 @@ const style = StyleSheet.create({
   Base: {
     padding: 12,
     backgroundColor: GlobalColor.light,
-    alignSelf: 'baseline',
+    // alignSelf: 'baseline',
     borderRadius: 12,
   },
 });

@@ -20,6 +20,8 @@ import Icon, {IIconProps} from './Icon';
 
 import GlobalColor from '@Utilities/Styles/GlobalColor';
 import {textStyle} from '@Utilities/Styles/GlobalStyle';
+import {getCurrencySymbol} from '@Utilities/String/Currency/FormatCurrency';
+import {ICurrencyTypes} from '@Types/CommonTypes';
 
 type ITextInputBordered = {
   mode?: 'Outlined' | 'Circled';
@@ -41,6 +43,9 @@ type ITextInputProps = {
   containerStyle?: ViewStyle;
   options?: TextInputProps;
   isError?: boolean;
+  showLabel?: boolean;
+  labelStyle?: TextStyle;
+  isMoney?: ICurrencyTypes;
 } & IMergedTextInput &
   TextInputProps;
 
@@ -54,6 +59,10 @@ const TextInput = forwardRef<TextInputReact, ITextInputProps>((props, ref) => {
 
   const inputPlatformStyle =
     Platform.OS === 'ios' ? styles.InputIOS : styles.InputAndroid;
+
+  const [value, decimalValue] = props.isMoney
+    ? props.value.toString().split('.')
+    : [props.value];
 
   /**
    * Note - State:
@@ -87,6 +96,16 @@ const TextInput = forwardRef<TextInputReact, ITextInputProps>((props, ref) => {
 
   return (
     <>
+      {props.showLabel && (
+        <Text
+          style={[
+            textStyle.SubTitle_Regular,
+            styles.LabelText,
+            props.labelStyle,
+          ]}>
+          {props.label}
+        </Text>
+      )}
       <Animated.View
         style={[
           styles.CoreContainer,
@@ -99,9 +118,19 @@ const TextInput = forwardRef<TextInputReact, ITextInputProps>((props, ref) => {
             <Icon {...props.iconLeading} />
           </View>
         )}
-
+        {props.isMoney && <Text>{getCurrencySymbol(props.isMoney) + ' '}</Text>}
         <TextInputReact
           {...props}
+          value={value}
+          onChangeText={v => {
+            props.isMoney
+              ? props.onChangeText(
+                  parseFloat(v || '0.0').toString() +
+                    '.' +
+                    (decimalValue || ''),
+                )
+              : props.onChangeText(v);
+          }}
           style={[inputPlatformStyle, textStyle.SubTitle_Regular]}
           placeholder={props.placeholder || props.label}
           ref={ref}
@@ -113,6 +142,32 @@ const TextInput = forwardRef<TextInputReact, ITextInputProps>((props, ref) => {
             animateTo(0);
           }}
         />
+        {props.isMoney && (
+          <>
+            <Text>.</Text>
+            <TextInputReact
+              value={decimalValue || ''}
+              onChangeText={v => {
+                props.onChangeText(value + '.' + v);
+              }}
+              style={[
+                inputPlatformStyle,
+                {flex: 0},
+                textStyle.SubTitle_Regular,
+              ]}
+              placeholder="00"
+              maxLength={2}
+              // ref={ref}
+              onFocus={() => {
+                animateTo(1);
+              }}
+              onBlur={() => {
+                if (props.isError) return animateTo(2);
+                animateTo(0);
+              }}
+            />
+          </>
+        )}
 
         {props.iconTrailing && (
           <View style={{marginLeft: 10}}>
@@ -140,6 +195,7 @@ const getModeStyle = (mode: ITextInputProps['mode']): ViewStyle => {
 
 const baseInputStyle: TextStyle = {
   flex: 1,
+  // backgroundColor: 'red',
 };
 
 const baseBorderedContainerStyle: ViewStyle = {
@@ -175,6 +231,11 @@ const styles = StyleSheet.create({
   ContainerUnderlinedMode: {
     paddingBottom: 4,
     borderBottomWidth: 1,
+    marginBottom: 4,
+  },
+  LabelText: {
+    textAlign: 'left',
+    width: '100%',
     marginBottom: 4,
   },
 });

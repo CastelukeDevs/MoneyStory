@@ -36,7 +36,7 @@ export default ProgressBar;
 const styles = StyleSheet.create({
   RootContainer: {
     flexDirection: 'row',
-    paddingHorizontal: 4,
+    // paddingHorizontal: -2,
   },
   IndicatorBase: {
     height: 3,
@@ -48,6 +48,6 @@ const styles = StyleSheet.create({
     backgroundColor: GlobalColor.accent,
   },
   IndicatorInactive: {
-    backgroundColor: GlobalColor.overlay,
+    backgroundColor: GlobalColor.overlay10,
   },
 });

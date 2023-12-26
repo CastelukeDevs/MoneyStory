@@ -1,5 +1,3 @@
-export type ICurrencyTypes = {
-  currency: string;
-  abbreviation: string;
-  sign?: string;
-};
+import CurrencyList from '@Utilities/String/Currency/CurrencyList';
+
+export type ICurrencyTypes = (typeof CurrencyList)[number]['abbreviation'];
