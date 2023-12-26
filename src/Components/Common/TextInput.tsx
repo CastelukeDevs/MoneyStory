@@ -60,7 +60,9 @@ const TextInput = forwardRef<TextInputReact, ITextInputProps>((props, ref) => {
   const inputPlatformStyle =
     Platform.OS === 'ios' ? styles.InputIOS : styles.InputAndroid;
 
-  const [value, decimalValue] = props.value.toString().split('.');
+  const [value, decimalValue] = props.isMoney
+    ? props.value.toString().split('.')
+    : [props.value];
 
   /**
    * Note - State:
