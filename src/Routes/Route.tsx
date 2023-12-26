@@ -31,6 +31,7 @@ import Dev from '@Screens/Dev';
 import PostAuthTransitionScreen from '@Screens/Dashboard/PostAuthTransitionScreen';
 import {AnyAction} from 'redux';
 import {HeaderBackButtonProps} from '@react-navigation/elements';
+import CreateCardScreen from '@Screens/CreateCard/CreateCardScreen';
 
 const Stack = createStackNavigator<IMainNav>();
 const Drawer = createDrawerNavigator<IDashNav>();
@@ -89,11 +90,6 @@ const Route = () => {
     routeNameRef.current = currentRouteName;
   };
 
-  //All Main Header below
-  const preLoginHeader = (options: StackHeaderProps) => {
-    return <Header onBackPressed={options.navigation.goBack} />;
-  };
-
   const headerBackButton = (props: HeaderBackButtonProps) => {
     const canGoBack = props.canGoBack;
     return (
@@ -126,7 +122,7 @@ const Route = () => {
               <Stack.Group
                 navigationKey="SignUp"
                 screenOptions={{
-                  header: props => preLoginHeader(props),
+                  // header: props => preLoginHeader(props),
                   headerShown: true,
                 }}>
                 <Stack.Screen name="SignUpScreen" component={SignUpScreen} />
@@ -165,6 +161,10 @@ const Route = () => {
                 />
               </Stack.Group>
               <Stack.Screen name="MainDashboard" component={DashboardRoute} />
+              <Stack.Screen
+                name="CreateCardScreen"
+                component={CreateCardScreen}
+              />
             </>
           )}
           {/* <Stack.Group screenOptions={{presentation: 'modal'}}></Stack.Group> */}

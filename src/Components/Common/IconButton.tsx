@@ -3,12 +3,14 @@ import {StyleSheet, TouchableOpacity, View, ViewStyle} from 'react-native';
 import Icon, {IIconProps} from './Icon';
 import GlobalColor from '@Utilities/Styles/GlobalColor';
 
-type IIconButtonModeTypes = 'contained' | 'bordered' | 'icon';
+type IIconButtonMode = 'contained' | 'bordered' | 'icon';
+type IIconButtonShape = 'box' | 'circle';
 
 type IIconButtonPropTypes = {
   style?: ViewStyle;
-  mode?: IIconButtonModeTypes;
-  onPress: () => void;
+  mode?: IIconButtonMode;
+  shape?: IIconButtonShape;
+  onPress?: () => void;
 } & IIconProps;
 
 //TODO: add button disable function
@@ -20,29 +22,30 @@ type IIconButtonPropTypes = {
  */
 const IconButton = (props: IIconButtonPropTypes) => {
   const currentMode = props.mode || 'contained';
+  const currentShape = props.shape || 'box';
   const currentLogoColor =
     currentMode === 'contained' ? GlobalColor.light : GlobalColor.accent;
 
   return (
-    <TouchableOpacity
-      style={{flexDirection: 'row'}}
-      onPress={() => props.onPress()}>
-      <View
-        style={[
-          {
-            padding: 12,
-            borderRadius: 12,
-          },
-          selectedContainerStyle(currentMode),
-          props.style,
-        ]}>
-        <Icon {...props} color={props.color || currentLogoColor} />
-      </View>
-    </TouchableOpacity>
+    <View style={{flexDirection: 'row'}}>
+      <TouchableOpacity onPress={() => props.onPress?.()}>
+        <View
+          style={[
+            {
+              padding: 12,
+              borderRadius: currentShape === 'box' ? 12 : 100,
+            },
+            selectedContainerStyle(currentMode),
+            props.style,
+          ]}>
+          <Icon {...props} color={props.color || currentLogoColor} />
+        </View>
+      </TouchableOpacity>
+    </View>
   );
 };
 
-const selectedContainerStyle = (selectedMode: IIconButtonModeTypes) => {
+const selectedContainerStyle = (selectedMode: IIconButtonMode) => {
   switch (selectedMode) {
     case 'bordered':
       return styles.ModeBorderedContainer;
