@@ -54,6 +54,7 @@ const ProfileCompletionScreen = (
       firstName,
       lastName,
       dateOfBirth,
+      defaultCurrency: defaultCurrency || 'IDR',
     };
     dispatch(updateUserData({data: updatePayload})).then(() => {
       goBack();
