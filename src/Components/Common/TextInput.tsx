@@ -34,7 +34,6 @@ type ITextInputUnderlined = {
 type IMergedTextInput = ITextInputBordered | ITextInputUnderlined;
 
 type ITextInputProps = {
-  // mode?: string;
   label: string;
   value: string;
   onChangeText: (str: string) => void;
@@ -134,12 +133,14 @@ const TextInput = forwardRef<TextInputReact, ITextInputProps>((props, ref) => {
           style={[inputPlatformStyle, textStyle.SubTitle_Regular]}
           placeholder={props.placeholder || props.label}
           ref={ref}
-          onFocus={() => {
+          onFocus={ev => {
             animateTo(1);
+            props.onFocus?.(ev);
           }}
-          onBlur={() => {
+          onBlur={ev => {
             if (props.isError) return animateTo(2);
             animateTo(0);
+            props.onBlur?.(ev);
           }}
         />
         {props.isMoney && (
