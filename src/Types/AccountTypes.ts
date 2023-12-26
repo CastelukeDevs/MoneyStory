@@ -1,9 +1,9 @@
 import {ICurrencyTypes} from './CommonTypes';
+import {ITransactionMini} from './TransactionTypes';
 
 export type IAccount = {
   _id: string;
   totalBalance: number;
-  wallet: string[];
   defaultCurrency: ICurrencyTypes;
   id: string;
 };
