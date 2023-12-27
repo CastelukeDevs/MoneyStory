@@ -1,4 +1,4 @@
-import React, {useRef, useState} from 'react';
+import React, {useEffect, useRef, useState} from 'react';
 import {
   ScrollView,
   StyleSheet,
@@ -35,9 +35,14 @@ const CreateCardScreen = (props: IMainNavPropTypes<'CreateCardScreen'>) => {
   const [page, setPage] = useState(1);
   const [cardData, setCardData] = useState(defaultWalletData);
 
-  const goToPage = (targetPage: number) => {
-    scrollViewRef.current?.scrollTo({x: targetPage * width - width});
-  };
+  // const goToPage = (targetPage: number) => {
+  //   setPage(targetPage);
+  //   // scrollViewRef.current?.scrollTo({x: targetPage * width - width});
+  // };
+
+  useEffect(() => {
+    scrollViewRef.current?.scrollTo({x: page * width - width});
+  }, [page]);
 
   const getSubHeaderTitle = () => {
     switch (page) {
@@ -55,17 +60,15 @@ const CreateCardScreen = (props: IMainNavPropTypes<'CreateCardScreen'>) => {
   };
 
   const onNextHandler = (walletPassed: IWalletMain) => {
-    goToPage(page + 1);
+    setPage(page + 1);
     setCardData(walletPassed);
   };
 
   const onHeaderBackPressHandler = () => {
-    console.log('back');
-
     if (page === 1) {
       props.navigation.goBack();
     } else {
-      goToPage(page - 1);
+      setPage(page - 1);
     }
   };
 
@@ -81,7 +84,6 @@ const CreateCardScreen = (props: IMainNavPropTypes<'CreateCardScreen'>) => {
       type: 'image/jpeg',
       name: 'avatar.jpg',
     };
-    // dispatch(resetWallet());
 
     await dispatch(createUserWallets({data: {...cardData, image}}))
       .unwrap()
@@ -105,11 +107,6 @@ const CreateCardScreen = (props: IMainNavPropTypes<'CreateCardScreen'>) => {
         horizontal
         snapToInterval={width}
         scrollEnabled={false}
-        onMomentumScrollEnd={ev => {
-          const scroll = ev.nativeEvent.contentOffset.x;
-          const currentPage = (scroll + width) / width;
-          setPage(currentPage);
-        }}
         decelerationRate={0}
         showsHorizontalScrollIndicator={false}
         bounces={false}

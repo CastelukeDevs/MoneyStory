@@ -1,8 +1,10 @@
 import React, {forwardRef, useEffect} from 'react';
 import {
+  NativeSyntheticEvent,
   Platform,
   StyleSheet,
   Text,
+  TextInputFocusEventData,
   TextInputProps,
   TextInput as TextInputReact,
   TextStyle,
@@ -33,8 +35,7 @@ type ITextInputUnderlined = {
 
 type IMergedTextInput = ITextInputBordered | ITextInputUnderlined;
 
-type ITextInputProps = {
-  // mode?: string;
+export type ITextInputProps = {
   label: string;
   value: string;
   onChangeText: (str: string) => void;
@@ -56,9 +57,6 @@ type ITextInputProps = {
 const TextInput = forwardRef<TextInputReact, ITextInputProps>((props, ref) => {
   const currentMode = props.mode || 'Circled';
   const duration = 500;
-
-  const inputPlatformStyle =
-    Platform.OS === 'ios' ? styles.InputIOS : styles.InputAndroid;
 
   const [value, decimalValue] = props.isMoney
     ? props.value.toString().split('.')
@@ -94,18 +92,73 @@ const TextInput = forwardRef<TextInputReact, ITextInputProps>((props, ref) => {
     }
   }, [props.isError]);
 
+  const onChangeTextHandler = (v: string) => {
+    props.isMoney
+      ? props.onChangeText(
+          parseFloat(v || '0.0').toString() + '.' + (decimalValue || ''),
+        )
+      : props.onChangeText(v);
+  };
+
+  const onDecimalChangeText = (v: string) => {
+    props.onChangeText(value + '.' + v);
+  };
+
+  const onFocusHandler = (
+    ev: NativeSyntheticEvent<TextInputFocusEventData>,
+  ) => {
+    animateTo(1);
+    props.onFocus?.(ev);
+  };
+
+  const onBlurHandler = (ev: NativeSyntheticEvent<TextInputFocusEventData>) => {
+    if (props.isError) return animateTo(2);
+    animateTo(0);
+    props.onBlur?.(ev);
+  };
+
+  const showLabel = (label: string) =>
+    props.showLabel && (
+      <Text
+        style={[
+          textStyle.SubTitle_Regular,
+          styles.LabelText,
+          props.labelStyle,
+        ]}>
+        {label}
+      </Text>
+    );
+
+  const showIcon = (icon: IIconProps | undefined) => icon && <Icon {...icon} />;
+
+  const showLeadingMoney = () =>
+    props.isMoney && (
+      <Text style={(textStyle.SubTitle_Regular, {marginLeft: 10})}>
+        {getCurrencySymbol(props.isMoney)}
+      </Text>
+    );
+
+  const showTrailingMoney = () =>
+    props.isMoney && (
+      <>
+        <Text>.</Text>
+        <TextInputReact
+          value={decimalValue || ''}
+          onChangeText={onDecimalChangeText}
+          style={[inputPlatformStyle, {flex: 0}, textStyle.SubTitle_Regular]}
+          placeholder="00"
+          maxLength={2}
+          // ref={ref}
+          onFocus={onFocusHandler}
+          onBlur={onBlurHandler}
+          onSubmitEditing={props.onSubmitEditing}
+        />
+      </>
+    );
+
   return (
     <>
-      {props.showLabel && (
-        <Text
-          style={[
-            textStyle.SubTitle_Regular,
-            styles.LabelText,
-            props.labelStyle,
-          ]}>
-          {props.label}
-        </Text>
-      )}
+      {showLabel(props.label)}
       <Animated.View
         style={[
           styles.CoreContainer,
@@ -113,67 +166,20 @@ const TextInput = forwardRef<TextInputReact, ITextInputProps>((props, ref) => {
           inputAnimationStyle,
           props.containerStyle,
         ]}>
-        {props.iconLeading && (
-          <View style={{marginRight: 10}}>
-            <Icon {...props.iconLeading} />
-          </View>
-        )}
-        {props.isMoney && <Text>{getCurrencySymbol(props.isMoney) + ' '}</Text>}
+        {showIcon(props.iconLeading)}
+        {showLeadingMoney()}
         <TextInputReact
           {...props}
+          ref={ref}
           value={value}
-          onChangeText={v => {
-            props.isMoney
-              ? props.onChangeText(
-                  parseFloat(v || '0.0').toString() +
-                    '.' +
-                    (decimalValue || ''),
-                )
-              : props.onChangeText(v);
-          }}
+          onChangeText={onChangeTextHandler}
           style={[inputPlatformStyle, textStyle.SubTitle_Regular]}
           placeholder={props.placeholder || props.label}
-          ref={ref}
-          onFocus={() => {
-            animateTo(1);
-          }}
-          onBlur={() => {
-            if (props.isError) return animateTo(2);
-            animateTo(0);
-          }}
+          onFocus={onFocusHandler}
+          onBlur={onBlurHandler}
         />
-        {props.isMoney && (
-          <>
-            <Text>.</Text>
-            <TextInputReact
-              value={decimalValue || ''}
-              onChangeText={v => {
-                props.onChangeText(value + '.' + v);
-              }}
-              style={[
-                inputPlatformStyle,
-                {flex: 0},
-                textStyle.SubTitle_Regular,
-              ]}
-              placeholder="00"
-              maxLength={2}
-              // ref={ref}
-              onFocus={() => {
-                animateTo(1);
-              }}
-              onBlur={() => {
-                if (props.isError) return animateTo(2);
-                animateTo(0);
-              }}
-            />
-          </>
-        )}
-
-        {props.iconTrailing && (
-          <View style={{marginLeft: 10}}>
-            <Icon {...props.iconTrailing} />
-          </View>
-        )}
+        {showTrailingMoney()}
+        {showIcon(props.iconTrailing)}
       </Animated.View>
     </>
   );
@@ -181,20 +187,9 @@ const TextInput = forwardRef<TextInputReact, ITextInputProps>((props, ref) => {
 
 export default TextInput;
 
-//Style utilities
-const getModeStyle = (mode: ITextInputProps['mode']): ViewStyle => {
-  switch (mode) {
-    case 'Underlined':
-      return styles.ContainerUnderlinedMode;
-    case 'Outlined':
-      return styles.ContainerOutlinedMode;
-    default:
-      return styles.ContainerCircledMode;
-  }
-};
-
 const baseInputStyle: TextStyle = {
   flex: 1,
+  marginHorizontal: 6,
   // backgroundColor: 'red',
 };
 
@@ -239,3 +234,18 @@ const styles = StyleSheet.create({
     marginBottom: 4,
   },
 });
+
+//Style utilities
+const getModeStyle = (mode: ITextInputProps['mode']): ViewStyle => {
+  switch (mode) {
+    case 'Underlined':
+      return styles.ContainerUnderlinedMode;
+    case 'Outlined':
+      return styles.ContainerOutlinedMode;
+    default:
+      return styles.ContainerCircledMode;
+  }
+};
+
+const inputPlatformStyle =
+  Platform.OS === 'ios' ? styles.InputIOS : styles.InputAndroid;

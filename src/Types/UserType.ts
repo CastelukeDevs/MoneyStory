@@ -6,6 +6,7 @@ export type IUserMain = {
   lastName?: string;
   dateOfBirth?: string;
   avatarUrl?: string;
+  defaultCurrency?: ICurrencyTypes;
 };
 
 export type IUserType = {
@@ -13,7 +14,6 @@ export type IUserType = {
   level: number;
   points: number;
   wallet: string[];
-  defaultCurrency: ICurrencyTypes;
   firebaseUID: string;
   email: string;
   createdAt: Date;

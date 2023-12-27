@@ -38,6 +38,7 @@ const SignInModal = (props: ISignInModalProp) => {
         containerStyle={{marginTop: 12}}
         onSubmitEditing={() => passwordRef.current?.focus()}
         isError={props.error?.email !== undefined && props.error?.email}
+        keyboardType="email-address"
       />
       <TextInput
         ref={passwordRef}

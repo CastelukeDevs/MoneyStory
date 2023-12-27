@@ -1,12 +1,14 @@
 import React, {useState} from 'react';
 import {
   Image,
+  Platform,
   StyleSheet,
   Text,
   TouchableOpacity,
   View,
   useWindowDimensions,
 } from 'react-native';
+import {useSafeAreaInsets} from 'react-native-safe-area-context';
 import {useDispatch} from 'react-redux';
 import {createUserData, updateUserData} from '@Redux/Actions/UserAction';
 import {launchImageLibrary, Asset} from 'react-native-image-picker';
@@ -21,6 +23,9 @@ import {PickerOption} from '@Utilities/ImagePicker';
 
 const SignUpImageScreen = (props: IMainNavPropTypes<'ProfileImageScreen'>) => {
   const payload = props.route.params;
+
+  const inset = useSafeAreaInsets();
+
   const isCreate = payload.mode === 'create';
 
   console.log('screen payload', payload);
@@ -67,11 +72,17 @@ const SignUpImageScreen = (props: IMainNavPropTypes<'ProfileImageScreen'>) => {
   };
 
   return (
-    <View style={styles.RootContainer}>
+    <View
+      style={[
+        styles.RootContainer,
+        Platform.OS === 'ios'
+          ? {paddingBottom: inset.bottom}
+          : {paddingBottom: 16},
+      ]}>
       <Text style={textStyle.Hero_Bold}>
         {isCreate ? 'Add your profile picture' : 'Change your profile picture'}
       </Text>
-      <View style={{flex: 1, justifyContent: 'center', alignItems: 'center'}}>
+      <View style={{flex: 1, alignItems: 'center', marginTop: 48}}>
         <TouchableOpacity
           onPress={onImagePress}
           style={{
@@ -104,10 +115,11 @@ export default SignUpImageScreen;
 const styles = StyleSheet.create({
   RootContainer: {
     flex: 1,
-    padding: 18,
+    paddingHorizontal: 18,
   },
   ButtonContainer: {
     // flex: 1,
     justifyContent: 'flex-end',
+    zIndex: 0,
   },
 });

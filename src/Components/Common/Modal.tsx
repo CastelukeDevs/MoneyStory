@@ -82,7 +82,6 @@ const Modal = (props: IModalPropTypes) => {
   const gesture = Gesture.Pan()
     .onChange(({changeY}) => {
       const offsetDelta = changeY + offsetY.value;
-      // console.log('test', {windowDelta, offsetDelta});
 
       //Clamping scroll to top
       const topClamp = Math.max(
@@ -114,9 +113,9 @@ const Modal = (props: IModalPropTypes) => {
     };
   });
 
+  //TODO: Validate this behavior
   const KAVBehavior =
     Platform.OS === 'ios' && props.avoidKeyboard ? 'height' : undefined;
-  // const KAVBehavior = Platform.OS === 'ios' ? 'height' : 'padding';
 
   return (
     visible && (
