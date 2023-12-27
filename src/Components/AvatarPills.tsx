@@ -15,7 +15,14 @@ const AvatarPills = (props: IAvatarPillsProps) => {
 
   return (
     <View style={styles.RootContainer}>
-      <Image source={{uri: user.avatarUrl}} style={styles.AvatarSize} />
+      <View style={styles.AvatarSize}>
+        {user.avatarUrl && (
+          <Image
+            source={{uri: user.avatarUrl}}
+            style={StyleSheet.absoluteFillObject}
+          />
+        )}
+      </View>
       <View style={{flexDirection: 'column'}}>
         <Text
           style={[textStyle.Content_Regular, {marginRight: 24, marginLeft: 8}]}>
@@ -52,5 +59,6 @@ const styles = StyleSheet.create({
     width: 50,
     height: 50,
     borderRadius: 100,
+    backgroundColor: GlobalColor.accent,
   },
 });
