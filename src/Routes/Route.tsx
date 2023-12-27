@@ -122,8 +122,15 @@ const Route = () => {
               <Stack.Group
                 navigationKey="SignUp"
                 screenOptions={{
-                  // header: props => preLoginHeader(props),
+                  // header: props => profileCompletionHeader(props),
+                  headerLeft: props => headerBackButton(props),
                   headerShown: true,
+                  title: '',
+                  headerStyle: {
+                    backgroundColor: DefaultTheme.colors.background,
+                    elevation: 0,
+                    shadowOpacity: 0,
+                  },
                 }}>
                 <Stack.Screen name="SignUpScreen" component={SignUpScreen} />
                 <Stack.Screen
