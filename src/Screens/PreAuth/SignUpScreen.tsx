@@ -87,24 +87,24 @@ const SignUpScreen = (prop: IMainNavPropTypes<'SignUpScreen'>) => {
         />
         <TextInput
           ref={passwordRef}
+          label="Password"
           value={password}
           onChangeText={setPassword}
-          label="Password"
           iconLeading={{name: 'lock-closed-outline'}}
           iconTrailing={{
             name: passwordHide ? 'eye-outline' : 'eye-off-outline',
             onPress: () => setPasswordHide(!passwordHide),
           }}
-          secureTextEntry={passwordHide}
           containerStyle={styles.InputSpacing}
+          secureTextEntry={passwordHide}
           isError={passwordError.length > 0}
           onSubmitEditing={() => confirmRef.current?.focus()}
         />
         <TextInput
           ref={confirmRef}
+          label="Confirm Password"
           value={confirm}
           onChangeText={setConfirm}
-          label="Confirm Password"
           iconLeading={{name: 'lock-closed-outline'}}
           iconTrailing={{
             name: confirmHide ? 'eye-outline' : 'eye-off-outline',

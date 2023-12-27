@@ -108,6 +108,17 @@ const Route = () => {
     );
   };
 
+  const screenOptionsWithHeader = {
+    headerLeft: (props: any) => headerBackButton(props),
+    headerShown: true,
+    title: '',
+    headerStyle: {
+      backgroundColor: DefaultTheme.colors.background,
+      elevation: 0,
+      shadowOpacity: 0,
+    },
+  };
+
   return (
     <SafeAreaProvider>
       <NavigationContainer
@@ -121,10 +132,7 @@ const Route = () => {
               <Stack.Screen name="SignInScreen" component={SignInScreen} />
               <Stack.Group
                 navigationKey="SignUp"
-                screenOptions={{
-                  // header: props => preLoginHeader(props),
-                  headerShown: true,
-                }}>
+                screenOptions={screenOptionsWithHeader}>
                 <Stack.Screen name="SignUpScreen" component={SignUpScreen} />
                 <Stack.Screen
                   name="ForgotPasswordScreen"
@@ -140,17 +148,7 @@ const Route = () => {
               />
               <Stack.Group
                 navigationKey="ProfileCompletion"
-                screenOptions={{
-                  // header: props => profileCompletionHeader(props),
-                  headerLeft: props => headerBackButton(props),
-                  headerShown: true,
-                  title: '',
-                  headerStyle: {
-                    backgroundColor: DefaultTheme.colors.background,
-                    elevation: 0,
-                    shadowOpacity: 0,
-                  },
-                }}>
+                screenOptions={screenOptionsWithHeader}>
                 <Stack.Screen
                   name="ProfileCompletionScreen"
                   component={ProfileCompletionScreen}

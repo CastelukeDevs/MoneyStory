@@ -6,6 +6,7 @@ import {
   Text,
   TextInput as RNInput,
   View,
+  KeyboardAvoidingViewProps,
 } from 'react-native';
 import {useSafeAreaInsets} from 'react-native-safe-area-context';
 import auth from '@react-native-firebase/auth';
@@ -17,6 +18,10 @@ import TextInput from '@Components/Common/TextInput';
 import Button from '@Components/Common/Button';
 import {useDispatch} from 'react-redux';
 import {updateUserData} from '@Redux/Actions/UserAction';
+import Dropdown, {IDropdownData} from '@Components/Common/Dropdown';
+import CurrencyList from '@Utilities/String/Currency/CurrencyList';
+import KAVBehavior from '@Utilities/KAVBehavior';
+import {ICurrencyTypes} from '@Types/CommonTypes';
 
 const ProfileCompletionScreen = (
   props: IMainNavPropTypes<'ProfileCompletionScreen'>,
@@ -36,13 +41,20 @@ const ProfileCompletionScreen = (
   const [lastName, setLastName] = useState(data?.lastName || '');
   const [dateOfBirth, setDateOfBirth] = useState(data?.dateOfBirth || '');
   const [defaultCurrency, setDefaultCurrency] = useState('');
+  const [selectedCurrency, setSelectedCurrency] =
+    useState<ICurrencyTypes | null>();
 
   const goBack = () => {
     props.navigation.replace('MainDashboard', {screen: 'HomeScreen'});
   };
 
   const onNextHandler = () => {
-    const screenPayload = {firstName, lastName, dateOfBirth};
+    const screenPayload = {
+      firstName,
+      lastName,
+      dateOfBirth,
+      defaultCurrency: selectedCurrency || 'IDR',
+    };
     props.navigation.navigate('ProfileImageScreen', {
       mode: 'create',
       data: screenPayload,
@@ -54,7 +66,7 @@ const ProfileCompletionScreen = (
       firstName,
       lastName,
       dateOfBirth,
-      defaultCurrency: defaultCurrency || 'IDR',
+      defaultCurrency: selectedCurrency || 'IDR',
     };
     dispatch(updateUserData({data: updatePayload})).then(() => {
       goBack();
@@ -69,16 +81,25 @@ const ProfileCompletionScreen = (
     auth().signOut();
   };
 
+  const dropdownData: IDropdownData[] = CurrencyList.map(cur => ({
+    label: cur.abbreviation + ' - ' + cur.currency,
+    value: cur.abbreviation,
+  }));
+
   return (
     <View
       style={[
         styles.RootContainer,
-        Platform.OS === 'ios' && {paddingBottom: inset.bottom},
+        Platform.OS === 'ios'
+          ? {paddingBottom: inset.bottom}
+          : {paddingBottom: 16},
       ]}>
       <Text style={textStyle.Hero_Bold}>
         {isCreate ? 'Complete your Profile' : 'Change your existing Profile'}
       </Text>
-      <KeyboardAvoidingView style={styles.InputGroupContainer}>
+      <KeyboardAvoidingView
+        style={styles.InputGroupContainer}
+        behavior={KAVBehavior}>
         <TextInput
           value={firstName}
           onChangeText={setFirstName}
@@ -111,18 +132,17 @@ const ProfileCompletionScreen = (
             currencyRef.current?.focus();
           }}
         />
-        <TextInput
+        <Dropdown
+          label="Default Currency"
           ref={currencyRef}
+          // showLabel
           value={defaultCurrency}
           onChangeText={setDefaultCurrency}
-          label="Default Currency"
+          dropdown={dropdownData}
           iconLeading={{name: 'logo-usd'}}
-          containerStyle={styles.InputSpacing}
-          onSubmitEditing={() => {
-            if (isCreate) return onNextHandler();
-            onSubmitHandler();
+          onSelectedChange={v => {
+            setSelectedCurrency(v);
           }}
-          maxLength={3}
         />
       </KeyboardAvoidingView>
       <View style={styles.FooterContainer}>
@@ -145,18 +165,18 @@ export default ProfileCompletionScreen;
 const styles = StyleSheet.create({
   RootContainer: {
     flex: 1,
-    padding: 18,
+    paddingHorizontal: 18,
   },
   InputGroupContainer: {
     flex: 1,
-    justifyContent: 'center',
-    marginTop: 24,
+    marginTop: 48,
   },
   InputSpacing: {
     marginBottom: 12,
   },
   FooterContainer: {
-    flex: 1,
+    // flex: 1,
     justifyContent: 'flex-end',
+    zIndex: -1,
   },
 });
