@@ -177,6 +177,7 @@ const TextInput = forwardRef<TextInputReact, ITextInputProps>((props, ref) => {
           placeholder={props.placeholder || props.label}
           onFocus={onFocusHandler}
           onBlur={onBlurHandler}
+          textContentType={props.secureTextEntry ? 'oneTimeCode' : undefined}
         />
         {showTrailingMoney()}
         {showIcon(props.iconTrailing)}
