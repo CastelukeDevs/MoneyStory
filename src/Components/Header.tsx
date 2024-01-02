@@ -7,7 +7,7 @@ import Icon, {IIconProps} from './Common/Icon';
 import GlobalColor from '@Utilities/Styles/GlobalColor';
 import {textStyle} from '@Utilities/Styles/GlobalStyle';
 
-type IHeaderModeTypes = 'normal' | 'overlay';
+type IHeaderModeTypes = 'normal' | 'highlights';
 type IHeaderPropTypes = {
   mode?: IHeaderModeTypes;
   label?: string;
@@ -17,35 +17,64 @@ type IHeaderPropTypes = {
   hideRightIcon?: boolean;
   // showProgressBar?: boolean;
   hideBackButton?: boolean;
+  miniIcon?: string;
+};
+type IRenderIconParams = {
+  hide?: boolean;
+  iconName: string;
+  onPress?: () => void;
 };
 
 const Header = (props: IHeaderPropTypes) => {
-  const currentMode = props.mode || 'normal';
+  const inset = useSafeAreaInsets();
 
-  const safeArea = useSafeAreaInsets();
+  const currentMode = props.mode || 'normal';
+  const isHighlight = currentMode === 'highlights';
+  const iconSize = 24;
+
+  const emptyIcon = () => <View style={{width: iconSize, height: iconSize}} />;
+
+  const renderIcon = (params: IRenderIconParams) => {
+    if (params.hide) return emptyIcon();
+    return (
+      <Icon
+        name={params.iconName}
+        size={iconSize}
+        color={GlobalColor.accent}
+        onPress={params.onPress}
+      />
+    );
+  };
+
+  const renderMiniIcon = () => (
+    <View style={styles.MiniIconContainer}>
+      <Icon name={props.miniIcon} size={iconSize} color={GlobalColor.light} />
+    </View>
+  );
+
   return (
-    <View style={[{paddingTop: safeArea.top}, styles.RootComponentContainer]}>
+    <View style={[{paddingTop: inset.top}, styles.RootComponentContainer]}>
       <View style={[styles.ButtonGroupContainer]}>
-        <Icon
-          name="chevron-back"
-          size={24}
-          color={GlobalColor.accent}
-          onPress={() => props.onBackPressed?.()}
-        />
-        <Text style={[textStyle.Title_Bold, styles.TextCenter]}>
-          {props.label}
+        {isHighlight
+          ? renderMiniIcon()
+          : renderIcon({
+              hide: props.hideBackButton,
+              iconName: 'chevron-back',
+              onPress: props.onBackPressed,
+            })}
+        <Text
+          style={[
+            textStyle.Title_Bold,
+            styles.Text,
+            isHighlight ? textStyle.H3_Bold : styles.TextCenter,
+          ]}>
+          {isHighlight ? props.label?.toUpperCase() : props.label}
         </Text>
-        {props.hideRightIcon ? (
-          <View style={{width: 24}} />
-        ) : (
-          <Icon
-            name="ellipsis-vertical"
-            size={24}
-            color={GlobalColor.accent}
-            onPress={props.onRightIconPressed}
-            {...props.rightIcon}
-          />
-        )}
+        {renderIcon({
+          hide: props.hideRightIcon,
+          iconName: 'ellipsis-vertical',
+          onPress: props.onRightIconPressed,
+        })}
         <Text style={[textStyle.Hero_Bold, styles.TextOverlay]}>
           {props.label}
         </Text>
@@ -66,10 +95,8 @@ const styles = StyleSheet.create({
     bottom: 12,
     // backgroundColor: 'skyblue',
   },
-  TextCenter: {
-    textAlign: 'center',
-    flex: 1,
-  },
+  Text: {flex: 1},
+  TextCenter: {textAlign: 'center'},
   TextOverlay: {
     position: 'absolute',
     // alignSelf: 'center',
@@ -80,5 +107,11 @@ const styles = StyleSheet.create({
     color: GlobalColor.overlay10,
     fontSize: 84,
     zIndex: -1,
+  },
+  MiniIconContainer: {
+    padding: 6,
+    borderRadius: 8,
+    backgroundColor: GlobalColor.accent,
+    marginRight: 12,
   },
 });
