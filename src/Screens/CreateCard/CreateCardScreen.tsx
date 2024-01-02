@@ -35,33 +35,12 @@ const CreateCardScreen = (props: IMainNavPropTypes<'CreateCardScreen'>) => {
   const [page, setPage] = useState(1);
   const [cardData, setCardData] = useState(defaultWalletData);
 
-  // const goToPage = (targetPage: number) => {
-  //   setPage(targetPage);
-  //   // scrollViewRef.current?.scrollTo({x: targetPage * width - width});
-  // };
-
   useEffect(() => {
     scrollViewRef.current?.scrollTo({x: page * width - width});
   }, [page]);
 
   const getSubHeaderTitle = () => {
-    switch (page) {
-      case 1:
-        return 'Add new wallet card image';
-      case 2:
-        return 'Select wallet card logo';
-      case 3:
-        return 'Complete your wallet card details';
-      case 4:
-        return 'Confirm your new wallet card';
-      default:
-        return 'Create new card';
-    }
-  };
-
-  const onNextHandler = (walletPassed: IWalletMain) => {
-    setPage(page + 1);
-    setCardData(walletPassed);
+    return fragments[page - 1].title;
   };
 
   const onHeaderBackPressHandler = () => {
@@ -70,6 +49,11 @@ const CreateCardScreen = (props: IMainNavPropTypes<'CreateCardScreen'>) => {
     } else {
       setPage(page - 1);
     }
+  };
+
+  const onNextHandler = (walletPassed: IWalletMain) => {
+    setPage(page + 1);
+    setCardData(walletPassed);
   };
 
   const onDataChangeHandler = (passedWallet: IWalletMain) => {
@@ -92,13 +76,47 @@ const CreateCardScreen = (props: IMainNavPropTypes<'CreateCardScreen'>) => {
       });
   };
 
+  const fragments = [
+    {
+      title: 'Add new wallet card image',
+      view: CardImageFragment({
+        cardData,
+        onNextPress: onNextHandler,
+        onDataChange: onDataChangeHandler,
+      }),
+    },
+    {
+      title: 'Select wallet card logo',
+      view: CardLogoFragment({
+        cardData,
+        onNextPress: onNextHandler,
+        onDataChange: onDataChangeHandler,
+      }),
+    },
+    {
+      title: 'Complete your wallet card details',
+      view: CardDetailsFragment({
+        cardData,
+        onNextPress: onNextHandler,
+        onDataChange: onDataChangeHandler,
+      }),
+    },
+    {
+      title: 'Confirm your new wallet card',
+      view: CardCompletionFragment({
+        cardData,
+        onNextPress: onSubmitDataHandler,
+      }),
+    },
+  ];
+
   return (
     <View style={{flex: 1}}>
       <Header label="Create Card" onBackPressed={onHeaderBackPressHandler} />
       <View style={styles.SubHeaderContainer}>
         <Text style={textStyle.H3_Bold}>{getSubHeaderTitle()}</Text>
         <View style={{height: 18}} />
-        <ProgressBar indicatorCount={4} indicatorActive={page} />
+        <ProgressBar indicatorCount={fragments.length} indicatorActive={page} />
       </View>
 
       <ScrollView
@@ -111,30 +129,10 @@ const CreateCardScreen = (props: IMainNavPropTypes<'CreateCardScreen'>) => {
         showsHorizontalScrollIndicator={false}
         bounces={false}
         scrollEventThrottle={16}>
-        <CardImageFragment
-          cardData={cardData}
-          onNextPress={onNextHandler}
-          onDataChange={onDataChangeHandler}
-        />
-
-        <CardLogoFragment
-          cardData={cardData}
-          onNextPress={onNextHandler}
-          onDataChange={onDataChangeHandler}
-        />
-
-        <CardDetailsFragment
-          onNextPress={onNextHandler}
-          cardData={cardData}
-          onDataChange={onDataChangeHandler}
-        />
-
-        <CardCompletionFragment
-          cardData={cardData}
-          onNextPress={onSubmitDataHandler}
-        />
+        {fragments.map((item, index) => (
+          <View key={index}>{item.view}</View>
+        ))}
       </ScrollView>
-      {/* <Button label="Next" onPress={onNextHandler} /> */}
     </View>
   );
 };
