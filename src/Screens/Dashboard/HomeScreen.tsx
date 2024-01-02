@@ -173,6 +173,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     paddingHorizontal: 14,
+    paddingVertical: 8,
   },
   SectionContainer: {
     marginTop: 24,
