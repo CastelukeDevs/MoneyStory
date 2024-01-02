@@ -73,6 +73,10 @@ const HomeScreen = ({navigation}: IDashNavPropTypes<'HomeScreen'>) => {
     firebase.auth().signOut();
   };
 
+  const onSeeAllWalletHandler = () => {
+    navigation.navigate('WalletListScreen');
+  };
+
   return (
     <View style={[{paddingTop: inset.top}, styles.RootScreenContainer]}>
       <View style={styles.HeaderContainer}>
@@ -99,7 +103,11 @@ const HomeScreen = ({navigation}: IDashNavPropTypes<'HomeScreen'>) => {
         <View style={[styles.SectionContainer, {paddingHorizontal: 0}]}>
           <View style={[styles.SectionHeader, {paddingHorizontal: 14}]}>
             <Text style={textStyle.Title_Bold}>Your Wallet</Text>
-            <Text style={textStyle.Content_Regular}>See All</Text>
+            <Text
+              style={textStyle.Content_Regular}
+              onPress={onSeeAllWalletHandler}>
+              See All
+            </Text>
           </View>
           <FlatList
             data={userWallets}
@@ -109,7 +117,7 @@ const HomeScreen = ({navigation}: IDashNavPropTypes<'HomeScreen'>) => {
             contentContainerStyle={{paddingHorizontal: 14}}
             showsHorizontalScrollIndicator={false}
             bounces={false}
-            renderItem={({item, index}) => (
+            renderItem={({item}) => (
               <WalletCard
                 orientation="portrait"
                 wallet={item}

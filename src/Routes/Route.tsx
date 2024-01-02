@@ -32,6 +32,7 @@ import PostAuthTransitionScreen from '@Screens/Dashboard/PostAuthTransitionScree
 import {AnyAction} from 'redux';
 import {HeaderBackButtonProps} from '@react-navigation/elements';
 import CreateCardScreen from '@Screens/CreateCard/CreateCardScreen';
+import WalletListScreen from '@Screens/General/WalletListScreen';
 
 const Stack = createStackNavigator<IMainNav>();
 const Drawer = createDrawerNavigator<IDashNav>();
@@ -162,6 +163,11 @@ const Route = () => {
               <Stack.Screen
                 name="CreateCardScreen"
                 component={CreateCardScreen}
+              />
+              <Stack.Screen
+                name="WalletListScreen"
+                component={WalletListScreen}
+                options={screenOptionsWithHeader}
               />
             </>
           )}
