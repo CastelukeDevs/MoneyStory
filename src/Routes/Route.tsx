@@ -10,7 +10,6 @@ import {
   createNavigationContainerRef,
 } from '@react-navigation/native';
 import {
-  StackHeaderProps,
   StackNavigationOptions,
   createStackNavigator,
 } from '@react-navigation/stack';
@@ -33,7 +32,9 @@ import PostAuthTransitionScreen from '@Screens/Dashboard/PostAuthTransitionScree
 import {HeaderBackButtonProps} from '@react-navigation/elements';
 import CreateCardScreen from '@Screens/CreateCard/CreateCardScreen';
 import WalletListScreen from '@Screens/General/WalletListScreen';
-import ActivityListScreen from '@Screens/General/ActivityListScreen';
+import ActivityListScreen from '@Screens/Dashboard/ActivityListScreen';
+import BottomTabBar from '@Components/BottomTabBar';
+import CreateTransactionScreen from '@Screens/CreateTransaction/CreateTransactionScreen';
 
 const Stack = createStackNavigator<IMainNav>();
 const Drawer = createDrawerNavigator<IDashNav>();
@@ -166,11 +167,11 @@ const Route = () => {
                 name="CreateCardScreen"
                 component={CreateCardScreen}
               />
-              {/* <Stack.Screen
-                name="WalletListScreen"
-                component={WalletListScreen}
-                options={screenOptionsWithHeader}
-              /> */}
+              <Stack.Screen
+                name="CreateTransactionScreen"
+                component={CreateTransactionScreen}
+                // options={screenOptionsWithHeader}
+              />
               <Stack.Screen
                 name="ActivityListScreen"
                 component={ActivityListScreen}
@@ -185,19 +186,19 @@ const Route = () => {
   );
 };
 
-const DashboardRoute = () => {
-  return (
-    <Tab.Navigator
-      screenOptions={{
-        headerShown: false,
-      }}>
-      <Tab.Screen name="HomeScreen" component={HomeScreen} />
-      <Tab.Screen name="WalletScreen" component={WalletListScreen} />
-      <Tab.Screen name="OverviewScreen" component={AboutScreen} />
-      {/* <Tab.Screen name="DeveloperScreen2" component={Dev} /> */}
-    </Tab.Navigator>
-  );
-};
+const DashboardRoute = () => (
+  <Tab.Navigator
+    tabBar={BottomTabBar} // Max 4 Screen with current tab Bar
+    screenOptions={{
+      headerShown: false,
+    }}>
+    <Tab.Screen name="HomeScreen" component={HomeScreen} />
+    <Tab.Screen name="WalletScreen" component={WalletListScreen} />
+    <Tab.Screen name="OverviewScreen" component={AboutScreen} />
+    {/* <Tab.Screen name="DeveloperScreen2" component={Dev} /> */}
+  </Tab.Navigator>
+);
+
 // const DashboardRoute = () => {
 //   return (
 //     <Drawer.Navigator

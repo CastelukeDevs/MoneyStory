@@ -27,8 +27,9 @@ export type IMainNav = {
 
   PasswordScreen: undefined;
   CreateCardScreen: undefined;
-  WalletListScreen: undefined;
+  // WalletListScreen: undefined;
   ActivityListScreen: undefined;
+  CreateTransactionScreen: undefined;
 };
 
 export type IDashNav = {
