@@ -49,19 +49,19 @@ const HomeScreen = ({navigation}: IDashNavPropTypes<'HomeScreen'>) => {
     [totalBalance],
   );
 
-  const updateProfileHandler = () => {
-    navigation.navigate('ProfileCompletionScreen', {
-      mode: 'edit',
-      data: userData!,
-    });
-  };
+  // const updateProfileHandler = () => {
+  //   navigation.navigate('ProfileCompletionScreen', {
+  //     mode: 'edit',
+  //     data: userData!,
+  //   });
+  // };
 
-  const updateImageHandler = () => {
-    navigation.navigate('ProfileImageScreen', {
-      mode: 'edit',
-      data: userData!,
-    });
-  };
+  // const updateImageHandler = () => {
+  //   navigation.navigate('ProfileImageScreen', {
+  //     mode: 'edit',
+  //     data: userData!,
+  //   });
+  // };
 
   const onNotificationPressHandler = () => {};
 
@@ -75,6 +75,10 @@ const HomeScreen = ({navigation}: IDashNavPropTypes<'HomeScreen'>) => {
 
   const onSeeAllWalletHandler = () => {
     navigation.navigate('WalletListScreen');
+  };
+
+  const onSeeAllActivitiesHandler = () => {
+    navigation.navigate('ActivityListScreen');
   };
 
   return (
@@ -135,11 +139,16 @@ const HomeScreen = ({navigation}: IDashNavPropTypes<'HomeScreen'>) => {
         <View style={styles.SectionContainer}>
           <View style={styles.SectionHeader}>
             <Text style={textStyle.Title_Bold}>Your Activities</Text>
-            <Text style={textStyle.Content_Regular}>See All</Text>
+            <Text
+              style={textStyle.Content_Regular}
+              onPress={onSeeAllActivitiesHandler}>
+              See All
+            </Text>
           </View>
           <SearchBar />
           <View>
-            {transactionList.map((item, index) => (
+            {/**Using map since this is scaled vertically inside scroll view */}
+            {transactionList.map(item => (
               <ActivityListCard
                 key={item.id}
                 containerStyle={styles.ActivityList}

@@ -33,6 +33,7 @@ import {AnyAction} from 'redux';
 import {HeaderBackButtonProps} from '@react-navigation/elements';
 import CreateCardScreen from '@Screens/CreateCard/CreateCardScreen';
 import WalletListScreen from '@Screens/General/WalletListScreen';
+import ActivityListScreen from '@Screens/General/ActivityListScreen';
 
 const Stack = createStackNavigator<IMainNav>();
 const Drawer = createDrawerNavigator<IDashNav>();
@@ -167,6 +168,11 @@ const Route = () => {
               <Stack.Screen
                 name="WalletListScreen"
                 component={WalletListScreen}
+                options={screenOptionsWithHeader}
+              />
+              <Stack.Screen
+                name="ActivityListScreen"
+                component={ActivityListScreen}
                 options={screenOptionsWithHeader}
               />
             </>

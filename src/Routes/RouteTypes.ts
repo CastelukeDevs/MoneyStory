@@ -27,6 +27,7 @@ export type IMainNav = {
   PasswordScreen: undefined;
   CreateCardScreen: undefined;
   WalletListScreen: undefined;
+  ActivityListScreen: undefined;
 };
 
 export type IMainNavPropTypes<T extends keyof IMainNav> = StackScreenProps<
