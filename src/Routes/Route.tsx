@@ -10,13 +10,13 @@ import {
   createNavigationContainerRef,
 } from '@react-navigation/native';
 import {
-  StackHeaderProps,
   StackNavigationOptions,
   createStackNavigator,
 } from '@react-navigation/stack';
 import {createDrawerNavigator} from '@react-navigation/drawer';
+import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 
-import {IDashNav, IMainNav} from './RouteTypes';
+import {IDashNav, IMainNav, ITabNav} from './RouteTypes';
 import Header from '@Components/Header';
 import Button from '@Components/Common/Button';
 
@@ -29,12 +29,16 @@ import HomeScreen from '@Screens/Dashboard/HomeScreen';
 import AboutScreen from '@Screens/Dashboard/AboutScreen';
 import Dev from '@Screens/Dev';
 import PostAuthTransitionScreen from '@Screens/Dashboard/PostAuthTransitionScreen';
-import {AnyAction} from 'redux';
 import {HeaderBackButtonProps} from '@react-navigation/elements';
 import CreateCardScreen from '@Screens/CreateCard/CreateCardScreen';
+import WalletListScreen from '@Screens/General/WalletListScreen';
+import ActivityListScreen from '@Screens/Dashboard/ActivityListScreen';
+import BottomTabBar from '@Components/BottomTabBar';
+import CreateTransactionScreen from '@Screens/CreateTransaction/CreateTransactionScreen';
 
 const Stack = createStackNavigator<IMainNav>();
 const Drawer = createDrawerNavigator<IDashNav>();
+const Tab = createBottomTabNavigator<ITabNav>();
 
 const defaultScreenOptions: StackNavigationOptions = {headerShown: false};
 
@@ -163,6 +167,16 @@ const Route = () => {
                 name="CreateCardScreen"
                 component={CreateCardScreen}
               />
+              <Stack.Screen
+                name="CreateTransactionScreen"
+                component={CreateTransactionScreen}
+                // options={screenOptionsWithHeader}
+              />
+              <Stack.Screen
+                name="ActivityListScreen"
+                component={ActivityListScreen}
+                options={screenOptionsWithHeader}
+              />
             </>
           )}
           {/* <Stack.Group screenOptions={{presentation: 'modal'}}></Stack.Group> */}
@@ -172,17 +186,30 @@ const Route = () => {
   );
 };
 
-const DashboardRoute = () => {
-  return (
-    <Drawer.Navigator
-      screenOptions={{
-        headerShown: false,
-      }}>
-      <Drawer.Screen name="HomeScreen" component={HomeScreen} />
-      <Drawer.Screen name="AboutScreen" component={AboutScreen} />
-      <Drawer.Screen name="DeveloperScreen2" component={Dev} />
-    </Drawer.Navigator>
-  );
-};
+const DashboardRoute = () => (
+  <Tab.Navigator
+    tabBar={BottomTabBar} // Max 4 Screen with current tab Bar
+    screenOptions={{
+      headerShown: false,
+    }}>
+    <Tab.Screen name="HomeScreen" component={HomeScreen} />
+    <Tab.Screen name="WalletScreen" component={WalletListScreen} />
+    <Tab.Screen name="OverviewScreen" component={AboutScreen} />
+    {/* <Tab.Screen name="DeveloperScreen2" component={Dev} /> */}
+  </Tab.Navigator>
+);
+
+// const DashboardRoute = () => {
+//   return (
+//     <Drawer.Navigator
+//       screenOptions={{
+//         headerShown: false,
+//       }}>
+//       <Drawer.Screen name="HomeScreen" component={HomeScreen} />
+//       <Drawer.Screen name="AboutScreen" component={AboutScreen} />
+//       <Drawer.Screen name="DeveloperScreen2" component={Dev} />
+//     </Drawer.Navigator>
+//   );
+// };
 
 export default Route;
