@@ -1,5 +1,5 @@
-import {FlatList, StyleSheet, Text, View} from 'react-native';
 import React from 'react';
+import {FlatList, StyleSheet, Text, View} from 'react-native';
 import {useSelector} from 'react-redux';
 import {IRootStateType} from '@Redux/Store';
 import WalletCard from '@Components/WalletCard';
