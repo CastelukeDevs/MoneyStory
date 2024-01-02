@@ -3,12 +3,11 @@ import {FlatList, StyleSheet, Text, View} from 'react-native';
 import {useSelector} from 'react-redux';
 import {IRootStateType} from '@Redux/Store';
 import WalletCard from '@Components/WalletCard';
-import {IMainNavPropTypes} from '@Routes/RouteTypes';
+import {IMainNavPropTypes, ITabNavPropTypes} from '@Routes/RouteTypes';
 import {useSafeAreaInsets} from 'react-native-safe-area-context';
+import Header from '@Components/Header';
 
-const WalletListScreen = ({
-  navigation,
-}: IMainNavPropTypes<'WalletListScreen'>) => {
+const WalletListScreen = ({navigation}: ITabNavPropTypes<'WalletScreen'>) => {
   const inset = useSafeAreaInsets();
 
   const userWallet = useSelector(
@@ -24,6 +23,7 @@ const WalletListScreen = ({
   return (
     <View>
       {/* <Text>WalletListScreen</Text> */}
+      <Header label="My Wallet" mode="highlights" miniIcon="card-outline" />
       <FlatList
         data={userWallet}
         keyExtractor={item => item.id}

@@ -1,3 +1,4 @@
+import {BottomTabScreenProps} from '@react-navigation/bottom-tabs';
 import {DrawerScreenProps} from '@react-navigation/drawer';
 import {
   CompositeScreenProps,
@@ -22,7 +23,7 @@ export type IMainNav = {
   ForgotPasswordScreen: undefined;
 
   PostAuthTransitionScreen: undefined;
-  MainDashboard: NavigatorScreenParams<IDashNav>;
+  MainDashboard: NavigatorScreenParams<ITabNav>;
 
   PasswordScreen: undefined;
   CreateCardScreen: undefined;
@@ -30,23 +31,35 @@ export type IMainNav = {
   ActivityListScreen: undefined;
 };
 
-export type IMainNavPropTypes<T extends keyof IMainNav> = StackScreenProps<
-  IMainNav,
-  T
->;
-
 export type IDashNav = {
   HomeScreen: undefined;
   AboutScreen: undefined;
   DeveloperScreen2: {def: boolean; testProp?: string};
+};
+
+export type ITabNav = {
+  HomeScreen: undefined;
+  OverviewScreen: undefined;
+  WalletScreen: undefined;
+  ProfileScreen: undefined;
 };
 // export type IDashNavPropTypes<T extends keyof IDashNav> = DrawerScreenProps<
 //   IDashNav,
 //   T
 // >;
 
+export type IMainNavPropTypes<T extends keyof IMainNav> = StackScreenProps<
+  IMainNav,
+  T
+>;
+
 export type IDashNavPropTypes<T extends keyof IDashNav> = CompositeScreenProps<
   DrawerScreenProps<IDashNav, T>,
+  IMainNavPropTypes<keyof IMainNav>
+>;
+
+export type ITabNavPropTypes<T extends keyof ITabNav> = CompositeScreenProps<
+  BottomTabScreenProps<ITabNav, T>,
   IMainNavPropTypes<keyof IMainNav>
 >;
 

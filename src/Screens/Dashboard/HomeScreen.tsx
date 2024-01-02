@@ -74,7 +74,7 @@ const HomeScreen = ({navigation}: IDashNavPropTypes<'HomeScreen'>) => {
   };
 
   const onSeeAllWalletHandler = () => {
-    navigation.navigate('WalletListScreen');
+    navigation.navigate('MainDashboard', {screen: 'WalletScreen'});
   };
 
   const onSeeAllActivitiesHandler = () => {
