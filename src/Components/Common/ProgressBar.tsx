@@ -48,6 +48,7 @@ const styles = StyleSheet.create({
     backgroundColor: GlobalColor.accent,
   },
   IndicatorInactive: {
-    backgroundColor: GlobalColor.overlay10,
+    backgroundColor: GlobalColor.dark,
+    opacity: 0.1,
   },
 });

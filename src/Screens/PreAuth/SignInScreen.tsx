@@ -5,7 +5,7 @@ import {SafeAreaView} from 'react-native-safe-area-context';
 import {IMainNavPropTypes} from '@Routes/RouteTypes';
 
 import {textStyle, viewStyle} from '@Utilities/Styles/GlobalStyle';
-import GlobalColor from '@Utilities/Styles/GlobalColor';
+import GlobalColor, {Opacity} from '@Utilities/Styles/GlobalColor';
 import getString from '@Utilities/String/LanguageTools';
 import {IUserAuth} from '@Types/AuthTypes';
 import SignInUserEmailPassword from '@Utilities/Authentication/SignInUserEmailPassword';
@@ -67,7 +67,7 @@ const SignInScreen = (props: IMainNavPropTypes<'SignInScreen'>) => {
       <View
         style={[
           StyleSheet.absoluteFillObject,
-          {backgroundColor: GlobalColor.overlay},
+          {backgroundColor: GlobalColor.dark + Opacity[50]},
         ]}
       />
 

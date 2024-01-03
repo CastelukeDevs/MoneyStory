@@ -19,6 +19,7 @@ import {defaultWalletData} from '@Utilities/DefaultData/walletData';
 import Icon from './Common/Icon';
 import IconButton from './Common/IconButton';
 import FormatCurrency from '@Utilities/String/Currency/FormatCurrency';
+import {LinearGradientProps} from '@Utilities/Styles/LinearGradientSettings';
 
 type IWalletCardProps = {
   isEmpty?: boolean;
@@ -48,22 +49,7 @@ const WalletCard = (props: IWalletCardProps) => {
           style={StyleSheet.absoluteFillObject}
         />
       )}
-      <LinearGradient
-        style={StyleSheet.absoluteFillObject}
-        colors={[
-          GlobalColor.dark,
-          GlobalColor.dark,
-          GlobalColor.dark,
-          GlobalColor.overlay80,
-          GlobalColor.overlay80,
-          GlobalColor.overlay25,
-          // '#00000000',
-          // '#00000000',
-        ]}
-        useAngle={true}
-        angle={35}
-        angleCenter={{x: 0.5, y: 0.5}}
-      />
+      <LinearGradient {...LinearGradientProps} />
       {!props.isEmpty ? (
         <TouchableOpacity
           style={styles.ComponentContainer}

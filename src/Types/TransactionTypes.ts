@@ -1,5 +1,6 @@
 import {ICancelSignal} from '@Utilities/APIs/APIUtils';
 import {CategoryList} from '@Utilities/CategoryList';
+import {IPaginateProps} from './CommonTypes';
 
 export type ITransactionType = (typeof CategoryList)[number]['type'];
 
@@ -53,7 +54,17 @@ type ITransactionParams = {
   transactionId?: string;
   transactionType?: ITransactionType;
 };
-export type ICreateUserDataProps = {
-  data?: ITransactionMain;
-  params?: ITransactionParams;
-} & ICancelSignal;
+
+export type ITransactionApiResult = {
+  transactionList: ITransaction[];
+} & Required<IPaginateProps>;
+
+export type ITransactionByWalletId = {
+  walletId: string;
+} & ICancelSignal &
+  IPaginateProps;
+
+// export type ICreateUserDataProps = {
+//   data?: ITransactionMain;
+//   params?: ITransactionParams;
+// } & ICancelSignal;

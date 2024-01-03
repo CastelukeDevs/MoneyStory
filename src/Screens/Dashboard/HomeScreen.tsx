@@ -21,6 +21,7 @@ import AvatarPills from '@Components/AvatarPills';
 import WalletCard from '@Components/WalletCard';
 import SearchBar from '@Components/SearchBar';
 import ActivityListCard from '@Components/ActivityListCard';
+import {IWallet} from '@Types/WalletTypes';
 
 const HomeScreen = ({navigation}: IDashNavPropTypes<'HomeScreen'>) => {
   const inset = useSafeAreaInsets();
@@ -69,6 +70,10 @@ const HomeScreen = ({navigation}: IDashNavPropTypes<'HomeScreen'>) => {
     navigation.navigate('CreateCardScreen');
   };
 
+  const onCardPressHandler = (wallet: IWallet) => {
+    navigation.navigate('WalletDetailScreen', {wallet});
+  };
+
   const onLogoutHandler = () => {
     firebase.auth().signOut();
   };
@@ -97,9 +102,9 @@ const HomeScreen = ({navigation}: IDashNavPropTypes<'HomeScreen'>) => {
         <View style={styles.SectionContainer}>
           <Text style={textStyle.Title_Bold}>Your Wealth</Text>
           <Text style={textStyle.Hero_Bold}>
-            <Text style={styles.HeroTextGey}>{balance.symbol}</Text>
+            <Text style={styles.BalanceTextGrey}>{balance.symbol}</Text>
             <Text>{' ' + balance.whole}</Text>
-            <Text style={styles.HeroTextGey}>{balance.decimal}</Text>
+            <Text style={styles.BalanceTextGrey}>{balance.decimal}</Text>
           </Text>
           <Text style={[textStyle.Content_Light]}>+0,0 (0,00%)</Text>
         </View>
@@ -126,6 +131,7 @@ const HomeScreen = ({navigation}: IDashNavPropTypes<'HomeScreen'>) => {
                 orientation="portrait"
                 wallet={item}
                 style={styles.CardStyle}
+                onPress={() => onCardPressHandler(item)}
               />
             )}
             ListFooterComponent={WalletCard({
@@ -185,8 +191,9 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
     marginBottom: 12,
   },
-  HeroTextGey: {
-    color: GlobalColor.overlay,
+  BalanceTextGrey: {
+    color: GlobalColor.dark,
+    opacity: 0.6,
   },
   CardStyle: {
     marginRight: 12,

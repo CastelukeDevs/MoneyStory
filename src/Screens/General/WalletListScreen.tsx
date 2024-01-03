@@ -6,6 +6,7 @@ import WalletCard from '@Components/WalletCard';
 import {IMainNavPropTypes, ITabNavPropTypes} from '@Routes/RouteTypes';
 import {useSafeAreaInsets} from 'react-native-safe-area-context';
 import Header from '@Components/Header';
+import {IWallet} from '@Types/WalletTypes';
 
 const WalletListScreen = ({navigation}: ITabNavPropTypes<'WalletScreen'>) => {
   const inset = useSafeAreaInsets();
@@ -16,8 +17,12 @@ const WalletListScreen = ({navigation}: ITabNavPropTypes<'WalletScreen'>) => {
 
   const itemSeparator = () => <View style={{height: 12}} />;
 
-  const onAddCardHandler = () => {
+  const onEmptyCardPressHandler = () => {
     navigation.navigate('CreateCardScreen');
+  };
+
+  const onCardPressHandler = (wallet: IWallet) => {
+    navigation.navigate('WalletDetailScreen', {wallet});
   };
 
   return (
@@ -28,7 +33,11 @@ const WalletListScreen = ({navigation}: ITabNavPropTypes<'WalletScreen'>) => {
         data={userWallet}
         keyExtractor={item => item.id}
         renderItem={({item}) => (
-          <WalletCard wallet={item} orientation="landscape" />
+          <WalletCard
+            wallet={item}
+            orientation="landscape"
+            onPress={() => onCardPressHandler(item)}
+          />
         )}
         contentContainerStyle={[
           styles.FlatListContentContainer,
@@ -38,7 +47,7 @@ const WalletListScreen = ({navigation}: ITabNavPropTypes<'WalletScreen'>) => {
         ListFooterComponent={WalletCard({
           isEmpty: true,
           orientation: 'landscape',
-          onPress: onAddCardHandler,
+          onPress: onEmptyCardPressHandler,
         })}
         ListFooterComponentStyle={styles.ListFooterComponent}
       />

@@ -22,7 +22,7 @@ import Animated, {
   useSharedValue,
   withSpring,
 } from 'react-native-reanimated';
-import GlobalColor from '@Utilities/Styles/GlobalColor';
+import GlobalColor, {Opacity} from '@Utilities/Styles/GlobalColor';
 
 const windowHeight = Dimensions.get('window').height;
 const AnimatedPressable = Animated.createAnimatedComponent(Pressable);
@@ -161,7 +161,7 @@ const styles = StyleSheet.create({
 
   Overlay: {
     ...StyleSheet.absoluteFillObject,
-    backgroundColor: GlobalColor.overlay,
+    backgroundColor: GlobalColor.dark + Opacity[50],
     zIndex: 1,
   },
 

@@ -6,6 +6,7 @@ import {
 } from '@react-navigation/native';
 import {StackScreenProps} from '@react-navigation/stack';
 import {IUserMain, IUserType} from '@Types/UserType';
+import {IWallet} from '@Types/WalletTypes';
 
 type IProfileParams = {
   mode: 'create' | 'edit';
@@ -30,6 +31,7 @@ export type IMainNav = {
   // WalletListScreen: undefined;
   ActivityListScreen: undefined;
   CreateTransactionScreen: undefined;
+  WalletDetailScreen: {wallet: IWallet};
 };
 
 export type IDashNav = {
