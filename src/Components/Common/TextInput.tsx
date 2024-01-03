@@ -86,7 +86,7 @@ const TextInput = forwardRef<TextInputReact, ITextInputProps>((props, ref) => {
   };
 
   useEffect(() => {
-    console.log(`${props.label} is ${props.isError ? 'error' : 'ok'}`);
+    // console.log(`${props.label} is ${props.isError ? 'error' : 'ok'}`);
     if (props.isError) {
       animateTo(2);
     }
