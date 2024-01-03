@@ -30,6 +30,7 @@ export type IMainNav = {
   // WalletListScreen: undefined;
   ActivityListScreen: undefined;
   CreateTransactionScreen: undefined;
+  WalletDetailScreen: undefined;
 };
 
 export type IDashNav = {
