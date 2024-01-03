@@ -4,7 +4,7 @@ import {useSafeAreaInsets} from 'react-native-safe-area-context';
 import ProgressBar, {IProgressBarProp} from './Common/ProgressBar';
 import Button from './Common/Button';
 import Icon, {IIconProps} from './Common/Icon';
-import GlobalColor from '@Utilities/Styles/GlobalColor';
+import GlobalColor, {Opacity} from '@Utilities/Styles/GlobalColor';
 import {textStyle} from '@Utilities/Styles/GlobalStyle';
 
 type IHeaderModeTypes = 'normal' | 'highlights';
@@ -18,6 +18,7 @@ type IHeaderPropTypes = {
   // showProgressBar?: boolean;
   hideBackButton?: boolean;
   miniIcon?: string;
+  textColor?: string;
 };
 type IRenderIconParams = {
   hide?: boolean;
@@ -67,6 +68,7 @@ const Header = (props: IHeaderPropTypes) => {
             textStyle.Title_Bold,
             styles.Text,
             isHighlight ? textStyle.H3_Bold : styles.TextCenter,
+            {color: props.textColor || GlobalColor.dark},
           ]}>
           {isHighlight ? props.label?.toUpperCase() : props.label}
         </Text>
@@ -75,7 +77,12 @@ const Header = (props: IHeaderPropTypes) => {
           iconName: 'ellipsis-vertical',
           onPress: props.onRightIconPressed,
         })}
-        <Text style={[textStyle.Hero_Bold, styles.TextOverlay]}>
+        <Text
+          style={[
+            textStyle.Hero_Bold,
+            styles.TextOverlay,
+            {color: props.textColor || GlobalColor.dark},
+          ]}>
           {props.label}
         </Text>
       </View>
@@ -99,14 +106,11 @@ const styles = StyleSheet.create({
   TextCenter: {textAlign: 'center'},
   TextOverlay: {
     position: 'absolute',
-    // alignSelf: 'center',
     left: 0,
-    // top: 0,
-    // bottom: 0,
     textAlign: 'center',
-    color: GlobalColor.overlay10,
     fontSize: 84,
     zIndex: -1,
+    opacity: 0.1,
   },
   MiniIconContainer: {
     padding: 6,
