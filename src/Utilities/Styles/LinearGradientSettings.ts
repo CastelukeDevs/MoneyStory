@@ -1,5 +1,5 @@
 import {StyleSheet} from 'react-native';
-import GlobalColor from './GlobalColor';
+import GlobalColor, {Opacity} from './GlobalColor';
 
 export const LinearGradientProps = {
   style: StyleSheet.absoluteFillObject,
@@ -7,11 +7,9 @@ export const LinearGradientProps = {
     GlobalColor.dark,
     GlobalColor.dark,
     GlobalColor.dark,
-    GlobalColor.overlay80,
-    GlobalColor.overlay80,
-    GlobalColor.overlay25,
-    // '#00000000',
-    // '#00000000',
+    GlobalColor.dark + Opacity[80],
+    GlobalColor.dark + Opacity[80],
+    GlobalColor.dark + Opacity[25],
   ],
   useAngle: true,
   angle: 35,

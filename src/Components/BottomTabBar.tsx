@@ -2,7 +2,7 @@ import React from 'react';
 import {StyleSheet, View} from 'react-native';
 import {BottomTabBarProps} from '@react-navigation/bottom-tabs';
 
-import GlobalColor from '@Utilities/Styles/GlobalColor';
+import GlobalColor, {Opacity} from '@Utilities/Styles/GlobalColor';
 import Icon from './Common/Icon';
 
 type ITabIcon = {
@@ -75,7 +75,7 @@ const BottomTabBar = ({
                   ? GlobalColor.accent
                   : isMiddle
                   ? GlobalColor.light
-                  : GlobalColor.overlay25
+                  : GlobalColor.dark + Opacity[25]
               }
               size={iconSize}
               onPress={() => onIconPressHandler(item)}
