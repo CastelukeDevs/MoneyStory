@@ -1,5 +1,7 @@
-import {StyleSheet, TextStyle} from 'react-native';
+import {Dimensions, StyleSheet} from 'react-native';
 import GlobalColor from './GlobalColor';
+
+const width = Dimensions.get('window').width;
 
 export const viewStyle = StyleSheet.create({
   Base: {flex: 1},
@@ -10,6 +12,7 @@ export const viewStyle = StyleSheet.create({
     width: 200,
     backgroundColor: GlobalColor.light,
   },
+  RootFragmentStyle: {width, flex: 1, padding: 18},
 });
 
 export const textStyle = StyleSheet.create({

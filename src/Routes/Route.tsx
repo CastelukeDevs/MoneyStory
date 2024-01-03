@@ -35,6 +35,7 @@ import WalletListScreen from '@Screens/General/WalletListScreen';
 import ActivityListScreen from '@Screens/Dashboard/ActivityListScreen';
 import BottomTabBar from '@Components/BottomTabBar';
 import CreateTransactionScreen from '@Screens/CreateTransaction/CreateTransactionScreen';
+import WalletDetailsScreen from '@Screens/General/WalletDetailsScreen';
 
 const Stack = createStackNavigator<IMainNav>();
 const Drawer = createDrawerNavigator<IDashNav>();
@@ -150,6 +151,7 @@ const Route = () => {
                 name="PostAuthTransitionScreen"
                 component={PostAuthTransitionScreen}
               />
+
               <Stack.Group
                 navigationKey="ProfileCompletion"
                 screenOptions={screenOptionsWithHeader}>
@@ -162,6 +164,7 @@ const Route = () => {
                   component={ProfileImageScreen}
                 />
               </Stack.Group>
+
               <Stack.Screen name="MainDashboard" component={DashboardRoute} />
               <Stack.Screen
                 name="CreateCardScreen"
@@ -170,12 +173,15 @@ const Route = () => {
               <Stack.Screen
                 name="CreateTransactionScreen"
                 component={CreateTransactionScreen}
-                // options={screenOptionsWithHeader}
               />
               <Stack.Screen
                 name="ActivityListScreen"
                 component={ActivityListScreen}
                 options={screenOptionsWithHeader}
+              />
+              <Stack.Screen
+                name="WalletDetailScreen"
+                component={WalletDetailsScreen}
               />
             </>
           )}
