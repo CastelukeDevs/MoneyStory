@@ -29,7 +29,7 @@ const APICall = async (endpoint: IEndpoint, options?: IAPIsCallOption) => {
     data: payloadData,
     params: options?.params,
     signal: options?.abortController?.signal,
-    headers: {...requestHeader},
+    headers: {...requestHeader, 'Content-Type': 'multipart/form-data'},
   })
     .then(result => {
       console.log(`=> [O] axios request ${endpoint} success`, result);
@@ -45,6 +45,8 @@ const APICall = async (endpoint: IEndpoint, options?: IAPIsCallOption) => {
       console.log(
         `=> [X] axios request ${endpoint} error with code: ${errorPayload.code} //message: ${errorPayload.message}`,
       );
+      console.error('=> [X] axios error:', error);
+
       throw errorPayload;
     });
 };
