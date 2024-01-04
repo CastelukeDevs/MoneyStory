@@ -4,7 +4,6 @@ import {useDispatch, useSelector} from 'react-redux';
 import {firebase} from '@react-native-firebase/auth';
 import {IRootStateType} from '@Redux/Store';
 import {getTransaction} from '@Redux/Actions/TransactionAction';
-import {getUserAccount} from '@Redux/Actions/AccountAction';
 import {useSafeAreaInsets} from 'react-native-safe-area-context';
 
 import useUserBalance from '@Utilities/Hooks/useUserBalance';
@@ -22,7 +21,6 @@ import WalletCard from '@Components/WalletCard';
 import SearchBar from '@Components/SearchBar';
 import ActivityListCard from '@Components/ActivityListCard';
 import {IWallet} from '@Types/WalletTypes';
-import DropdownV2, {IDropdownItem} from '@Components/Common/DropdownV2';
 
 const HomeScreen = ({navigation}: IDashNavPropTypes<'HomeScreen'>) => {
   const inset = useSafeAreaInsets();
@@ -87,13 +85,6 @@ const HomeScreen = ({navigation}: IDashNavPropTypes<'HomeScreen'>) => {
     navigation.navigate('ActivityListScreen');
   };
 
-  const dropdownItem: IDropdownItem[] = userWallets.map(wallet => ({
-    label: wallet.walletName,
-    subLabel: wallet.balance.toString(),
-    value: wallet.id,
-    icon: wallet.logo,
-  }));
-
   return (
     <View style={[{paddingTop: inset.top}, styles.RootScreenContainer]}>
       <View style={styles.HeaderContainer}>
@@ -106,7 +97,6 @@ const HomeScreen = ({navigation}: IDashNavPropTypes<'HomeScreen'>) => {
           />
         </View>
       </View>
-      <DropdownV2 items={dropdownItem} />
       <ScrollView bounces={false}>
         <View style={styles.SectionContainer}>
           <Text style={textStyle.Title_Bold}>Your Wealth</Text>
