@@ -104,7 +104,7 @@ const DropdownV2 = (props: IDropdownPropType) => {
 
 const ItemRender = (items: IDropdownItem) => (
   <View style={styles.ItemGeneral}>
-    <IconButton name={items.icon} shape="circle" />
+    {items.icon && <IconButton name={items.icon} shape="circle" />}
     <View style={styles.ItemTextContainer}>
       <Text style={textStyle.SubTitle_Bold}>{items.label}</Text>
       {items.subLabel && (
