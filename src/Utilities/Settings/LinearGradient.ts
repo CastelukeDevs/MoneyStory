@@ -1,5 +1,5 @@
 import {StyleSheet} from 'react-native';
-import GlobalColor, {Opacity} from './GlobalColor';
+import GlobalColor, {Opacity} from '../Styles/GlobalColor';
 
 export const LinearGradientProps = {
   style: StyleSheet.absoluteFillObject,

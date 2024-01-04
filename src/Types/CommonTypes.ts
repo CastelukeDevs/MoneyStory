@@ -1,4 +1,4 @@
-import CurrencyList from '@Utilities/String/Currency/CurrencyList';
+import CurrencyList from '@Utilities/DefaultData/CurrencyList';
 
 export type ICurrencyTypes = (typeof CurrencyList)[number]['abbreviation'];
 export type IPaginateProps = {

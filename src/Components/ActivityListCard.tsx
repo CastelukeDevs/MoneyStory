@@ -11,7 +11,7 @@ import FormatCurrency from '@Utilities/String/Currency/FormatCurrency';
 import {useSelector} from 'react-redux';
 import {IRootStateType} from '@Redux/Store';
 import GlobalColor from '@Utilities/Styles/GlobalColor';
-import getCategories from '@Utilities/getCategories';
+import getCategories from '@Utilities/Tools/getCategories';
 
 type IActivityListCardPropsType = {
   transaction: ITransactionMain;
