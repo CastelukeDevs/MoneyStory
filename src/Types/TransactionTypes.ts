@@ -1,5 +1,5 @@
 import {ICancelSignal} from '@Utilities/APIs/APIUtils';
-import {CategoryList} from '@Utilities/CategoryList';
+import {CategoryList} from '@Utilities/DefaultData/CategoryList';
 import {IPaginateProps} from './CommonTypes';
 
 export type ITransactionType = (typeof CategoryList)[number]['type'];

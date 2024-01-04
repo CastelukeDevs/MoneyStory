@@ -19,8 +19,8 @@ import Button from '@Components/Common/Button';
 import {useDispatch} from 'react-redux';
 import {updateUserData} from '@Redux/Actions/UserAction';
 import Dropdown, {IDropdownData} from '@Components/Common/Dropdown';
-import CurrencyList from '@Utilities/String/Currency/CurrencyList';
-import KAVBehavior from '@Utilities/KAVBehavior';
+import CurrencyList from '@Utilities/DefaultData/CurrencyList';
+import KAVBehavior from '@Utilities/Settings/KAVBehavior';
 import {ICurrencyTypes} from '@Types/CommonTypes';
 
 const ProfileCompletionScreen = (

@@ -15,6 +15,7 @@ import TransactionItemFragment from './Fragment/3-TransactionItemFragment';
 import TransactionReceiptFragment from './Fragment/4-TransactionReceiptFragment';
 import ProgressBar from '@Components/Common/ProgressBar';
 import {textStyle} from '@Utilities/Styles/GlobalStyle';
+import {ITransaction} from '@Types/TransactionTypes';
 
 const CreateTransactionScreen = ({
   navigation,
@@ -23,6 +24,7 @@ const CreateTransactionScreen = ({
   const scrollViewRef = useRef<ScrollView>(null);
 
   const [page, setPage] = useState(1);
+  const [transactions, setTransactions] = useState<ITransaction>();
 
   useEffect(() => {
     scrollViewRef.current?.scrollTo({x: page * width - width});
@@ -48,16 +50,23 @@ const CreateTransactionScreen = ({
     return fragments[page - 1].title;
   };
 
+  const onImageChange = (uri: string) => {
+    const newImage = {};
+  };
+
   const fragments = [
     {
       title: 'Snap your receipt',
-      view: TransactionImageFragment({onNext}),
+      view: TransactionImageFragment({onNext, onImageChange}),
     },
     {
       title: 'Your transaction details',
       view: TransactionDetailFragment({onNext}),
     },
-    {title: 'Add transaction items', view: TransactionItemFragment({onNext})},
+    {
+      title: 'Add transaction items',
+      view: TransactionItemFragment({onNext}),
+    },
     {
       title: 'Transaction receipt',
       view: TransactionReceiptFragment({onNext: onSubmit}),
@@ -85,6 +94,10 @@ const CreateTransactionScreen = ({
         {fragments.map((item, index) => (
           <View key={index}>{item.view}</View>
         ))}
+        {/* <TransactionImageFragment
+          onNext={onNext}
+          onImageChange={onImageChange}
+        /> */}
       </ScrollView>
     </View>
   );

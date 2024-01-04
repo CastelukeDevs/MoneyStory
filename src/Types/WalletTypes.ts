@@ -1,5 +1,5 @@
 import {ICancelSignal} from '@Utilities/APIs/APIUtils';
-import {ICurrencyTypes} from './CommonTypes';
+import {ICurrencyTypes, IFile} from './CommonTypes';
 
 export type IWalletType = 'wallet' | 'debit' | 'credit';
 
@@ -25,7 +25,7 @@ export type IWallet = {
 } & IWalletMain;
 
 export type IWalletCreateUpdateData = {
-  image: any;
+  image: IFile;
 } & IWalletMain;
 
 export type ICreateWalletDataProps = {
