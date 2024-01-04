@@ -71,8 +71,8 @@ const Dropdown = forwardRef<RNInput, IDropdownPropsType>((props, ref) => {
     setDropdownItem(filtered);
   }, [props.value]);
 
-  wrapperRef.current?.measureInWindow((mX, mY, mWidth, mHeight) => {
-    setIsInTopHalf(mY < halfWindow);
+  wrapperRef.current?.measureInWindow((_, posY) => {
+    setIsInTopHalf(posY < halfWindow);
   });
 
   const onInputTextLayoutHandler = useCallback((ev: LayoutChangeEvent) => {
