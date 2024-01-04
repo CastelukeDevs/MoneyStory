@@ -21,6 +21,7 @@ import WalletCard from '@Components/WalletCard';
 import SearchBar from '@Components/SearchBar';
 import ActivityListCard from '@Components/ActivityListCard';
 import {IWallet} from '@Types/WalletTypes';
+import NewWalletCard from '@Components/NewWalletCard';
 
 const HomeScreen = ({navigation}: IDashNavPropTypes<'HomeScreen'>) => {
   const inset = useSafeAreaInsets();
@@ -65,7 +66,7 @@ const HomeScreen = ({navigation}: IDashNavPropTypes<'HomeScreen'>) => {
 
   const onNotificationPressHandler = () => {};
 
-  const onCardEmptyPressHandler = () => {
+  const onNewWalletPressHandler = () => {
     navigation.navigate('CreateCardScreen');
   };
 
@@ -121,7 +122,6 @@ const HomeScreen = ({navigation}: IDashNavPropTypes<'HomeScreen'>) => {
             data={userWallets}
             keyExtractor={item => item.id}
             horizontal
-            // style={{backgroundColor: 'tomato'}}
             contentContainerStyle={{paddingHorizontal: 14}}
             showsHorizontalScrollIndicator={false}
             bounces={false}
@@ -133,11 +133,10 @@ const HomeScreen = ({navigation}: IDashNavPropTypes<'HomeScreen'>) => {
                 onPress={() => onCardPressHandler(item)}
               />
             )}
-            ListFooterComponent={WalletCard({
-              orientation: 'portrait',
-              isEmpty: true,
-              onPress: onCardEmptyPressHandler,
+            ListFooterComponent={NewWalletCard({
+              onPress: onNewWalletPressHandler,
             })}
+            ListFooterComponentStyle={{height: '100%'}}
           />
         </View>
 
