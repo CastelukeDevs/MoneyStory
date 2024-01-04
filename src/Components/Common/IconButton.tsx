@@ -28,7 +28,9 @@ const IconButton = (props: IIconButtonPropTypes) => {
 
   return (
     <View style={{flexDirection: 'row'}}>
-      <TouchableOpacity onPress={() => props.onPress?.()}>
+      <TouchableOpacity
+        disabled={props.onPress === undefined}
+        onPress={() => props.onPress?.()}>
         <View
           style={[
             {
