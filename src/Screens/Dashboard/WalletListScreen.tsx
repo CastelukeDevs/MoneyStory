@@ -1,5 +1,5 @@
 import React from 'react';
-import {FlatList, StyleSheet, Text, View} from 'react-native';
+import {FlatList, StyleSheet, Text, TouchableOpacity, View} from 'react-native';
 import {useSelector} from 'react-redux';
 import {IRootStateType} from '@Redux/Store';
 import WalletCard from '@Components/WalletCard';
@@ -7,6 +7,10 @@ import {IMainNavPropTypes, ITabNavPropTypes} from '@Routes/RouteTypes';
 import {useSafeAreaInsets} from 'react-native-safe-area-context';
 import Header from '@Components/Header';
 import {IWallet} from '@Types/WalletTypes';
+import NewWalletCard from '@Components/NewWalletCard';
+import Icon from '@Components/Common/Icon';
+import {textStyle} from '@Utilities/Styles/GlobalStyle';
+import GlobalColor from '@Utilities/Styles/GlobalColor';
 
 const WalletListScreen = ({navigation}: ITabNavPropTypes<'WalletScreen'>) => {
   const inset = useSafeAreaInsets();
@@ -26,10 +30,11 @@ const WalletListScreen = ({navigation}: ITabNavPropTypes<'WalletScreen'>) => {
   };
 
   return (
-    <View>
+    <View style={{flex: 1}}>
       {/* <Text>WalletListScreen</Text> */}
       <Header label="My Wallet" mode="highlights" miniIcon="card-outline" />
       <FlatList
+        style={{flex: 1}}
         data={userWallet}
         keyExtractor={item => item.id}
         renderItem={({item}) => (
@@ -41,15 +46,13 @@ const WalletListScreen = ({navigation}: ITabNavPropTypes<'WalletScreen'>) => {
         )}
         contentContainerStyle={[
           styles.FlatListContentContainer,
-          {paddingBottom: inset.bottom + 12},
+          // {paddingBottom: inset.bottom + 12},
         ]}
         ItemSeparatorComponent={itemSeparator}
-        ListFooterComponent={WalletCard({
-          isEmpty: true,
-          orientation: 'landscape',
+        ListFooterComponent={NewWalletCard({
           onPress: onEmptyCardPressHandler,
         })}
-        ListFooterComponentStyle={styles.ListFooterComponent}
+        ListFooterComponentStyle={{width: '100%', marginTop: 12}}
       />
     </View>
   );
@@ -58,6 +61,5 @@ const WalletListScreen = ({navigation}: ITabNavPropTypes<'WalletScreen'>) => {
 export default WalletListScreen;
 
 const styles = StyleSheet.create({
-  FlatListContentContainer: {alignItems: 'center', paddingVertical: 12},
-  ListFooterComponent: {marginTop: 12},
+  FlatListContentContainer: {alignItems: 'center', padding: 12},
 });
