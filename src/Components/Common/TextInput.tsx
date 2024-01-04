@@ -41,12 +41,13 @@ export type ITextInputProps = {
   onChangeText: (str: string) => void;
   iconLeading?: IIconProps;
   iconTrailing?: IIconProps;
-  containerStyle?: ViewStyle;
   options?: TextInputProps;
   isError?: boolean;
   showLabel?: boolean;
-  labelStyle?: TextStyle;
   isMoney?: ICurrencyTypes;
+  containerStyle?: ViewStyle;
+  labelStyle?: TextStyle;
+  currencyStyle?: TextStyle;
 } & IMergedTextInput &
   TextInputProps;
 
@@ -133,7 +134,12 @@ const TextInput = forwardRef<TextInputReact, ITextInputProps>((props, ref) => {
 
   const showLeadingMoney = () =>
     props.isMoney && (
-      <Text style={(textStyle.SubTitle_Regular, {marginLeft: 10})}>
+      <Text
+        style={[
+          textStyle.SubTitle_Regular,
+          {marginLeft: 10},
+          props.currencyStyle,
+        ]}>
         {getCurrencySymbol(props.isMoney)}
       </Text>
     );
@@ -141,17 +147,23 @@ const TextInput = forwardRef<TextInputReact, ITextInputProps>((props, ref) => {
   const showTrailingMoney = () =>
     props.isMoney && (
       <>
-        <Text>.</Text>
+        <Text style={props.style}>.</Text>
         <TextInputReact
           value={decimalValue || ''}
           onChangeText={onDecimalChangeText}
-          style={[inputPlatformStyle, {flex: 0}, textStyle.SubTitle_Regular]}
+          style={[
+            inputPlatformStyle,
+            {flex: 0},
+            textStyle.SubTitle_Regular,
+            props.style,
+          ]}
           placeholder="00"
           maxLength={2}
           // ref={ref}
           onFocus={onFocusHandler}
           onBlur={onBlurHandler}
           onSubmitEditing={props.onSubmitEditing}
+          keyboardType="number-pad"
         />
       </>
     );
@@ -173,11 +185,12 @@ const TextInput = forwardRef<TextInputReact, ITextInputProps>((props, ref) => {
           ref={ref}
           value={value}
           onChangeText={onChangeTextHandler}
-          style={[inputPlatformStyle, textStyle.SubTitle_Regular]}
+          style={[inputPlatformStyle, textStyle.SubTitle_Regular, props.style]}
           placeholder={props.placeholder || props.label}
           onFocus={onFocusHandler}
           onBlur={onBlurHandler}
           textContentType={props.secureTextEntry ? 'oneTimeCode' : undefined}
+          keyboardType={props.isMoney ? 'number-pad' : props.keyboardType}
         />
         {showTrailingMoney()}
         {showIcon(props.iconTrailing)}
