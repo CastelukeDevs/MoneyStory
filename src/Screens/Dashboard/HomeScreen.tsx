@@ -4,7 +4,6 @@ import {useDispatch, useSelector} from 'react-redux';
 import {firebase} from '@react-native-firebase/auth';
 import {IRootStateType} from '@Redux/Store';
 import {getTransaction} from '@Redux/Actions/TransactionAction';
-import {getUserAccount} from '@Redux/Actions/AccountAction';
 import {useSafeAreaInsets} from 'react-native-safe-area-context';
 
 import useUserBalance from '@Utilities/Hooks/useUserBalance';
@@ -163,7 +162,8 @@ const HomeScreen = ({navigation}: IDashNavPropTypes<'HomeScreen'>) => {
             ))}
           </View>
         </View>
-        <Button label="Sign Out" onPress={onLogoutHandler} />
+
+        {/* <Button label="Sign Out" onPress={onLogoutHandler} /> */}
       </ScrollView>
     </View>
   );
