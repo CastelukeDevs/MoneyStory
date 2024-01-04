@@ -19,7 +19,7 @@ import {textStyle} from '@Utilities/Styles/GlobalStyle';
 import GlobalColor from '@Utilities/Styles/GlobalColor';
 
 import Button from '@Components/Common/Button';
-import {PickerOption} from '@Utilities/ImagePicker';
+import {PickerOption} from '@Utilities/Settings/ImagePicker';
 
 const SignUpImageScreen = (props: IMainNavPropTypes<'ProfileImageScreen'>) => {
   const payload = props.route.params;

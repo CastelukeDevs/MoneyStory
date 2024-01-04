@@ -3,7 +3,7 @@ import {StyleSheet, View, useWindowDimensions} from 'react-native';
 import {useSafeAreaInsets} from 'react-native-safe-area-context';
 import {launchImageLibrary} from 'react-native-image-picker';
 
-import {PickerOption} from '@Utilities/ImagePicker';
+import {PickerOption} from '@Utilities/Settings/ImagePicker';
 import {IWalletMain} from '@Types/WalletTypes';
 
 import WalletCard from '@Components/WalletCard';

@@ -1,8 +1,13 @@
 import auth from '@react-native-firebase/auth';
 import axios, {AxiosError} from 'axios';
-import {IAPIError, IAPIsCallOption, IEndpoint, getEndpoint} from './APIUtils';
+import {
+  IAPIError,
+  IAPIsCallOption,
+  IEndpoint,
+  TransformObjectToForm,
+  getEndpoint,
+} from './APIUtils';
 import {APP_API_KEY, BASE_SERVICES_PORT, BASE_URL} from '@env';
-import transformObject from '@Utilities/transformObject';
 
 const URL = BASE_URL + BASE_SERVICES_PORT + '/' + APP_API_KEY;
 
@@ -17,7 +22,7 @@ const APICall = async (endpoint: IEndpoint, options?: IAPIsCallOption) => {
     ? {Authorization: `Bearer ${token}`}
     : {};
 
-  const payloadData = transformObject(options?.data);
+  const payloadData = TransformObjectToForm(options?.data);
   console.log(`=> New API Call ${endpoint} with detail:`, {
     options,
     payloadData,

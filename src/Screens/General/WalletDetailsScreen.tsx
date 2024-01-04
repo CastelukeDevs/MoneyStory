@@ -9,7 +9,7 @@ import {getTransactionByWalletId} from '@Redux/Actions/TransactionAction';
 import {IMainNavPropTypes} from '@Routes/RouteTypes';
 
 import GlobalColor, {Opacity} from '@Utilities/Styles/GlobalColor';
-import {LinearGradientProps} from '@Utilities/Styles/LinearGradientSettings';
+import {LinearGradientProps} from '@Utilities/Settings/LinearGradient';
 import {textStyle} from '@Utilities/Styles/GlobalStyle';
 import FormatCurrency from '@Utilities/String/Currency/FormatCurrency';
 
