@@ -1,7 +1,4 @@
-import {CancelToken, GenericAbortSignal} from 'axios';
 import EndpointPool from './EndpointPool';
-import {IUserCreateUpdateData, IUserMain} from '@Types/UserType';
-import {IWalletCreateUpdateData} from '@Types/WalletTypes';
 
 enum EndpointMethod {
   get,
@@ -40,3 +37,19 @@ export const ActionPrefix: IEndpoint[] = EndpointPool.map(
 );
 
 export type IAPIError = {message: string; status: number; error: any};
+
+export const TransformObjectToForm = (object: any): FormData => {
+  if (object === null || object === undefined) return object;
+  const formData = new FormData();
+  Object.keys(object).forEach(key => {
+    const value = object[key];
+    if (Array.isArray(value)) {
+      value.forEach(v => {
+        formData.append(`${key}[]`, JSON.stringify(v));
+      });
+    } else {
+      formData.append(key, object[key]);
+    }
+  });
+  return formData;
+};

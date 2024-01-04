@@ -1,5 +1,5 @@
 import {ICategory, ITransactionType} from '@Types/TransactionTypes';
-import {CategoryList} from './CategoryList';
+import {CategoryList} from '../DefaultData/CategoryList';
 
 export default (str: string, type: ITransactionType): ICategory => {
   const categories = CategoryList.find(

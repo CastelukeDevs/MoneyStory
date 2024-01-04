@@ -16,7 +16,7 @@ import Button from '@Components/Common/Button';
 import TextInput from '@Components/Common/TextInput';
 import {useSelector} from 'react-redux';
 import {IRootStateType} from '@Redux/Store';
-import KAVBehavior from '@Utilities/KAVBehavior';
+import KAVBehavior from '@Utilities/Settings/KAVBehavior';
 
 type ICardDetailsFragmentProps = {
   onNextPress: (cardData: IWalletMain) => void;

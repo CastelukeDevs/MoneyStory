@@ -19,7 +19,7 @@ import {defaultWalletData} from '@Utilities/DefaultData/walletData';
 import Icon from './Common/Icon';
 import IconButton from './Common/IconButton';
 import FormatCurrency from '@Utilities/String/Currency/FormatCurrency';
-import {LinearGradientProps} from '@Utilities/Styles/LinearGradientSettings';
+import {LinearGradientProps} from '@Utilities/Settings/LinearGradient';
 
 type IWalletCardProps = {
   isEmpty?: boolean;
