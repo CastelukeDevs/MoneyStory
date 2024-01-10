@@ -1,8 +1,8 @@
 import {View, Text} from 'react-native';
 import React from 'react';
-import {IDashNavPropTypes, IMainNavPropTypes} from '../../Routes/RouteTypes';
+import {ITabNavPropTypes} from '../../Routes/RouteTypes';
 
-export default function AboutScreen(props: IDashNavPropTypes<'AboutScreen'>) {
+export default function AboutScreen(props: ITabNavPropTypes<'OverviewScreen'>) {
   const {navigation, route} = props;
 
   return (

@@ -15,6 +15,33 @@ module.exports = {
         allowUndefined: true,
       },
     ],
+    [
+      'module-resolver',
+      {
+        extensions: [
+          '.ios.js',
+          '.android.js',
+          '.ios.jsx',
+          '.android.jsx',
+          '.js',
+          '.jsx',
+          '.json',
+          '.ts',
+          '.tsx',
+        ],
+        root: ['.'],
+        alias: {
+          '@Utilities': './src/Utilities',
+          '@Types': './src/Types',
+          '@Screens': './src/Screens',
+          '@Routes': './src/Routes',
+          '@Resources': './src/Resources',
+          '@Redux': './src/Redux',
+          '@Components': './src/Components',
+          '@Common': './src/Components/Common',
+        },
+      },
+    ],
     'react-native-reanimated/plugin',
   ],
 };

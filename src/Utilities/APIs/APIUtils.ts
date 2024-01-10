@@ -1,4 +1,3 @@
-import {CancelToken} from 'axios';
 import EndpointPool from './EndpointPool';
 
 enum EndpointMethod {
@@ -14,8 +13,6 @@ export type IEndpointPool = {
   endpoint: string;
   url: string;
   method: IEndpointMethod;
-  payload?: any;
-  params?: any;
   auth?: boolean;
 };
 
@@ -25,13 +22,34 @@ export const getEndpoint = (endpoint: IEndpoint) => {
   return EndpointPool.find(item => item.endpoint === endpoint);
 };
 
+export type ICancelSignal = {
+  abortController?: AbortController;
+};
+
 export type IAPIsCallOption = {
   params?: any;
-  payload?: any;
+  data?: any;
   auth?: boolean;
-  cancelToken?: CancelToken;
-};
+} & ICancelSignal;
 
 export const ActionPrefix: IEndpoint[] = EndpointPool.map(
   endpointItem => endpointItem.endpoint,
 );
+
+export type IAPIError = {message: string; status: number; error: any};
+
+export const TransformObjectToForm = (object: any): FormData => {
+  if (object === null || object === undefined) return object;
+  const formData = new FormData();
+  Object.keys(object).forEach(key => {
+    const value = object[key];
+    if (Array.isArray(value)) {
+      value.forEach(v => {
+        formData.append(`${key}[]`, JSON.stringify(v));
+      });
+    } else {
+      formData.append(key, object[key]);
+    }
+  });
+  return formData;
+};

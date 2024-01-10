@@ -1,35 +1,19 @@
-import {PayloadAction, createSlice} from '@reduxjs/toolkit';
-import {IErrorMessage, IUser} from '../../Types/Types';
-import DefaultAction from '../Actions/DefaultAction';
+import {createSlice} from '@reduxjs/toolkit';
 
-export type IDefaultState = {
-  isLoading: boolean;
-  error: IErrorMessage | null;
-  userData: IUser | null;
-};
+export type IDefaultState = {};
 
 export const contactInitialState: IDefaultState = {
-  isLoading: false,
-  error: null,
-  userData: null,
+  // isLoading: false,
+  // error: null,
+  // userData: null,
 };
 
 const DefaultReducer = createSlice({
-  name: 'contacts',
+  name: 'default',
   initialState: contactInitialState,
-  reducers: {
-    setUser: (state: IDefaultState, action: PayloadAction<IUser>) => {
-      const userData = action.payload;
-      state.userData = userData;
-    },
-    removeUser: (state: IDefaultState) => {
-      state.userData = null;
-      state.isLoading = false;
-      state.error = null;
-    },
-  },
-  extraReducers: DefaultAction,
+  reducers: {},
+  // extraReducers: DefaultAction,
 });
 
-export const {setUser, removeUser} = DefaultReducer.actions;
+export const {} = DefaultReducer.actions;
 export default DefaultReducer;
