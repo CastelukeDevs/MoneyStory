@@ -12,15 +12,11 @@ import {useSafeAreaInsets} from 'react-native-safe-area-context';
 import {IMainNavPropTypes} from '@Routes/RouteTypes';
 
 import {ThemeText} from '@Utilities/Styles/GlobalStyle';
-import {
-  IValidationResult,
-  validateEmail,
-  validatePassword,
-} from '@Utilities/Tools/StringValidation';
 import CreateUserEmailPassword from '@Utilities/Authentication/CreateUserEmailPassword';
 
 import TextInput from '@Components/Common/TextInput';
 import Button from '@Components/Common/Button';
+import ValidateString from '@Utilities/Tools/ValidateString';
 
 const SignUpScreen = (prop: IMainNavPropTypes<'SignUpScreen'>) => {
   const inset = useSafeAreaInsets();
@@ -30,8 +26,8 @@ const SignUpScreen = (prop: IMainNavPropTypes<'SignUpScreen'>) => {
   const [confirm, setConfirm] = useState('');
   const [passwordHide, setPasswordHide] = useState(true);
   const [confirmHide, setConfirmHide] = useState(true);
-  const [emailError, setEmailError] = useState<IValidationResult[]>([]);
-  const [passwordError, setPasswordError] = useState<IValidationResult[]>([]);
+  const [emailError, setEmailError] = useState<string[]>([]);
+  const [passwordError, setPasswordError] = useState<string[]>([]);
 
   const passwordRef = useRef<RNTextInput>(null);
   const confirmRef = useRef<RNTextInput>(null);
@@ -41,27 +37,20 @@ const SignUpScreen = (prop: IMainNavPropTypes<'SignUpScreen'>) => {
   const onRegisterHandler = () => {
     console.log('register attempted');
 
-    const isPasswordValid = validatePassword(password);
-    const isEmailValid = validateEmail(email);
+    const isPasswordValid = ValidateString(password, 'password');
+    const isEmailValid = ValidateString(email, 'email');
 
     if (isEmailValid.length > 0) return setEmailError(isEmailValid);
     setEmailError([]);
     if (isPasswordValid.length > 0) return setPasswordError(isPasswordValid);
     if (password !== confirm) {
-      return setPasswordError([
-        {description: 'Password not match', name: 'unmatch'},
-      ]);
+      return setPasswordError(['Password not match']);
     }
     setPasswordError([]);
 
     console.log('ready to sign up new user', {email, password});
     CreateUserEmailPassword({email, password}).catch(() => {
-      const generalError: IValidationResult[] = [
-        {
-          description: 'General Error',
-          name: 'general',
-        },
-      ];
+      const generalError = ['General Error'];
       setEmailError(generalError);
       setPasswordError(generalError);
     });

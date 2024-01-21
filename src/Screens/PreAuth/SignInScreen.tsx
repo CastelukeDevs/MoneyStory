@@ -14,7 +14,7 @@ import Button from '@Components/Common/Button';
 import Modal from '@Components/Common/Modal';
 import Logo from '@Components/Logo';
 import SignInModal from './SignInModal';
-import StringValidation from '@Utilities/Tools/StringValidation';
+import StringValidation from '@Utilities/Tools/ValidateString';
 
 const SignInScreen = (props: IMainNavPropTypes<'SignInScreen'>) => {
   const {navigation, route} = props;

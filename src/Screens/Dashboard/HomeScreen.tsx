@@ -162,7 +162,7 @@ const HomeScreen = ({navigation}: IDashNavPropTypes<'HomeScreen'>) => {
           </View>
         </View>
 
-        {/* <Button label="Sign Out" onPress={onLogoutHandler} /> */}
+        <Button label="Sign Out" onPress={onLogoutHandler} />
       </ScrollView>
     </View>
   );

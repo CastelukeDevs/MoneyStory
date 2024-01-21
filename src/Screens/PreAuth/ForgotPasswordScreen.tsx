@@ -13,7 +13,7 @@ import ForgetPassword from '@Utilities/Authentication/ForgetPassword';
 import {
   IValidationResult,
   validateEmail,
-} from '@Utilities/Tools/StringValidation';
+} from '@Utilities/Tools/ValidateString';
 
 import Button from '@Components/Common/Button';
 import TextInput from '@Components/Common/TextInput';
