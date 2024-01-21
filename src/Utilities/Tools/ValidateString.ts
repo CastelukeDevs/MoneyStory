@@ -91,27 +91,28 @@ export type IValidationResult = {
 const ValidationCases = {
   empty: {
     test: (e: string) => e.length >= 1,
-    message: 'Tidak boleh kosong',
+    message: 'Cannot be empty',
   },
   validMail: {
     test: (e: string) => mailRegexValidation.test(e),
 
-    message: 'Email tidak valid',
+    message: 'Email invalid',
   },
   length: {
     test: (e: string) => e.length > passwordMinLength,
-    message: `Harus lebih dari ${passwordMinLength} karakter`,
+    message: `Should be more than ${passwordMinLength} character`,
   },
-  uppercase: {regex: /[A-Z]/, message: 'Minimal satu huruf besar'},
-  lowercase: {regex: /[a-z]/, message: 'Minimal satu huruf kecil'},
-  number: {regex: /[0-9]/, message: 'Minimal satu angka'},
-  special: {regex: /[^A-Za-z0-9]/, message: 'Minimal satu symbol'},
+  uppercase: {regex: /[A-Z]/, message: 'At least one uppercase letter'},
+  lowercase: {regex: /[a-z]/, message: 'At least one lowercase letter'},
+  number: {regex: /[0-9]/, message: 'At least one number'},
+  special: {regex: /[^A-Za-z0-9]/, message: 'At least one special character'},
 } as const satisfies IValidationCase;
 
 //List of validation
 const ValidationContent = {
   password: ['length', 'lowercase', 'uppercase', 'number', 'special'],
   email: ['empty', 'validMail'],
+  name: ['empty'],
 } as const satisfies IValidationContent;
 
 /**
@@ -131,7 +132,7 @@ const ValidationContent = {
 // }
 export default (text: string, mode?: IValidationMode): string[] => {
   const selectedCase: IValidationCaseEntries[] = ValidationContent[
-    mode || 'email'
+    mode || 'name'
   ].map(key => ValidationCases[key]);
   const validTest = selectedCase.flatMap(({test, regex, message}) => {
     const isValid = test?.(text) || regex?.test(text);
