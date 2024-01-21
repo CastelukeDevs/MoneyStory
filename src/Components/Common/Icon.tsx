@@ -2,9 +2,10 @@ import React from 'react';
 import {TouchableOpacity} from 'react-native';
 import IonIcon from 'react-native-vector-icons/Ionicons';
 import GlobalColor from '@Utilities/Styles/GlobalColor';
+import {IIconName, ILogoName} from '@Types/CommonTypes';
 
 export type IIconProps = {
-  name?: string;
+  name?: IIconName | ILogoName;
   color?: string;
   size?: number;
   onPress?: () => void;

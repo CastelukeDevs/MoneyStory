@@ -1,4 +1,4 @@
-const LogoList = [
+export const LogoList = [
   {name: 'logo-xing'},
   {name: 'logo-xbox'},
   {name: 'logo-windows'},
@@ -23,7 +23,6 @@ const LogoList = [
   {name: 'logo-linkedin'},
   {name: 'logo-google-playstore'},
   {name: 'logo-google'},
-  //   {name: 'logo-gitlab'},
   {name: 'logo-github'},
   {name: 'logo-firebase'},
   {name: 'logo-facebook'},
@@ -54,8 +53,19 @@ const LogoList = [
   {name: 'telescope-outline'},
   {name: 'wallet-outline'},
   {name: 'thunderstorm-outline'},
-] as const;
+] as const satisfies {name: string}[];
 
-export type ILogoName = (typeof LogoList)[number]['name'];
-
-export default LogoList;
+export const IconList = [
+  {name: 'balloon-outline'},
+  {name: 'bonfire-outline'},
+  {name: 'basketball-outline'},
+  {name: 'cash-outline'},
+  {name: 'card-outline'},
+  {name: 'desktop-outline'},
+  {name: 'rocket-outline'},
+  {name: 'school-outline'},
+  {name: 'skull-outline'},
+  {name: 'telescope-outline'},
+  {name: 'wallet-outline'},
+  {name: 'thunderstorm-outline'},
+] as const satisfies {name: string}[];

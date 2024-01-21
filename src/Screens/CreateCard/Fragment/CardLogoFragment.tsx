@@ -3,11 +3,11 @@ import {FlatList, StyleSheet, View, useWindowDimensions} from 'react-native';
 import {useSafeAreaInsets} from 'react-native-safe-area-context';
 
 import {IWalletMain} from '@Types/WalletTypes';
-import LogoList from '@Utilities/DefaultData/LogoList';
 
 import WalletCard from '@Components/WalletCard';
 import Button from '@Components/Common/Button';
 import IconButton from '@Components/Common/IconButton';
+import {LogoList} from '@Utilities/DefaultData/IconList';
 
 type ICardLogoFragmentProps = {
   onNextPress: (cardData: IWalletMain) => void;
