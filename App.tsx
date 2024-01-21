@@ -1,7 +1,7 @@
 import React from 'react';
-import Route from './src/Routes/Route';
-import {GestureHandlerRootView} from 'react-native-gesture-handler';
 import {StatusBar} from 'react-native';
+import {GestureHandlerRootView} from 'react-native-gesture-handler';
+import Routes from './src/Routes/Routes';
 import ReduxWrapper from '@Redux/ReduxWrapper';
 
 /**
@@ -20,7 +20,7 @@ export default function App() {
     <GestureHandlerRootView style={{flex: 1}}>
       <ReduxWrapper>
         <StatusBar translucent backgroundColor="transparent" />
-        <Route />
+        <Routes />
       </ReduxWrapper>
     </GestureHandlerRootView>
   );
