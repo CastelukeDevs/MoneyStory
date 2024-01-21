@@ -72,4 +72,5 @@ export const IconList = [
   {name: 'lock-closed-outline'},
   {name: 'eye-outline'},
   {name: 'eye-off-outline'},
+  {name: 'notifications-outline'},
 ] as const satisfies {name: string}[];
