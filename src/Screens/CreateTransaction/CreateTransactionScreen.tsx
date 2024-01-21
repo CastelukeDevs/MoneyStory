@@ -6,16 +6,18 @@ import {
   View,
   useWindowDimensions,
 } from 'react-native';
-import {IMainNavPropTypes} from '@Routes/RouteTypes';
 
+import {IMainNavPropTypes} from '@Routes/RouteTypes';
+import {ITransaction} from '@Types/TransactionTypes';
+import {IFile} from '@Types/CommonTypes';
+
+import {textStyle} from '@Utilities/Styles/GlobalStyle';
 import Header from '@Components/Header';
 import TransactionImageFragment from './Fragment/1-TransactionImageFragment';
 import TransactionDetailFragment from './Fragment/2-TransactionDetailFragment';
 import TransactionItemFragment from './Fragment/3-TransactionItemFragment';
 import TransactionReceiptFragment from './Fragment/4-TransactionReceiptFragment';
 import ProgressBar from '@Components/Common/ProgressBar';
-import {textStyle} from '@Utilities/Styles/GlobalStyle';
-import {ITransaction} from '@Types/TransactionTypes';
 
 const CreateTransactionScreen = ({
   navigation,
@@ -50,8 +52,13 @@ const CreateTransactionScreen = ({
     return fragments[page - 1].title;
   };
 
-  const onImageChange = (uri: string) => {
-    const newImage = {};
+  const onImageChange = (uri: string | undefined) => {
+    if (uri === undefined) return;
+    const newImage: IFile = {
+      uri: uri,
+      name: 'transaction.jpg',
+      type: 'image/jpeg',
+    };
   };
 
   const fragments = [
@@ -91,13 +98,16 @@ const CreateTransactionScreen = ({
         showsHorizontalScrollIndicator={false}
         bounces={false}
         scrollEventThrottle={16}>
-        {fragments.map((item, index) => (
+        {/* {fragments.map((item, index) => (
           <View key={index}>{item.view}</View>
-        ))}
-        {/* <TransactionImageFragment
+        ))} */}
+        <TransactionImageFragment
           onNext={onNext}
           onImageChange={onImageChange}
-        /> */}
+        />
+        <TransactionDetailFragment onNext={onNext} />
+        <TransactionItemFragment onNext={onNext} />
+        <TransactionReceiptFragment onNext={onSubmit} />
       </ScrollView>
     </View>
   );

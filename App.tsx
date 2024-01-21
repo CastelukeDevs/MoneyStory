@@ -5,7 +5,6 @@ import {Provider} from 'react-redux';
 import Store from './src/Redux/Store';
 import {GestureHandlerRootView} from 'react-native-gesture-handler';
 import {StatusBar} from 'react-native';
-import {firebase} from '@react-native-firebase/auth';
 
 /**
  * This is Root level App file. No function or Screen should be appear here
@@ -13,6 +12,8 @@ import {firebase} from '@react-native-firebase/auth';
  */
 if (__DEV__) {
   //disable when not using FB Emulator
+  // import {firebase} from '@react-native-firebase/auth';
+  // const {firebase} = require('@react-native-firebase/auth');
   // firebase.auth().useEmulator('http://127.0.0.1:9099');
 }
 

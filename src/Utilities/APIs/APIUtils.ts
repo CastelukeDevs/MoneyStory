@@ -32,10 +32,6 @@ export type IAPIsCallOption = {
   auth?: boolean;
 } & ICancelSignal;
 
-export const ActionPrefix: IEndpoint[] = EndpointPool.map(
-  endpointItem => endpointItem.endpoint,
-);
-
 export type IAPIError = {message: string; status: number; error: any};
 
 export const TransformObjectToForm = (object: any): FormData => {

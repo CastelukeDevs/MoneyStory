@@ -23,6 +23,7 @@ import CardImageFragment from './Fragment/CardImageFragment';
 import CardLogoFragment from './Fragment/CardLogoFragment';
 import CardDetailsFragment from './Fragment/CardDetailsFragment';
 import CardCompletionFragment from './Fragment/CardCompletionFragment';
+import {IFile} from '@Types/CommonTypes';
 
 const CreateCardScreen = (props: IMainNavPropTypes<'CreateCardScreen'>) => {
   const width = useWindowDimensions().width;
@@ -63,8 +64,8 @@ const CreateCardScreen = (props: IMainNavPropTypes<'CreateCardScreen'>) => {
   const onSubmitDataHandler = async () => {
     if (wallet.status === 'fetching') return;
 
-    const image = {
-      uri: cardData?.imageUrl,
+    const image: IFile = {
+      uri: cardData.imageUrl!,
       type: 'image/jpeg',
       name: 'avatar.jpg',
     };

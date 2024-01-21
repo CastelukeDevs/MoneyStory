@@ -21,17 +21,19 @@ import {PickerOption} from '@Utilities/Settings/ImagePicker';
 const dimens = Dimensions.get('window');
 
 const TransactionImageFragment = (
-  props: ITransactionFragmentProps & {onImageChange: (uri: string) => void},
+  props: ITransactionFragmentProps & {
+    onImageChange: (uri: string | undefined) => void;
+  },
 ) => {
   const inset = useSafeAreaInsets();
 
-  const [imageUri, setImageUri] = useState<string>();
+  const [imageUri, setImageUri] = useState<string | undefined>(undefined);
 
   const onImagePress = async () => {
     await launchImageLibrary(PickerOption).then(result => {
       const assets = result.assets?.[0];
       setImageUri(assets?.uri);
-      props.onImageChange(assets?.uri!);
+      props.onImageChange(assets?.uri);
     });
   };
 

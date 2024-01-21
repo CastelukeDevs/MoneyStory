@@ -12,7 +12,7 @@ export const viewStyle = StyleSheet.create({
     width: 200,
     backgroundColor: GlobalColor.light,
   },
-  RootFragmentStyle: {width, flex: 1, padding: 18},
+  RootFragmentStyle: {width, flex: 1, paddingHorizontal: 18},
 });
 
 export const textStyle = StyleSheet.create({
