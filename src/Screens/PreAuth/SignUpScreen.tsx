@@ -9,7 +9,7 @@ import {
 } from 'react-native';
 import {useSafeAreaInsets} from 'react-native-safe-area-context';
 
-import {IMainNavPropTypes} from '@Routes/RouteTypes';
+import {IMainNavProp} from '@Routes/RouteTypes';
 
 import {ThemeText} from '@Utilities/Styles/GlobalStyle';
 import CreateUserEmailPassword from '@Utilities/Authentication/CreateUserEmailPassword';
@@ -18,7 +18,7 @@ import TextInput from '@Components/Common/TextInput';
 import Button from '@Components/Common/Button';
 import ValidateString from '@Utilities/Tools/ValidateString';
 
-const SignUpScreen = (prop: IMainNavPropTypes<'SignUpScreen'>) => {
+const SignUpScreen = (prop: IMainNavProp<'SignUpScreen'>) => {
   const inset = useSafeAreaInsets();
 
   const [email, setEmail] = useState('');

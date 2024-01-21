@@ -2,7 +2,7 @@ import React, {useState} from 'react';
 import {View, Text, Image, StyleSheet} from 'react-native';
 import {SafeAreaView} from 'react-native-safe-area-context';
 
-import {IMainNavPropTypes} from '@Routes/RouteTypes';
+import {IMainNavProp} from '@Routes/RouteTypes';
 
 import {ThemeText, ThemeStyle} from '@Utilities/Styles/GlobalStyle';
 import GlobalColor, {Opacity} from '@Utilities/Styles/GlobalColor';
@@ -16,7 +16,7 @@ import Logo from '@Components/Logo';
 import SignInModal from './SignInModal';
 import StringValidation from '@Utilities/Tools/ValidateString';
 
-const SignInScreen = (props: IMainNavPropTypes<'SignInScreen'>) => {
+const SignInScreen = (props: IMainNavProp<'SignInScreen'>) => {
   const {navigation, route} = props;
 
   const [modalVisible, setModalVisible] = useState(false);

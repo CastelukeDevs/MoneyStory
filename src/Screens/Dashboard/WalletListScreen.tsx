@@ -4,14 +4,14 @@ import {useSafeAreaInsets} from 'react-native-safe-area-context';
 import {useSelector} from 'react-redux';
 import {selectWallets} from '@Redux/Reducers/WalletReducer';
 
-import {ITabNavPropTypes} from '@Routes/RouteTypes';
+import {ITabNavProp} from '@Routes/RouteTypes';
 import {IWallet} from '@Types/WalletTypes';
 
 import Header from '@Components/Header';
 import NewWalletCard from '@Components/NewWalletCard';
 import WalletCard from '@Components/WalletCard';
 
-const WalletListScreen = ({navigation}: ITabNavPropTypes<'WalletScreen'>) => {
+const WalletListScreen = ({navigation}: ITabNavProp<'WalletScreen'>) => {
   const inset = useSafeAreaInsets();
 
   const userWallet = useSelector(selectWallets);

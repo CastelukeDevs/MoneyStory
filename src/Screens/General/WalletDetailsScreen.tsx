@@ -8,7 +8,7 @@ import {
   selectTransactionWallet,
 } from '@Redux/Reducers/TransactionReducer';
 
-import {IMainNavPropTypes} from '@Routes/RouteTypes';
+import {IMainNavProp} from '@Routes/RouteTypes';
 
 import GlobalColor, {Opacity} from '@Utilities/Styles/GlobalColor';
 import {LinearGradientProps} from '@Utilities/Settings/LinearGradient';
@@ -23,7 +23,7 @@ import ActivityListCard from '@Components/ActivityListCard';
 const WalletDetailsScreen = ({
   navigation,
   route,
-}: IMainNavPropTypes<'WalletDetailScreen'>) => {
+}: IMainNavProp<'WalletDetailScreen'>) => {
   const dispatch = useAppDispatch();
 
   const wallet = route.params.wallet;

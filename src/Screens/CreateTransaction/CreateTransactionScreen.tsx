@@ -7,7 +7,7 @@ import {
   useWindowDimensions,
 } from 'react-native';
 
-import {IMainNavPropTypes} from '@Routes/RouteTypes';
+import {IMainNavProp} from '@Routes/RouteTypes';
 import {ITransaction} from '@Types/TransactionTypes';
 import {IFile} from '@Types/CommonTypes';
 
@@ -21,7 +21,7 @@ import ProgressBar from '@Components/Common/ProgressBar';
 
 const CreateTransactionScreen = ({
   navigation,
-}: IMainNavPropTypes<'CreateTransactionScreen'>) => {
+}: IMainNavProp<'CreateTransactionScreen'>) => {
   const width = useWindowDimensions().width;
   const scrollViewRef = useRef<ScrollView>(null);
 

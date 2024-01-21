@@ -3,7 +3,7 @@ import {StyleSheet, Text} from 'react-native';
 import {SafeAreaView} from 'react-native-safe-area-context';
 import {useAppDispatch} from '@Redux/Store';
 
-import {IMainNavPropTypes} from '@Routes/RouteTypes';
+import {IMainNavProp} from '@Routes/RouteTypes';
 
 import Logo from '@Components/Logo';
 import GlobalColor from '@Utilities/Styles/GlobalColor';
@@ -11,7 +11,7 @@ import {ThemeText} from '@Utilities/Styles/GlobalStyle';
 import useInitializeEntry from '@Utilities/Hooks/useInitializeEntry';
 
 const PostAuthTransitionScreen = (
-  props: IMainNavPropTypes<'PostAuthTransitionScreen'>,
+  props: IMainNavProp<'PostAuthTransitionScreen'>,
 ) => {
   const dispatch = useAppDispatch();
 

@@ -14,14 +14,14 @@ import {createUserData, updateUserData} from '@Redux/Reducers/UserReducer';
 import {launchImageLibrary, Asset} from 'react-native-image-picker';
 import {PickerOption} from '@Utilities/Settings/ImagePicker';
 
-import {IMainNavPropTypes} from '@Routes/RouteTypes';
+import {IMainNavProp} from '@Routes/RouteTypes';
 
 import {ThemeText} from '@Utilities/Styles/GlobalStyle';
 import GlobalColor from '@Utilities/Styles/GlobalColor';
 
 import Button from '@Components/Common/Button';
 
-const SignUpImageScreen = (props: IMainNavPropTypes<'ProfileImageScreen'>) => {
+const SignUpImageScreen = (props: IMainNavProp<'ProfileImageScreen'>) => {
   const payload = props.route.params;
 
   const inset = useSafeAreaInsets();

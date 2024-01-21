@@ -11,7 +11,7 @@ import {
 
 import useUserBalance from '@Utilities/Hooks/useUserBalance';
 
-import {IDashNavPropTypes} from '@Routes/RouteTypes';
+import {IDashNavProp} from '@Routes/RouteTypes';
 import {IWallet} from '@Types/WalletTypes';
 
 import GlobalColor from '@Utilities/Styles/GlobalColor';
@@ -28,7 +28,7 @@ import NewWalletCard from '@Components/NewWalletCard';
 import {selectUserData} from '@Redux/Reducers/UserReducer';
 import {selectWallets} from '@Redux/Reducers/WalletReducer';
 
-const HomeScreen = ({navigation}: IDashNavPropTypes<'HomeScreen'>) => {
+const HomeScreen = ({navigation}: IDashNavProp<'HomeScreen'>) => {
   const inset = useSafeAreaInsets();
   const dispatch = useAppDispatch();
 

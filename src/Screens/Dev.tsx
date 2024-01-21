@@ -1,9 +1,9 @@
 import React, {FC} from 'react';
 
 import {View, Text} from 'react-native';
-import {IDashNavPropTypes} from '../Routes/RouteTypes';
+import {IDashNavProp} from '../Routes/RouteTypes';
 
-const Dev: FC<IDashNavPropTypes<'DeveloperScreen2'>> = props => {
+const Dev: FC<IDashNavProp<'DeveloperScreen2'>> = props => {
   const {navigation, route} = props;
 
   const test = () => {

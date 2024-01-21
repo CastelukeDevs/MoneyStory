@@ -2,7 +2,7 @@ import React, {useState} from 'react';
 import {View, Text, Image, StyleSheet} from 'react-native';
 import {SafeAreaView} from 'react-native-safe-area-context';
 
-import {IMainNavPropTypes} from '../../Routes/RouteTypes';
+import {IMainNavProp} from '../../Routes/RouteTypes';
 
 import {ThemeText, ThemeStyle} from '../../Utilities/Styles/GlobalStyle';
 import GlobalColor from '../../Utilities/Styles/GlobalColor';
@@ -14,7 +14,7 @@ import Modal from '../../Components/Common/Modal';
 import IconButton from '../../Components/Common/IconButton';
 import Logo from '../../Components/Logo';
 
-const SplashScreen = (props: IMainNavPropTypes<'SplashScreen'>) => {
+const SplashScreen = (props: IMainNavProp<'SplashScreen'>) => {
   const {navigation, route} = props;
 
   const [modalVisible, setModalVisible] = useState(false);

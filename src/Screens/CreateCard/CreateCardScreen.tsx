@@ -13,7 +13,7 @@ import {
   selectWalletStatus,
 } from '@Redux/Reducers/WalletReducer';
 
-import {IMainNavPropTypes} from '@Routes/RouteTypes';
+import {IMainNavProp} from '@Routes/RouteTypes';
 import {IWalletMain} from '@Types/WalletTypes';
 import {IFile} from '@Types/CommonTypes';
 
@@ -28,7 +28,7 @@ import CardLogoFragment from './Fragment/CardLogoFragment';
 import CardDetailsFragment from './Fragment/CardDetailsFragment';
 import CardCompletionFragment from './Fragment/CardCompletionFragment';
 
-const CreateCardScreen = (props: IMainNavPropTypes<'CreateCardScreen'>) => {
+const CreateCardScreen = (props: IMainNavProp<'CreateCardScreen'>) => {
   const width = useWindowDimensions().width;
   const dispatch = useAppDispatch();
 

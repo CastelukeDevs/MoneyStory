@@ -12,7 +12,7 @@ import auth from '@react-native-firebase/auth';
 import {useAppDispatch} from '@Redux/Store';
 import {updateUserData} from '@Redux/Reducers/UserReducer';
 
-import {IMainNavPropTypes} from '@Routes/RouteTypes';
+import {IMainNavProp} from '@Routes/RouteTypes';
 import {ICurrencyTypes} from '@Types/CommonTypes';
 
 import {ThemeText} from '@Utilities/Styles/GlobalStyle';
@@ -24,7 +24,7 @@ import Button from '@Components/Common/Button';
 import Dropdown, {IDropdownData} from '@Components/Common/Dropdown';
 
 const ProfileCompletionScreen = (
-  props: IMainNavPropTypes<'ProfileCompletionScreen'>,
+  props: IMainNavProp<'ProfileCompletionScreen'>,
 ) => {
   const {mode, data} = props.route.params;
 
