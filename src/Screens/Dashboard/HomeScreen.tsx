@@ -12,7 +12,7 @@ import {IDashNavPropTypes} from '@Routes/RouteTypes';
 
 import GlobalColor from '@Utilities/Styles/GlobalColor';
 import {ThemeText} from '@Utilities/Styles/GlobalStyle';
-import FormatCurrency from '@Utilities/String/Currency/FormatCurrency';
+import FormatCurrency from '@Utilities/Tools/FormatCurrency';
 
 import Button from '@Components/Common/Button';
 import Icon from '@Components/Common/Icon';

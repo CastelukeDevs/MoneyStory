@@ -22,7 +22,7 @@ import Icon, {IIconProps} from './Icon';
 
 import GlobalColor from '@Utilities/Styles/GlobalColor';
 import {ThemeText} from '@Utilities/Styles/GlobalStyle';
-import {getCurrencySymbol} from '@Utilities/String/Currency/FormatCurrency';
+import {getCurrencySymbol} from '@Utilities/Tools/FormatCurrency';
 import {ICurrencyTypes} from '@Types/CommonTypes';
 
 type ITextInputBordered = {

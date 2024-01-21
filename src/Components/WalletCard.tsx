@@ -12,7 +12,7 @@ import LinearGradient from 'react-native-linear-gradient';
 import {ThemeText} from '@Utilities/Styles/GlobalStyle';
 import GlobalColor from '@Utilities/Styles/GlobalColor';
 import {defaultWalletData} from '@Utilities/DefaultData/walletData';
-import FormatCurrency from '@Utilities/String/Currency/FormatCurrency';
+import FormatCurrency from '@Utilities/Tools/FormatCurrency';
 import {LinearGradientProps} from '@Utilities/Settings/LinearGradient';
 
 import {

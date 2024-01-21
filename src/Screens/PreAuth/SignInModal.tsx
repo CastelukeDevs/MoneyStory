@@ -4,7 +4,6 @@ import {Text, TextInput as RNTextInput, View} from 'react-native';
 import {IUserAuth} from '@Types/AuthTypes';
 
 import {ThemeText} from '@Utilities/Styles/GlobalStyle';
-import {IValidationResult} from '@Utilities/String/EmailPasswordValidation';
 
 import TextInput from '@Components/Common/TextInput';
 import Button from '@Components/Common/Button';
@@ -14,10 +13,6 @@ type ISignInModalProp = {
   onSignIn: (user: IUserAuth) => void;
   onSignUp: () => void;
   onForgotPassword: () => void;
-  error?: {
-    email: boolean;
-    password: boolean;
-  };
 };
 
 const SignInModal = (props: ISignInModalProp) => {
@@ -37,7 +32,6 @@ const SignInModal = (props: ISignInModalProp) => {
         iconLeading={{name: 'mail-outline'}}
         containerStyle={{marginTop: 12}}
         onSubmitEditing={() => passwordRef.current?.focus()}
-        isError={props.error?.email !== undefined && props.error?.email}
         keyboardType="email-address"
       />
       <TextInput
@@ -53,7 +47,6 @@ const SignInModal = (props: ISignInModalProp) => {
         containerStyle={{marginTop: 12}}
         secureTextEntry={isPasswordHidden}
         onSubmitEditing={() => props.onSignIn({email, password})}
-        isError={props.error?.password !== undefined && props.error?.password}
       />
       <Button
         label="Login"

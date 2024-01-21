@@ -9,7 +9,7 @@ import Button from '@Components/Common/Button';
 import DropdownV2, {IDropdownItem} from '@Components/Common/DropdownV2';
 import {useSelector} from 'react-redux';
 import {IRootStateType} from '@Redux/Store';
-import FormatCurrency from '@Utilities/String/Currency/FormatCurrency';
+import FormatCurrency from '@Utilities/Tools/FormatCurrency';
 import TextInput from '@Components/Common/TextInput';
 
 const TransactionDetailFragment = (props: ITransactionFragmentProps) => {

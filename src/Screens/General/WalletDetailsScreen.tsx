@@ -11,7 +11,7 @@ import {IMainNavPropTypes} from '@Routes/RouteTypes';
 import GlobalColor, {Opacity} from '@Utilities/Styles/GlobalColor';
 import {LinearGradientProps} from '@Utilities/Settings/LinearGradient';
 import {ThemeText} from '@Utilities/Styles/GlobalStyle';
-import FormatCurrency from '@Utilities/String/Currency/FormatCurrency';
+import FormatCurrency from '@Utilities/Tools/FormatCurrency';
 
 import IconButton from '@Components/Common/IconButton';
 import Header from '@Components/Header';

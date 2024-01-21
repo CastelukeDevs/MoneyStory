@@ -7,7 +7,7 @@ import {
   ITransactionMain,
   ITransactionType,
 } from '@Types/TransactionTypes';
-import FormatCurrency from '@Utilities/String/Currency/FormatCurrency';
+import FormatCurrency from '@Utilities/Tools/FormatCurrency';
 import {useSelector} from 'react-redux';
 import {IRootStateType} from '@Redux/Store';
 import GlobalColor from '@Utilities/Styles/GlobalColor';

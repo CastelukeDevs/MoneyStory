@@ -16,7 +16,7 @@ import {
   IValidationResult,
   validateEmail,
   validatePassword,
-} from '@Utilities/String/EmailPasswordValidation';
+} from '@Utilities/Tools/StringValidation';
 import CreateUserEmailPassword from '@Utilities/Authentication/CreateUserEmailPassword';
 
 import TextInput from '@Components/Common/TextInput';

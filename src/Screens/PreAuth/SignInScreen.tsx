@@ -9,23 +9,19 @@ import GlobalColor, {Opacity} from '@Utilities/Styles/GlobalColor';
 import getString from '@Utilities/String/LanguageTools';
 import {IUserAuth} from '@Types/AuthTypes';
 import SignInUserEmailPassword from '@Utilities/Authentication/SignInUserEmailPassword';
-import {
-  IValidationResult,
-  validateEmail,
-  validatePassword,
-} from '@Utilities/String/EmailPasswordValidation';
 
 import Button from '@Components/Common/Button';
 import Modal from '@Components/Common/Modal';
 import Logo from '@Components/Logo';
 import SignInModal from './SignInModal';
+import StringValidation from '@Utilities/Tools/StringValidation';
 
 const SignInScreen = (props: IMainNavPropTypes<'SignInScreen'>) => {
   const {navigation, route} = props;
 
   const [modalVisible, setModalVisible] = useState(false);
-  const [emailError, setEmailError] = useState<IValidationResult[]>([]);
-  const [passwordError, setPasswordError] = useState<IValidationResult[]>([]);
+  const [emailError, setEmailError] = useState<string[]>([]);
+  const [passwordError, setPasswordError] = useState<string[]>([]);
   const [generalError, setGeneralError] = useState(false);
 
   const openModalHandler = () => {
@@ -33,20 +29,11 @@ const SignInScreen = (props: IMainNavPropTypes<'SignInScreen'>) => {
   };
 
   const signInHandler = async (prop: IUserAuth) => {
-    const isPasswordValid = validatePassword(prop.password);
-    const isEmailValid = validateEmail(prop.email);
-
-    if (isEmailValid.length > 0) return setEmailError(isEmailValid);
-    setEmailError([]);
-    if (isPasswordValid.length > 0) return setPasswordError(isPasswordValid);
-    setPasswordError([]);
-
     console.log('sign in attempt', prop);
-
-    await SignInUserEmailPassword(prop).catch(() => {
-      setGeneralError(true);
-      return;
-    });
+    // await SignInUserEmailPassword(prop).catch(() => {
+    //   setGeneralError(true);
+    //   return;
+    // });
   };
 
   const signUpHandler = () => {
@@ -100,10 +87,6 @@ const SignInScreen = (props: IMainNavPropTypes<'SignInScreen'>) => {
           onSignIn={signInHandler}
           onForgotPassword={forgotPasswordHandler}
           onSignUp={signUpHandler}
-          error={{
-            email: emailError.length > 0,
-            password: passwordError.length > 0,
-          }}
         />
       </Modal>
     </View>
