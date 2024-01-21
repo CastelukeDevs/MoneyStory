@@ -30,10 +30,10 @@ const SignInScreen = (props: IMainNavPropTypes<'SignInScreen'>) => {
 
   const signInHandler = async (prop: IUserAuth) => {
     console.log('sign in attempt', prop);
-    // await SignInUserEmailPassword(prop).catch(() => {
-    //   setGeneralError(true);
-    //   return;
-    // });
+    await SignInUserEmailPassword(prop).catch(() => {
+      setGeneralError(true);
+      return;
+    });
   };
 
   const signUpHandler = () => {

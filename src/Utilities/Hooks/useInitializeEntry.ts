@@ -1,25 +1,19 @@
-import {it} from '@jest/globals';
+import {useDispatch} from 'react-redux';
+import {getUserAccount} from '@Redux/Reducers/AccountReducer';
+import {getUserData} from '@Redux/Reducers/UserReducer';
+import {getUserWallets} from '@Redux/Reducers/WalletReducer';
 import {useEffect, useState} from 'react';
-import {useDispatch, useSelector} from 'react-redux';
-import {IRootStateType} from '@Redux/Store';
-import {IUserStateType} from '@Redux/Reducers/UserReducer';
-import {getUserData} from '@Redux/Actions/UserAction';
-import {getUserAccount} from '@Redux/Actions/AccountAction';
-import {getUserWallets} from '@Redux/Actions/WalletAction';
-import {AsyncThunkAction} from '@reduxjs/toolkit';
-import {ICancelSignal} from '@Utilities/APIs/APIUtils';
-import {AsyncThunkConfig} from '@reduxjs/toolkit/dist/createAsyncThunk';
 
-// type IUseInitializeEntryProps = {
-//   action: any;
-//   message: string;
-// };
+type IInitializationList = {
+  action: any;
+  name: string;
+};
 
 const initializationList = [
   {action: getUserData(), name: 'user_data'},
   {action: getUserAccount(), name: 'user_account'},
   {action: getUserWallets(), name: 'user_wallets'},
-] as const;
+] as const satisfies IInitializationList[];
 
 export type IInitListName = (typeof initializationList)[number]['name'];
 

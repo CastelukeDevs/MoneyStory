@@ -6,22 +6,22 @@ import {
   Text,
   TextInput as RNInput,
   View,
-  KeyboardAvoidingViewProps,
 } from 'react-native';
 import {useSafeAreaInsets} from 'react-native-safe-area-context';
 import auth from '@react-native-firebase/auth';
+import {useAppDispatch} from '@Redux/Store';
+import {updateUserData} from '@Redux/Reducers/UserReducer';
+
 import {IMainNavPropTypes} from '@Routes/RouteTypes';
+import {ICurrencyTypes} from '@Types/CommonTypes';
 
 import {ThemeText} from '@Utilities/Styles/GlobalStyle';
+import CurrencyList from '@Utilities/DefaultData/CurrencyList';
+import KAVBehavior from '@Utilities/Settings/KAVBehavior';
 
 import TextInput from '@Components/Common/TextInput';
 import Button from '@Components/Common/Button';
-import {useDispatch} from 'react-redux';
-import {updateUserData} from '@Redux/Actions/UserAction';
 import Dropdown, {IDropdownData} from '@Components/Common/Dropdown';
-import CurrencyList from '@Utilities/DefaultData/CurrencyList';
-import KAVBehavior from '@Utilities/Settings/KAVBehavior';
-import {ICurrencyTypes} from '@Types/CommonTypes';
 
 const ProfileCompletionScreen = (
   props: IMainNavPropTypes<'ProfileCompletionScreen'>,
@@ -29,7 +29,7 @@ const ProfileCompletionScreen = (
   const {mode, data} = props.route.params;
 
   const inset = useSafeAreaInsets();
-  const dispatch = useDispatch<any>();
+  const dispatch = useAppDispatch();
 
   const isCreate = mode === 'create';
 

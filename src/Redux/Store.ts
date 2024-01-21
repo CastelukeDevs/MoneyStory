@@ -3,6 +3,7 @@ import {persistReducer, persistStore} from 'redux-persist';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
 import reducer from './Reducers/index';
+import {useDispatch} from 'react-redux';
 
 const createDebugger = require('redux-flipper').default;
 const createObserver = require('flipper-redux-observer').default;
@@ -31,4 +32,6 @@ const stores = configureStore({
 
 const persistor = persistStore(stores);
 
+export type AppDispatch = typeof stores.dispatch;
+export const useAppDispatch: () => AppDispatch = useDispatch;
 export default {stores, persistor};

@@ -1,13 +1,12 @@
 import ActivityListCard from '@Components/ActivityListCard';
+import {selectTransactionList} from '@Redux/Reducers/TransactionReducer';
 import {IRootStateType} from '@Redux/Store';
 import React from 'react';
 import {FlatList, StyleSheet, Text, View} from 'react-native';
 import {useSelector} from 'react-redux';
 
 const ActivityListScreen = () => {
-  const transactionList = useSelector(
-    (state: IRootStateType) => state.transaction.allTransaction,
-  );
+  const transactionList = useSelector(selectTransactionList);
 
   const itemSeparator = () => <View style={{height: 12}} />;
 

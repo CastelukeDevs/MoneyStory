@@ -1,10 +1,12 @@
 import React, {useEffect} from 'react';
 import {Image, ScrollView, StyleSheet, Text, View} from 'react-native';
 import LinearGradient from 'react-native-linear-gradient';
-
-import {useDispatch, useSelector} from 'react-redux';
-import {IRootStateType} from '@Redux/Store';
-import {getTransactionByWalletId} from '@Redux/Actions/TransactionAction';
+import {useSelector} from 'react-redux';
+import {useAppDispatch} from '@Redux/Store';
+import {
+  getTransactionByWalletId,
+  selectTransactionWallet,
+} from '@Redux/Reducers/TransactionReducer';
 
 import {IMainNavPropTypes} from '@Routes/RouteTypes';
 
@@ -22,15 +24,13 @@ const WalletDetailsScreen = ({
   navigation,
   route,
 }: IMainNavPropTypes<'WalletDetailScreen'>) => {
-  const dispatch = useDispatch<any>();
+  const dispatch = useAppDispatch();
 
   const wallet = route.params.wallet;
   const img = wallet.imageUrl;
   const walletBalance = FormatCurrency(+wallet.balance, wallet.currency);
 
-  const transaction = useSelector(
-    (state: IRootStateType) => state.transaction.walletTransaction[wallet.id],
-  );
+  const transaction = useSelector(selectTransactionWallet)[wallet.id];
   console.log('transaction states', transaction);
 
   useEffect(() => {

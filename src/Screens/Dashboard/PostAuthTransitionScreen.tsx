@@ -1,26 +1,19 @@
-import React, {useEffect, useState} from 'react';
-import {useDispatch, useSelector} from 'react-redux';
-import {StyleSheet, Text, View} from 'react-native';
+import React, {useEffect} from 'react';
+import {StyleSheet, Text} from 'react-native';
 import {SafeAreaView} from 'react-native-safe-area-context';
+import {useAppDispatch} from '@Redux/Store';
 
-import Button from '@Components/Common/Button';
-import {getUserData} from '@Redux/Actions/UserAction';
-import {IUserStateType, resetAuth} from '@Redux/Reducers/UserReducer';
-import {IRootStateType} from '@Redux/Store';
 import {IMainNavPropTypes} from '@Routes/RouteTypes';
 
-import auth from '@react-native-firebase/auth';
 import Logo from '@Components/Logo';
 import GlobalColor from '@Utilities/Styles/GlobalColor';
 import {ThemeText} from '@Utilities/Styles/GlobalStyle';
-import {getUserWallets} from '@Redux/Actions/WalletAction';
-import {getUserAccount} from '@Redux/Actions/AccountAction';
 import useInitializeEntry from '@Utilities/Hooks/useInitializeEntry';
 
 const PostAuthTransitionScreen = (
   props: IMainNavPropTypes<'PostAuthTransitionScreen'>,
 ) => {
-  const dispatch = useDispatch<any>();
+  const dispatch = useAppDispatch();
 
   const init = useInitializeEntry();
 

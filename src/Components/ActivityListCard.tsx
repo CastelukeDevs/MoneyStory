@@ -7,9 +7,10 @@ import {
   ITransactionMain,
   ITransactionType,
 } from '@Types/TransactionTypes';
-import FormatCurrency from '@Utilities/Tools/FormatCurrency';
 import {useSelector} from 'react-redux';
-import {IRootStateType} from '@Redux/Store';
+import {selectUserDefaultCurrency} from '@Redux/Reducers/UserReducer';
+
+import FormatCurrency from '@Utilities/Tools/FormatCurrency';
 import GlobalColor from '@Utilities/Styles/GlobalColor';
 import getCategories from '@Utilities/Tools/getCategories';
 
@@ -21,9 +22,7 @@ const ActivityListCard = (props: IActivityListCardPropsType) => {
   const {transaction} = props;
   const transactionCategory = transaction.category as ICategory; //to future me, this has to be casted since its confused about its type
 
-  const currency = useSelector(
-    (state: IRootStateType) => state.user.userProfileData?.defaultCurrency,
-  );
+  const currency = useSelector(selectUserDefaultCurrency);
 
   const getColor = (type: ITransactionType) => {
     if (type === 'Expense') return GlobalColor.error;

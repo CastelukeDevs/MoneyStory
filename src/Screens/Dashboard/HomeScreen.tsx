@@ -1,14 +1,18 @@
 import React, {useEffect, useMemo} from 'react';
 import {View, Text, StyleSheet, ScrollView, FlatList} from 'react-native';
-import {useDispatch, useSelector} from 'react-redux';
-import {firebase} from '@react-native-firebase/auth';
-import {IRootStateType} from '@Redux/Store';
-import {getTransaction} from '@Redux/Actions/TransactionAction';
 import {useSafeAreaInsets} from 'react-native-safe-area-context';
+import {firebase} from '@react-native-firebase/auth';
+import {useSelector} from 'react-redux';
+import {useAppDispatch} from '@Redux/Store';
+import {
+  getTransaction,
+  selectTransactionList,
+} from '@Redux/Reducers/TransactionReducer';
 
 import useUserBalance from '@Utilities/Hooks/useUserBalance';
 
 import {IDashNavPropTypes} from '@Routes/RouteTypes';
+import {IWallet} from '@Types/WalletTypes';
 
 import GlobalColor from '@Utilities/Styles/GlobalColor';
 import {ThemeText} from '@Utilities/Styles/GlobalStyle';
@@ -20,26 +24,19 @@ import AvatarPills from '@Components/AvatarPills';
 import WalletCard from '@Components/WalletCard';
 import SearchBar from '@Components/SearchBar';
 import ActivityListCard from '@Components/ActivityListCard';
-import {IWallet} from '@Types/WalletTypes';
 import NewWalletCard from '@Components/NewWalletCard';
+import {selectUserData} from '@Redux/Reducers/UserReducer';
+import {selectWallets} from '@Redux/Reducers/WalletReducer';
 
 const HomeScreen = ({navigation}: IDashNavPropTypes<'HomeScreen'>) => {
   const inset = useSafeAreaInsets();
-  const dispatch = useDispatch<any>();
+  const dispatch = useAppDispatch();
 
   const totalBalance = useUserBalance();
 
-  const userData = useSelector(
-    (state: IRootStateType) => state.user,
-  ).userProfileData;
-  // const {currency} = useSelector((state: IRootStateType) => state.account);
-  const userWallets = useSelector(
-    (state: IRootStateType) => state.wallet,
-  ).wallets;
-
-  const transactionList = useSelector(
-    (state: IRootStateType) => state.transaction.allTransaction,
-  );
+  const userData = useSelector(selectUserData);
+  const userWallets = useSelector(selectWallets);
+  const transactionList = useSelector(selectTransactionList);
 
   useEffect(() => {
     dispatch(getTransaction());

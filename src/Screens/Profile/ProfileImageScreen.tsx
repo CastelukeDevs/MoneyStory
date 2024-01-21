@@ -9,9 +9,10 @@ import {
   useWindowDimensions,
 } from 'react-native';
 import {useSafeAreaInsets} from 'react-native-safe-area-context';
-import {useDispatch} from 'react-redux';
-import {createUserData, updateUserData} from '@Redux/Actions/UserAction';
+import {useAppDispatch} from '@Redux/Store';
+import {createUserData, updateUserData} from '@Redux/Reducers/UserReducer';
 import {launchImageLibrary, Asset} from 'react-native-image-picker';
+import {PickerOption} from '@Utilities/Settings/ImagePicker';
 
 import {IMainNavPropTypes} from '@Routes/RouteTypes';
 
@@ -19,7 +20,6 @@ import {ThemeText} from '@Utilities/Styles/GlobalStyle';
 import GlobalColor from '@Utilities/Styles/GlobalColor';
 
 import Button from '@Components/Common/Button';
-import {PickerOption} from '@Utilities/Settings/ImagePicker';
 
 const SignUpImageScreen = (props: IMainNavPropTypes<'ProfileImageScreen'>) => {
   const payload = props.route.params;
@@ -31,7 +31,7 @@ const SignUpImageScreen = (props: IMainNavPropTypes<'ProfileImageScreen'>) => {
   console.log('screen payload', payload);
 
   const width = useWindowDimensions().width;
-  const dispatch = useDispatch<any>();
+  const dispatch = useAppDispatch();
 
   const [image, setImage] = useState<Asset>();
 
