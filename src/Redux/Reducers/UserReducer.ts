@@ -114,4 +114,4 @@ export const {
 export const {resetUserState, getUserData, createUserData, updateUserData} =
   UserReducer.actions;
 
-export default UserReducer;
+export default UserReducer.reducer;

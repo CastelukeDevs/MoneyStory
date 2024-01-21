@@ -9,8 +9,8 @@ import CommonReducer from './CommonReducer';
 export default combineReducers({
   common: CommonReducer,
   default: DefaultReducer,
-  user: UserReducer.reducer,
-  account: AccountReducer.reducer,
+  user: UserReducer,
+  account: AccountReducer,
   wallet: WalletReducer,
-  transaction: TransactionReducer.reducer,
+  transaction: TransactionReducer,
 });

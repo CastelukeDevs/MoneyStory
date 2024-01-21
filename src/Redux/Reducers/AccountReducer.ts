@@ -65,4 +65,4 @@ export const {
 
 export const {resetAccountState, getUserAccount} = AccountReducer.actions;
 
-export default AccountReducer;
+export default AccountReducer.reducer;

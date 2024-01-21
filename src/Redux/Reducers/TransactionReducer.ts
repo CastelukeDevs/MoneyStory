@@ -134,4 +134,4 @@ export const {
 export const {resetTransactionState, getTransaction, getTransactionByWalletId} =
   TransactionReducer.actions;
 
-export default TransactionReducer;
+export default TransactionReducer.reducer;
