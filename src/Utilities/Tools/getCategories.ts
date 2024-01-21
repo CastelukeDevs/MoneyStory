@@ -6,6 +6,9 @@ export default (str: string, type: ITransactionType): ICategory => {
     cat => cat.type === type && cat.category === str,
   );
 
-  if (categories) return categories;
-  return {category: str, icon: 'person-outline', type};
+  if (categories) {
+    return categories;
+  } else {
+    return {category: str, icon: 'person-outline', type};
+  }
 };
