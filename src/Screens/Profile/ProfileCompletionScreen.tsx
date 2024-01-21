@@ -12,7 +12,7 @@ import {useSafeAreaInsets} from 'react-native-safe-area-context';
 import auth from '@react-native-firebase/auth';
 import {IMainNavPropTypes} from '@Routes/RouteTypes';
 
-import {textStyle} from '@Utilities/Styles/GlobalStyle';
+import {ThemeText} from '@Utilities/Styles/GlobalStyle';
 
 import TextInput from '@Components/Common/TextInput';
 import Button from '@Components/Common/Button';
@@ -94,7 +94,7 @@ const ProfileCompletionScreen = (
           ? {paddingBottom: inset.bottom}
           : {paddingBottom: 16},
       ]}>
-      <Text style={textStyle.Hero_Bold}>
+      <Text style={ThemeText.Hero_Bold}>
         {isCreate ? 'Complete your Profile' : 'Change your existing Profile'}
       </Text>
       <KeyboardAvoidingView

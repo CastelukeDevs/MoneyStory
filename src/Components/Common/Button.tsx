@@ -1,7 +1,7 @@
 import React from 'react';
 import {Text, TextStyle, TouchableOpacity, ViewStyle} from 'react-native';
 import Icon, {IIconProps} from '@Components/Common/Icon';
-import {textStyle} from '@Utilities/Styles/GlobalStyle';
+import {ThemeText} from '@Utilities/Styles/GlobalStyle';
 import GlobalColor from '@Utilities/Styles/GlobalColor';
 
 type IButtonPropTypes = {
@@ -51,7 +51,7 @@ const Button = (props: IButtonPropTypes) => {
       {props.label && (
         <Text
           style={[
-            textStyle.SubTitle_Bold,
+            ThemeText.SubTitle_Bold,
             {textAlign: 'center', marginHorizontal: 12},
             {
               color:

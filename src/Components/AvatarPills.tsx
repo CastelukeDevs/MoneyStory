@@ -2,7 +2,7 @@ import React from 'react';
 import {Image, StyleSheet, Text, View} from 'react-native';
 
 import {IUserType} from '@Types/UserType';
-import {textStyle} from '@Utilities/Styles/GlobalStyle';
+import {ThemeText} from '@Utilities/Styles/GlobalStyle';
 import GlobalColor from '@Utilities/Styles/GlobalColor';
 
 type IAvatarPillsProps = {
@@ -25,12 +25,12 @@ const AvatarPills = (props: IAvatarPillsProps) => {
       </View>
       <View style={{flexDirection: 'column'}}>
         <Text
-          style={[textStyle.Content_Regular, {marginRight: 24, marginLeft: 8}]}>
+          style={[ThemeText.Content_Regular, {marginRight: 24, marginLeft: 8}]}>
           Good Morning
         </Text>
         <Text
           style={[
-            textStyle.Title_Bold,
+            ThemeText.Title_Bold,
             {
               marginRight: 24,
               marginLeft: 8,

@@ -1,7 +1,7 @@
 import React from 'react';
 import {StyleSheet, Text, View, ViewStyle} from 'react-native';
 import Icon from './Common/Icon';
-import {textStyle} from '@Utilities/Styles/GlobalStyle';
+import {ThemeText} from '@Utilities/Styles/GlobalStyle';
 import {
   ICategory,
   ITransactionMain,
@@ -49,12 +49,12 @@ const ActivityListCard = (props: IActivityListCardPropsType) => {
         <Icon name={categories.icon} size={24} color={GlobalColor.light} />
       </View>
       <View style={styles.CenterTextContainer}>
-        <Text style={textStyle.Title_Bold}>{categories.category}</Text>
-        <Text numberOfLines={1} style={textStyle.SubTitle_Light}>
+        <Text style={ThemeText.Title_Bold}>{categories.category}</Text>
+        <Text numberOfLines={1} style={ThemeText.SubTitle_Light}>
           {transaction.note}
         </Text>
       </View>
-      <Text style={textStyle.SubTitle_Regular}>
+      <Text style={ThemeText.SubTitle_Regular}>
         {FormatCurrency(transaction.amount as number, currency || 'IDR').format}
       </Text>
     </View>

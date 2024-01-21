@@ -9,7 +9,7 @@ import {
 } from 'react-native';
 import LinearGradient from 'react-native-linear-gradient';
 
-import {textStyle} from '@Utilities/Styles/GlobalStyle';
+import {ThemeText} from '@Utilities/Styles/GlobalStyle';
 import GlobalColor from '@Utilities/Styles/GlobalColor';
 import {defaultWalletData} from '@Utilities/DefaultData/walletData';
 import FormatCurrency from '@Utilities/String/Currency/FormatCurrency';
@@ -62,11 +62,11 @@ const WalletCard = (props: IWalletCardProps) => {
           <IconButton name={walletData.logo} />
           <View style={styles.HeaderTextContainer}>
             <Text
-              style={[textStyle.H2_Bold, styles.HeaderText, {paddingLeft: 12}]}
+              style={[ThemeText.H2_Bold, styles.HeaderText, {paddingLeft: 12}]}
               numberOfLines={3}>
               {walletData.walletName}.
             </Text>
-            <Text style={[textStyle.Title_Light, styles.HeaderText]}>
+            <Text style={[ThemeText.Title_Light, styles.HeaderText]}>
               ( {walletData.walletAbbreviation} )
             </Text>
           </View>
@@ -74,7 +74,7 @@ const WalletCard = (props: IWalletCardProps) => {
         <View style={styles.NumberContainer}>
           <Text
             style={[
-              isPortrait ? textStyle.H2_Bold : textStyle.H1_Bold,
+              isPortrait ? ThemeText.H2_Bold : ThemeText.H1_Bold,
               styles.NumberText,
             ]}>
             {
@@ -82,18 +82,18 @@ const WalletCard = (props: IWalletCardProps) => {
                 .format
             }
           </Text>
-          <Text style={[textStyle.Content_Regular, styles.NumberText]}>
+          <Text style={[ThemeText.Content_Regular, styles.NumberText]}>
             +{walletData.monthDiff} ({walletData.percentDiff}%)
           </Text>
         </View>
         <View style={styles.PersonContainer}>
-          <Text style={[textStyle.SubTitle_Light, styles.CardHolderNumberText]}>
+          <Text style={[ThemeText.SubTitle_Light, styles.CardHolderNumberText]}>
             {walletData.type}
           </Text>
-          <Text style={[textStyle.H3_Regular, styles.CardHolderNameText]}>
+          <Text style={[ThemeText.H3_Regular, styles.CardHolderNameText]}>
             {walletData.holderName}
           </Text>
-          <Text style={[textStyle.Title_Light, styles.CardHolderNumberText]}>
+          <Text style={[ThemeText.Title_Light, styles.CardHolderNumberText]}>
             {walletData.holderNumber}
           </Text>
         </View>

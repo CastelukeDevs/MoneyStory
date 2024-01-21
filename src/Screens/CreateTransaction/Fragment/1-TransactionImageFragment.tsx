@@ -9,7 +9,7 @@ import {
 } from 'react-native';
 import {useSafeAreaInsets} from 'react-native-safe-area-context';
 
-import {viewStyle} from '@Utilities/Styles/GlobalStyle';
+import {ThemeStyle} from '@Utilities/Styles/GlobalStyle';
 import {ITransactionFragmentProps} from '@Types/FragmentTypes';
 
 import Button from '@Components/Common/Button';
@@ -38,7 +38,7 @@ const TransactionImageFragment = (
   };
 
   return (
-    <View style={[viewStyle.RootFragmentStyle, {paddingBottom: inset.bottom}]}>
+    <View style={[ThemeStyle.RootFragmentStyle, {paddingBottom: inset.bottom}]}>
       <View style={styles.ContentContainer}>
         <TouchableOpacity style={styles.ImageContainer} onPress={onImagePress}>
           {imageUri && (

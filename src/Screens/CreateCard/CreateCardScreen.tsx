@@ -13,7 +13,7 @@ import {createUserWallets} from '@Redux/Actions/WalletAction';
 import {IMainNavPropTypes} from '@Routes/RouteTypes';
 import {IWalletMain} from '@Types/WalletTypes';
 
-import {textStyle} from '@Utilities/Styles/GlobalStyle';
+import {ThemeText} from '@Utilities/Styles/GlobalStyle';
 import {defaultWalletData} from '@Utilities/DefaultData/walletData';
 
 import ProgressBar from '@Components/Common/ProgressBar';
@@ -115,7 +115,7 @@ const CreateCardScreen = (props: IMainNavPropTypes<'CreateCardScreen'>) => {
     <View style={{flex: 1}}>
       <Header label="Create Card" onBackPressed={onHeaderBackPressHandler} />
       <View style={styles.SubHeaderContainer}>
-        <Text style={textStyle.H3_Bold}>{getSubHeaderTitle()}</Text>
+        <Text style={ThemeText.H3_Bold}>{getSubHeaderTitle()}</Text>
         <View style={{height: 18}} />
         <ProgressBar indicatorCount={fragments.length} indicatorActive={page} />
       </View>

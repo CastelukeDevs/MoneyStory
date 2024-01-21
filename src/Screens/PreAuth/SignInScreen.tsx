@@ -4,7 +4,7 @@ import {SafeAreaView} from 'react-native-safe-area-context';
 
 import {IMainNavPropTypes} from '@Routes/RouteTypes';
 
-import {textStyle, viewStyle} from '@Utilities/Styles/GlobalStyle';
+import {ThemeText, ThemeStyle} from '@Utilities/Styles/GlobalStyle';
 import GlobalColor, {Opacity} from '@Utilities/Styles/GlobalColor';
 import getString from '@Utilities/String/LanguageTools';
 import {IUserAuth} from '@Types/AuthTypes';
@@ -58,7 +58,7 @@ const SignInScreen = (props: IMainNavPropTypes<'SignInScreen'>) => {
   };
 
   return (
-    <View style={viewStyle.Base}>
+    <View style={ThemeStyle.Base}>
       <Image
         // source={require('../Resources/bg-1.jpg')}
         source={require('../../Resources/Gradient/01.RoyalHeath.png')}
@@ -71,17 +71,17 @@ const SignInScreen = (props: IMainNavPropTypes<'SignInScreen'>) => {
         ]}
       />
 
-      <SafeAreaView style={[viewStyle.Base, styles.RootContainer]}>
-        <View style={viewStyle.LogoArea}>
+      <SafeAreaView style={[ThemeStyle.Base, styles.RootContainer]}>
+        <View style={ThemeStyle.LogoArea}>
           <Logo />
         </View>
-        <View style={[viewStyle.CenterArea, styles.BodyContainer]}>
-          <Text style={textStyle.LogoText}>{getString('APP_NAME')}</Text>
-          <Text style={textStyle.HeroText}>{getString('APP_TAGLINE')}</Text>
-          <View style={viewStyle.StripeLine} />
+        <View style={[ThemeStyle.CenterArea, styles.BodyContainer]}>
+          <Text style={ThemeText.LogoText}>{getString('APP_NAME')}</Text>
+          <Text style={ThemeText.HeroText}>{getString('APP_TAGLINE')}</Text>
+          <View style={ThemeStyle.StripeLine} />
         </View>
         <View
-          style={[viewStyle.Base, {justifyContent: 'flex-end', padding: 20}]}>
+          style={[ThemeStyle.Base, {justifyContent: 'flex-end', padding: 20}]}>
           <Button label="Unlock the possibilities" onPress={openModalHandler} />
         </View>
       </SafeAreaView>

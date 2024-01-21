@@ -9,7 +9,7 @@ import Header from '@Components/Header';
 import {IWallet} from '@Types/WalletTypes';
 import NewWalletCard from '@Components/NewWalletCard';
 import Icon from '@Components/Common/Icon';
-import {textStyle} from '@Utilities/Styles/GlobalStyle';
+import {ThemeText} from '@Utilities/Styles/GlobalStyle';
 import GlobalColor from '@Utilities/Styles/GlobalColor';
 
 const WalletListScreen = ({navigation}: ITabNavPropTypes<'WalletScreen'>) => {

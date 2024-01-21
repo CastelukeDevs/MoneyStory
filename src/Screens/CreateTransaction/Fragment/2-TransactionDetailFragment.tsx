@@ -2,7 +2,7 @@ import React, {useState} from 'react';
 import {StyleSheet, Text, View} from 'react-native';
 import {useSafeAreaInsets} from 'react-native-safe-area-context';
 
-import {textStyle, viewStyle} from '@Utilities/Styles/GlobalStyle';
+import {ThemeText, ThemeStyle} from '@Utilities/Styles/GlobalStyle';
 import {ITransactionFragmentProps} from '@Types/FragmentTypes';
 
 import Button from '@Components/Common/Button';
@@ -25,7 +25,7 @@ const TransactionDetailFragment = (props: ITransactionFragmentProps) => {
 
   const [amount, setAmount] = useState('');
   return (
-    <View style={[viewStyle.RootFragmentStyle, {paddingBottom: inset.bottom}]}>
+    <View style={[ThemeStyle.RootFragmentStyle, {paddingBottom: inset.bottom}]}>
       <View style={styles.ContentContainer}>
         <Text>Wallet</Text>
         <DropdownV2 items={walletDropdownDataset} />
@@ -36,8 +36,8 @@ const TransactionDetailFragment = (props: ITransactionFragmentProps) => {
           showLabel
           mode="Underlined"
           isMoney="IDR"
-          currencyStyle={{...textStyle.H1_Bold, opacity: 0.5}}
-          style={textStyle.H1_Bold}
+          currencyStyle={{...ThemeText.H1_Bold, opacity: 0.5}}
+          style={ThemeText.H1_Bold}
         />
       </View>
       <View style={styles.ButtonContainer}>

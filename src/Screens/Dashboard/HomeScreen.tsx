@@ -11,7 +11,7 @@ import useUserBalance from '@Utilities/Hooks/useUserBalance';
 import {IDashNavPropTypes} from '@Routes/RouteTypes';
 
 import GlobalColor from '@Utilities/Styles/GlobalColor';
-import {textStyle} from '@Utilities/Styles/GlobalStyle';
+import {ThemeText} from '@Utilities/Styles/GlobalStyle';
 import FormatCurrency from '@Utilities/String/Currency/FormatCurrency';
 
 import Button from '@Components/Common/Button';
@@ -100,20 +100,20 @@ const HomeScreen = ({navigation}: IDashNavPropTypes<'HomeScreen'>) => {
       </View>
       <ScrollView bounces={false}>
         <View style={styles.SectionContainer}>
-          <Text style={textStyle.Title_Bold}>Your Wealth</Text>
-          <Text style={textStyle.Hero_Bold}>
+          <Text style={ThemeText.Title_Bold}>Your Wealth</Text>
+          <Text style={ThemeText.Hero_Bold}>
             <Text style={styles.BalanceTextGrey}>{balance.symbol}</Text>
             <Text>{' ' + balance.whole}</Text>
             <Text style={styles.BalanceTextGrey}>{balance.decimal}</Text>
           </Text>
-          <Text style={[textStyle.Content_Light]}>+0,0 (0,00%)</Text>
+          <Text style={[ThemeText.Content_Light]}>+0,0 (0,00%)</Text>
         </View>
 
         <View style={[styles.SectionContainer, {paddingHorizontal: 0}]}>
           <View style={[styles.SectionHeader, {paddingHorizontal: 14}]}>
-            <Text style={textStyle.Title_Bold}>Your Wallet</Text>
+            <Text style={ThemeText.Title_Bold}>Your Wallet</Text>
             <Text
-              style={textStyle.Content_Regular}
+              style={ThemeText.Content_Regular}
               onPress={onSeeAllWalletHandler}>
               See All
             </Text>
@@ -142,9 +142,9 @@ const HomeScreen = ({navigation}: IDashNavPropTypes<'HomeScreen'>) => {
 
         <View style={styles.SectionContainer}>
           <View style={styles.SectionHeader}>
-            <Text style={textStyle.Title_Bold}>Your Activities</Text>
+            <Text style={ThemeText.Title_Bold}>Your Activities</Text>
             <Text
-              style={textStyle.Content_Regular}
+              style={ThemeText.Content_Regular}
               onPress={onSeeAllActivitiesHandler}>
               See All
             </Text>

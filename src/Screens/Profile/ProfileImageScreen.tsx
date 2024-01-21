@@ -15,7 +15,7 @@ import {launchImageLibrary, Asset} from 'react-native-image-picker';
 
 import {IMainNavPropTypes} from '@Routes/RouteTypes';
 
-import {textStyle} from '@Utilities/Styles/GlobalStyle';
+import {ThemeText} from '@Utilities/Styles/GlobalStyle';
 import GlobalColor from '@Utilities/Styles/GlobalColor';
 
 import Button from '@Components/Common/Button';
@@ -79,7 +79,7 @@ const SignUpImageScreen = (props: IMainNavPropTypes<'ProfileImageScreen'>) => {
           ? {paddingBottom: inset.bottom}
           : {paddingBottom: 16},
       ]}>
-      <Text style={textStyle.Hero_Bold}>
+      <Text style={ThemeText.Hero_Bold}>
         {isCreate ? 'Add your profile picture' : 'Change your profile picture'}
       </Text>
       <View style={{flex: 1, alignItems: 'center', marginTop: 48}}>

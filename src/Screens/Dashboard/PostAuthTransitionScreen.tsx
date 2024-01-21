@@ -12,7 +12,7 @@ import {IMainNavPropTypes} from '@Routes/RouteTypes';
 import auth from '@react-native-firebase/auth';
 import Logo from '@Components/Logo';
 import GlobalColor from '@Utilities/Styles/GlobalColor';
-import {textStyle} from '@Utilities/Styles/GlobalStyle';
+import {ThemeText} from '@Utilities/Styles/GlobalStyle';
 import {getUserWallets} from '@Redux/Actions/WalletAction';
 import {getUserAccount} from '@Redux/Actions/AccountAction';
 import useInitializeEntry from '@Utilities/Hooks/useInitializeEntry';
@@ -40,16 +40,16 @@ const PostAuthTransitionScreen = (
   return (
     <SafeAreaView style={styles.RootScreenContainer}>
       <Logo />
-      <Text style={textStyle.Hero_Bold}>Money Story</Text>
-      <Text style={textStyle.H3_Light}>
+      <Text style={ThemeText.Hero_Bold}>Money Story</Text>
+      <Text style={ThemeText.H3_Light}>
         getting {processName.replace('_', ' ')}
       </Text>
       {error && (
         <>
-          <Text style={[textStyle.H3_Light, {color: GlobalColor.error}]}>
+          <Text style={[ThemeText.H3_Light, {color: GlobalColor.error}]}>
             error {error}
           </Text>
-          <Text style={[textStyle.H3_Light, {color: GlobalColor.error}]}>
+          <Text style={[ThemeText.H3_Light, {color: GlobalColor.error}]}>
             Please try again later
           </Text>
         </>

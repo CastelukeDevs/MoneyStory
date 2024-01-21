@@ -10,7 +10,7 @@ import {IMainNavPropTypes} from '@Routes/RouteTypes';
 
 import GlobalColor, {Opacity} from '@Utilities/Styles/GlobalColor';
 import {LinearGradientProps} from '@Utilities/Settings/LinearGradient';
-import {textStyle} from '@Utilities/Styles/GlobalStyle';
+import {ThemeText} from '@Utilities/Styles/GlobalStyle';
 import FormatCurrency from '@Utilities/String/Currency/FormatCurrency';
 
 import IconButton from '@Components/Common/IconButton';
@@ -56,20 +56,20 @@ const WalletDetailsScreen = ({
           <LinearGradient {...LinearGradientProps} />
           <IconButton name={wallet.logo} />
           <View style={styles.ContentHeaderTextContainer}>
-            <Text style={[textStyle.H3_Bold, styles.ContentHeaderText]}>
+            <Text style={[ThemeText.H3_Bold, styles.ContentHeaderText]}>
               {wallet.walletName}
             </Text>
-            <Text style={[textStyle.H1_Bold, styles.ContentHeaderText]}>
+            <Text style={[ThemeText.H1_Bold, styles.ContentHeaderText]}>
               {walletBalance.format}
             </Text>
-            <Text style={[textStyle.Content_Regular, styles.ContentHeaderText]}>
+            <Text style={[ThemeText.Content_Regular, styles.ContentHeaderText]}>
               +{wallet.monthDiff} ({wallet.percentDiff}%)
             </Text>
           </View>
         </View>
 
         <View style={{padding: 12}}>
-          <Text style={[textStyle.H3_Bold, {marginBottom: 12}]}>
+          <Text style={[ThemeText.H3_Bold, {marginBottom: 12}]}>
             Your Wallet History
           </Text>
           <SearchBar />
