@@ -15,7 +15,11 @@ import {defaultWalletData} from '@Utilities/DefaultData/walletData';
 import FormatCurrency from '@Utilities/String/Currency/FormatCurrency';
 import {LinearGradientProps} from '@Utilities/Settings/LinearGradient';
 
-import {IWallet, IWalletCreateUpdateData} from '@Types/WalletTypes';
+import {
+  IWallet,
+  IWalletCreateUpdateData,
+  IWalletMain,
+} from '@Types/WalletTypes';
 import {IOrientation} from '@Types/CommonTypes';
 
 import IconButton from './Common/IconButton';
@@ -25,7 +29,7 @@ type IWalletCardProps = {
   onPress?: () => void;
   disable?: boolean;
   orientation?: IOrientation;
-  wallet: IWalletCreateUpdateData | IWallet;
+  wallet: IWalletCreateUpdateData | IWallet | IWalletMain;
   style?: ViewStyle;
 };
 
