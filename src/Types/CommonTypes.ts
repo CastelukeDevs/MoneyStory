@@ -1,5 +1,4 @@
 import CurrencyList from '@Utilities/DefaultData/CurrencyList';
-import {IconList, LogoList} from '@Utilities/DefaultData/IconList';
 
 export type ICurrencyTypes = (typeof CurrencyList)[number]['abbreviation'];
 

@@ -7,7 +7,7 @@ import {IWalletMain} from '@Types/WalletTypes';
 import WalletCard from '@Components/WalletCard';
 import Button from '@Components/Common/Button';
 import IconButton from '@Components/Common/IconButton';
-import {LogoList} from '@Utilities/DefaultData/IconList';
+import {ILogoName, LogoList} from '@Components/Common/Icon';
 
 type ICardLogoFragmentProps = {
   onNextPress: (cardData: IWalletMain) => void;
@@ -28,6 +28,10 @@ const CardLogoFragment = (props: ICardLogoFragmentProps) => {
     props.onNextPress(props.cardData);
   };
 
+  const logoList = Object.keys(LogoList).map(logoName => ({
+    name: logoName as ILogoName,
+  }));
+
   return (
     <View
       style={{
@@ -40,7 +44,7 @@ const CardLogoFragment = (props: ICardLogoFragmentProps) => {
         <WalletCard orientation="landscape" wallet={props.cardData} />
         <FlatList
           style={{marginVertical: 12}}
-          data={LogoList}
+          data={logoList}
           keyExtractor={item => item.name}
           numColumns={6}
           bounces={false}

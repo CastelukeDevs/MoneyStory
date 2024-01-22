@@ -31,7 +31,7 @@ enum IconList {
   'rocket',
 }
 
-enum LogoList {
+export enum LogoList {
   'logo-xing',
   'logo-xbox',
   'logo-windows',
@@ -91,9 +91,10 @@ enum LogoList {
 export type IIconMode = keyof typeof IconMode;
 export type IIconName = keyof typeof IconList;
 export type ILogoName = keyof typeof LogoList;
+type IIcon = IIconName | ILogoName;
 
 export type IIconProps = {
-  name?: IIconName;
+  name?: IIcon;
   size?: number;
   color?: string;
   mode?: IIconMode;
@@ -102,11 +103,12 @@ export type IIconProps = {
   style?: TextStyle;
 };
 
-const getIconName = (name: IIconName, mode?: IIconMode): string => {
+const getIconName = (name: IIcon, mode?: IIconMode): IIcon => {
   const selectedMode = mode || 'outline';
   if (name.includes('logo')) return name;
   if (name.includes('outline')) return name;
-  return name + (selectedMode === 'filled' ? '' : `-${selectedMode}`);
+  return (name +
+    (selectedMode === 'filled' ? '' : `-${selectedMode}`)) as IIcon;
 };
 
 /**
