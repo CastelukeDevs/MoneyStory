@@ -9,11 +9,11 @@ import {
 } from 'react-native';
 import {useSafeAreaInsets} from 'react-native-safe-area-context';
 
-import {ThemeStyle} from '@Utilities/Styles/GlobalStyle';
+import {DefaultStyle} from '@Utilities/Styles/GlobalStyle';
 import {ITransactionFragmentProps} from '@Types/FragmentTypes';
 
 import Button from '@Components/Common/Button';
-import GlobalColor from '@Utilities/Styles/GlobalColor';
+import GlobalColor from '@Utilities/Styles/ThemeColor';
 
 import {launchImageLibrary} from 'react-native-image-picker';
 import {PickerOption} from '@Utilities/Settings/ImagePicker';
@@ -38,7 +38,8 @@ const TransactionImageFragment = (
   };
 
   return (
-    <View style={[ThemeStyle.RootFragmentStyle, {paddingBottom: inset.bottom}]}>
+    <View
+      style={[DefaultStyle.RootFragmentStyle, {paddingBottom: inset.bottom}]}>
       <View style={styles.ContentContainer}>
         <TouchableOpacity style={styles.ImageContainer} onPress={onImagePress}>
           {imageUri && (

@@ -17,9 +17,9 @@ import {
   TextInput as RNInput,
 } from 'react-native';
 import {ScrollView} from 'react-native-gesture-handler';
-import {ThemeText} from '@Utilities/Styles/GlobalStyle';
+import {DefaultText} from '@Utilities/Styles/GlobalStyle';
 import TextInput, {ITextInputProps} from './TextInput';
-import GlobalColor from '@Utilities/Styles/GlobalColor';
+import GlobalColor from '@Utilities/Styles/ThemeColor';
 
 export type IDropdownData = {
   label: string;
@@ -171,7 +171,7 @@ const DropdownItem = ({item, index, onItemPress}: IDropdownItemProps) => {
       key={index.toString()}
       style={styles.DropdownItem}
       onPress={() => onItemPress?.(item, index)}>
-      <Text style={ThemeText.SubTitle_Regular}>{item.label}</Text>
+      <Text style={DefaultText.SubTitle_Regular}>{item.label}</Text>
     </TouchableOpacity>
   );
 };

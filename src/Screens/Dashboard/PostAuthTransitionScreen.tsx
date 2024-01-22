@@ -6,8 +6,8 @@ import {useAppDispatch} from '@Redux/Store';
 import {IMainNavProp} from '@Routes/RouteTypes';
 
 import Logo from '@Components/Logo';
-import GlobalColor from '@Utilities/Styles/GlobalColor';
-import {ThemeText} from '@Utilities/Styles/GlobalStyle';
+import GlobalColor from '@Utilities/Styles/ThemeColor';
+import {DefaultText} from '@Utilities/Styles/GlobalStyle';
 import useInitializeEntry from '@Utilities/Hooks/useInitializeEntry';
 
 const PostAuthTransitionScreen = (
@@ -33,16 +33,16 @@ const PostAuthTransitionScreen = (
   return (
     <SafeAreaView style={styles.RootScreenContainer}>
       <Logo />
-      <Text style={ThemeText.Hero_Bold}>Money Story</Text>
-      <Text style={ThemeText.H3_Light}>
+      <Text style={DefaultText.Hero_Bold}>Money Story</Text>
+      <Text style={DefaultText.H3_Light}>
         getting {processName.replace('_', ' ')}
       </Text>
       {error && (
         <>
-          <Text style={[ThemeText.H3_Light, {color: GlobalColor.error}]}>
+          <Text style={[DefaultText.H3_Light, {color: GlobalColor.error}]}>
             error {error}
           </Text>
-          <Text style={[ThemeText.H3_Light, {color: GlobalColor.error}]}>
+          <Text style={[DefaultText.H3_Light, {color: GlobalColor.error}]}>
             Please try again later
           </Text>
         </>

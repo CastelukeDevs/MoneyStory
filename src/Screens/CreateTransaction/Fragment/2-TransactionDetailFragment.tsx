@@ -4,7 +4,7 @@ import {useSafeAreaInsets} from 'react-native-safe-area-context';
 import {useSelector} from 'react-redux';
 import {selectWallets} from '@Redux/Reducers/WalletReducer';
 
-import {ThemeText, ThemeStyle} from '@Utilities/Styles/GlobalStyle';
+import {DefaultText, DefaultStyle} from '@Utilities/Styles/GlobalStyle';
 import {ITransactionFragmentProps} from '@Types/FragmentTypes';
 
 import FormatCurrency from '@Utilities/Tools/FormatCurrency';
@@ -27,7 +27,8 @@ const TransactionDetailFragment = (props: ITransactionFragmentProps) => {
 
   const [amount, setAmount] = useState('');
   return (
-    <View style={[ThemeStyle.RootFragmentStyle, {paddingBottom: inset.bottom}]}>
+    <View
+      style={[DefaultStyle.RootFragmentStyle, {paddingBottom: inset.bottom}]}>
       <View style={styles.ContentContainer}>
         <Text>Wallet</Text>
         <DropdownV2 items={walletDropdownDataset} />
@@ -38,8 +39,8 @@ const TransactionDetailFragment = (props: ITransactionFragmentProps) => {
           showLabel
           mode="Underlined"
           isMoney="IDR"
-          currencyStyle={{...ThemeText.H1_Bold, opacity: 0.5}}
-          style={ThemeText.H1_Bold}
+          currencyStyle={{...DefaultText.H1_Bold, opacity: 0.5}}
+          style={DefaultText.H1_Bold}
         />
       </View>
       <View style={styles.ButtonContainer}>

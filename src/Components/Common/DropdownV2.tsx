@@ -8,9 +8,9 @@ import {
   useWindowDimensions,
 } from 'react-native';
 import IconButton from './IconButton';
-import {ThemeText} from '@Utilities/Styles/GlobalStyle';
+import {DefaultText} from '@Utilities/Styles/GlobalStyle';
 import Icon from './Icon';
-import GlobalColor, {Opacity} from '@Utilities/Styles/GlobalColor';
+import GlobalColor, {Opacity} from '@Utilities/Styles/ThemeColor';
 import {ScrollView} from 'react-native-gesture-handler';
 
 export type IDropdownItem = {
@@ -106,9 +106,9 @@ const ItemRender = (items: IDropdownItem) => (
   <View style={styles.ItemGeneral}>
     {items.icon && <IconButton name={items.icon} shape="circle" />}
     <View style={styles.ItemTextContainer}>
-      <Text style={ThemeText.SubTitle_Bold}>{items.label}</Text>
+      <Text style={DefaultText.SubTitle_Bold}>{items.label}</Text>
       {items.subLabel && (
-        <Text style={ThemeText.SubTitle_Regular}>{items.subLabel}</Text>
+        <Text style={DefaultText.SubTitle_Regular}>{items.subLabel}</Text>
       )}
     </View>
   </View>

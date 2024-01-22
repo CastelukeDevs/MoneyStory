@@ -4,8 +4,8 @@ import {SafeAreaView} from 'react-native-safe-area-context';
 
 import {IMainNavProp} from '@Routes/RouteTypes';
 
-import {ThemeText, ThemeStyle} from '@Utilities/Styles/GlobalStyle';
-import GlobalColor, {Opacity} from '@Utilities/Styles/GlobalColor';
+import {DefaultText, DefaultStyle} from '@Utilities/Styles/GlobalStyle';
+import GlobalColor, {Opacity} from '@Utilities/Styles/ThemeColor';
 import getString from '@Utilities/String/LanguageTools';
 import {IUserAuth} from '@Types/AuthTypes';
 import SignInUserEmailPassword from '@Utilities/Authentication/SignInUserEmailPassword';
@@ -45,7 +45,7 @@ const SignInScreen = (props: IMainNavProp<'SignInScreen'>) => {
   };
 
   return (
-    <View style={ThemeStyle.Base}>
+    <View style={DefaultStyle.Base}>
       <Image
         // source={require('../Resources/bg-1.jpg')}
         source={require('../../Resources/Gradient/01.RoyalHeath.png')}
@@ -58,17 +58,20 @@ const SignInScreen = (props: IMainNavProp<'SignInScreen'>) => {
         ]}
       />
 
-      <SafeAreaView style={[ThemeStyle.Base, styles.RootContainer]}>
-        <View style={ThemeStyle.LogoArea}>
+      <SafeAreaView style={[DefaultStyle.Base, styles.RootContainer]}>
+        <View style={DefaultStyle.LogoArea}>
           <Logo />
         </View>
-        <View style={[ThemeStyle.CenterArea, styles.BodyContainer]}>
-          <Text style={ThemeText.LogoText}>{getString('APP_NAME')}</Text>
-          <Text style={ThemeText.HeroText}>{getString('APP_TAGLINE')}</Text>
-          <View style={ThemeStyle.StripeLine} />
+        <View style={[DefaultStyle.CenterArea, styles.BodyContainer]}>
+          <Text style={DefaultText.LogoText}>{getString('APP_NAME')}</Text>
+          <Text style={DefaultText.HeroText}>{getString('APP_TAGLINE')}</Text>
+          <View style={DefaultStyle.StripeLine} />
         </View>
         <View
-          style={[ThemeStyle.Base, {justifyContent: 'flex-end', padding: 20}]}>
+          style={[
+            DefaultStyle.Base,
+            {justifyContent: 'flex-end', padding: 20},
+          ]}>
           <Button label="Unlock the possibilities" onPress={openModalHandler} />
         </View>
       </SafeAreaView>

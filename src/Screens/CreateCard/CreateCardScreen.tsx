@@ -17,7 +17,7 @@ import {IMainNavProp} from '@Routes/RouteTypes';
 import {IWalletMain} from '@Types/WalletTypes';
 import {IFile} from '@Types/CommonTypes';
 
-import {ThemeText} from '@Utilities/Styles/GlobalStyle';
+import {DefaultText} from '@Utilities/Styles/GlobalStyle';
 import {defaultWalletData} from '@Utilities/DefaultData/walletData';
 
 import ProgressBar from '@Components/Common/ProgressBar';
@@ -118,7 +118,7 @@ const CreateCardScreen = (props: IMainNavProp<'CreateCardScreen'>) => {
     <View style={{flex: 1}}>
       <Header label="Create Card" onBackPressed={onHeaderBackPressHandler} />
       <View style={styles.SubHeaderContainer}>
-        <Text style={ThemeText.H3_Bold}>{getSubHeaderTitle()}</Text>
+        <Text style={DefaultText.H3_Bold}>{getSubHeaderTitle()}</Text>
         <View style={{height: 18}} />
         <ProgressBar indicatorCount={fragments.length} indicatorActive={page} />
       </View>

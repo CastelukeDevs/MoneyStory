@@ -1,5 +1,5 @@
 import React, {useMemo} from 'react';
-import GlobalColor from '@Utilities/Styles/GlobalColor';
+import GlobalColor from '@Utilities/Styles/ThemeColor';
 import {StyleSheet, View} from 'react-native';
 
 export type IProgressBarProp = {

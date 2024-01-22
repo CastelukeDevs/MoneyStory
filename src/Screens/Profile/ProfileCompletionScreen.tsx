@@ -15,7 +15,7 @@ import {updateUserData} from '@Redux/Reducers/UserReducer';
 import {IMainNavProp} from '@Routes/RouteTypes';
 import {ICurrencyTypes} from '@Types/CommonTypes';
 
-import {ThemeText} from '@Utilities/Styles/GlobalStyle';
+import {DefaultText} from '@Utilities/Styles/GlobalStyle';
 import CurrencyList from '@Utilities/DefaultData/CurrencyList';
 import KAVBehavior from '@Utilities/Settings/KAVBehavior';
 
@@ -94,7 +94,7 @@ const ProfileCompletionScreen = (
           ? {paddingBottom: inset.bottom}
           : {paddingBottom: 16},
       ]}>
-      <Text style={ThemeText.Hero_Bold}>
+      <Text style={DefaultText.Hero_Bold}>
         {isCreate ? 'Complete your Profile' : 'Change your existing Profile'}
       </Text>
       <KeyboardAvoidingView

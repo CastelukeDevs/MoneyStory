@@ -11,7 +11,7 @@ import {useSafeAreaInsets} from 'react-native-safe-area-context';
 
 import {IMainNavProp} from '@Routes/RouteTypes';
 
-import {ThemeText} from '@Utilities/Styles/GlobalStyle';
+import {DefaultText} from '@Utilities/Styles/GlobalStyle';
 import CreateUserEmailPassword from '@Utilities/Authentication/CreateUserEmailPassword';
 
 import TextInput from '@Components/Common/TextInput';
@@ -62,7 +62,7 @@ const SignUpScreen = (prop: IMainNavProp<'SignUpScreen'>) => {
         styles.RootContainer,
         Platform.OS === 'ios' && {paddingBottom: inset.bottom},
       ]}>
-      <Text style={ThemeText.Hero_Bold}>Register new Account</Text>
+      <Text style={DefaultText.Hero_Bold}>Register new Account</Text>
       <KeyboardAvoidingView style={styles.InputGroupContainer}>
         <TextInput
           value={email}

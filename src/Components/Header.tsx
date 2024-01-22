@@ -4,8 +4,8 @@ import {useSafeAreaInsets} from 'react-native-safe-area-context';
 import ProgressBar, {IProgressBarProp} from './Common/ProgressBar';
 import Button from './Common/Button';
 import Icon, {IIconProps} from './Common/Icon';
-import GlobalColor, {Opacity} from '@Utilities/Styles/GlobalColor';
-import {ThemeText} from '@Utilities/Styles/GlobalStyle';
+import GlobalColor, {Opacity} from '@Utilities/Styles/ThemeColor';
+import {DefaultText} from '@Utilities/Styles/GlobalStyle';
 
 type IHeaderModeTypes = 'normal' | 'highlights';
 type IHeaderPropTypes = {
@@ -65,9 +65,9 @@ const Header = (props: IHeaderPropTypes) => {
             })}
         <Text
           style={[
-            ThemeText.Title_Bold,
+            DefaultText.Title_Bold,
             styles.Text,
-            isHighlight ? ThemeText.H3_Bold : styles.TextCenter,
+            isHighlight ? DefaultText.H3_Bold : styles.TextCenter,
             {color: props.textColor || GlobalColor.dark},
           ]}>
           {isHighlight ? props.label?.toUpperCase() : props.label}
@@ -79,7 +79,7 @@ const Header = (props: IHeaderPropTypes) => {
         })}
         <Text
           style={[
-            ThemeText.Hero_Bold,
+            DefaultText.Hero_Bold,
             styles.TextOverlay,
             {color: props.textColor || GlobalColor.dark},
           ]}>

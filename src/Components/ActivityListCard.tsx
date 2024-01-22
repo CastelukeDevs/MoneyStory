@@ -1,7 +1,7 @@
 import React from 'react';
 import {StyleSheet, Text, View, ViewStyle} from 'react-native';
 import Icon from './Common/Icon';
-import {ThemeText} from '@Utilities/Styles/GlobalStyle';
+import {DefaultText} from '@Utilities/Styles/GlobalStyle';
 import {
   ICategory,
   ITransactionMain,
@@ -11,7 +11,7 @@ import {useSelector} from 'react-redux';
 import {selectUserDefaultCurrency} from '@Redux/Reducers/UserReducer';
 
 import FormatCurrency from '@Utilities/Tools/FormatCurrency';
-import GlobalColor from '@Utilities/Styles/GlobalColor';
+import GlobalColor from '@Utilities/Styles/ThemeColor';
 import getCategories from '@Utilities/Tools/getCategories';
 
 type IActivityListCardPropsType = {
@@ -48,12 +48,12 @@ const ActivityListCard = (props: IActivityListCardPropsType) => {
         <Icon name={categories.icon} size={24} color={GlobalColor.light} />
       </View>
       <View style={styles.CenterTextContainer}>
-        <Text style={ThemeText.Title_Bold}>{categories.category}</Text>
-        <Text numberOfLines={1} style={ThemeText.SubTitle_Light}>
+        <Text style={DefaultText.Title_Bold}>{categories.category}</Text>
+        <Text numberOfLines={1} style={DefaultText.SubTitle_Light}>
           {transaction.note}
         </Text>
       </View>
-      <Text style={ThemeText.SubTitle_Regular}>
+      <Text style={DefaultText.SubTitle_Regular}>
         {FormatCurrency(transaction.amount as number, currency || 'IDR').format}
       </Text>
     </View>

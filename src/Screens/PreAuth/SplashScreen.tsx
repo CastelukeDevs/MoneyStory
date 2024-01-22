@@ -4,8 +4,8 @@ import {SafeAreaView} from 'react-native-safe-area-context';
 
 import {IMainNavProp} from '../../Routes/RouteTypes';
 
-import {ThemeText, ThemeStyle} from '../../Utilities/Styles/GlobalStyle';
-import GlobalColor from '../../Utilities/Styles/GlobalColor';
+import {DefaultText, DefaultStyle} from '../../Utilities/Styles/GlobalStyle';
+import GlobalColor from '../../Utilities/Styles/ThemeColor';
 import getString from '../../Utilities/String/LanguageTools';
 
 import Button from '../../Components/Common/Button';
@@ -34,7 +34,7 @@ const SplashScreen = (props: IMainNavProp<'SplashScreen'>) => {
   };
 
   return (
-    <View style={ThemeStyle.Base}>
+    <View style={DefaultStyle.Base}>
       <Image
         // source={require('../Resources/bg-1.jpg')}
         source={require('../../Resources/Gradient/01.RoyalHeath.png')}
@@ -47,17 +47,20 @@ const SplashScreen = (props: IMainNavProp<'SplashScreen'>) => {
         ]}
       />
 
-      <SafeAreaView style={[ThemeStyle.Base, styles.RootContainer]}>
-        <View style={ThemeStyle.LogoArea}>
+      <SafeAreaView style={[DefaultStyle.Base, styles.RootContainer]}>
+        <View style={DefaultStyle.LogoArea}>
           <Logo />
         </View>
-        <View style={[ThemeStyle.CenterArea, styles.BodyContainer]}>
-          <Text style={ThemeText.LogoText}>{getString('APP_NAME')}</Text>
-          <Text style={ThemeText.HeroText}>{getString('APP_TAGLINE')}</Text>
-          <View style={ThemeStyle.StripeLine} />
+        <View style={[DefaultStyle.CenterArea, styles.BodyContainer]}>
+          <Text style={DefaultText.LogoText}>{getString('APP_NAME')}</Text>
+          <Text style={DefaultText.HeroText}>{getString('APP_TAGLINE')}</Text>
+          <View style={DefaultStyle.StripeLine} />
         </View>
         <View
-          style={[ThemeStyle.Base, {justifyContent: 'flex-end', padding: 20}]}>
+          style={[
+            DefaultStyle.Base,
+            {justifyContent: 'flex-end', padding: 20},
+          ]}>
           <Button label="Unlock the possibilities" onPress={openModalHandler} />
         </View>
       </SafeAreaView>
@@ -92,7 +95,7 @@ type IModalLayoutPropType = {
 const ModalLayout = (prop: IModalLayoutPropType) => {
   return (
     <View style={{padding: 18}}>
-      <Text style={ThemeText.Hero_Bold}>Login to your Account</Text>
+      <Text style={DefaultText.Hero_Bold}>Login to your Account</Text>
       <TextInput
         label="Email"
         onChangeText={() => {}}
@@ -120,7 +123,7 @@ const ModalLayout = (prop: IModalLayoutPropType) => {
         onPress={() => prop.onForgotPassword?.()}
       />
       <View style={{height: 50}} />
-      <Text style={[ThemeText.Content_Regular, {textAlign: 'center'}]}>
+      <Text style={[DefaultText.Content_Regular, {textAlign: 'center'}]}>
         or continue with
       </Text>
       <View
@@ -150,9 +153,11 @@ const ModalLayout = (prop: IModalLayoutPropType) => {
       </View>
       <View style={{height: 50}} />
       <Text style={{textAlign: 'center', marginBottom: 12}}>
-        <Text style={ThemeText.SubTitle_Regular}>Don't have an account? </Text>
+        <Text style={DefaultText.SubTitle_Regular}>
+          Don't have an account?{' '}
+        </Text>
         <Text
-          style={[ThemeText.SubTitle_Bold, ThemeText.hyperlink]}
+          style={[DefaultText.SubTitle_Bold, DefaultText.hyperlink]}
           onPress={prop.onSignUp}>
           Sign up
         </Text>

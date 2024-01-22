@@ -1,7 +1,7 @@
 import React from 'react';
 import {TouchableOpacity} from 'react-native';
 import IonIcon from 'react-native-vector-icons/Ionicons';
-import GlobalColor from '@Utilities/Styles/GlobalColor';
+import GlobalColor from '@Utilities/Styles/ThemeColor';
 import {IIconName, ILogoName} from '@Types/CommonTypes';
 
 export type IIconProps = {

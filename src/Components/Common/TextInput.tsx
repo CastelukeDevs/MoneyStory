@@ -20,8 +20,8 @@ import Animated, {
 
 import Icon, {IIconProps} from './Icon';
 
-import GlobalColor from '@Utilities/Styles/GlobalColor';
-import {ThemeText} from '@Utilities/Styles/GlobalStyle';
+import GlobalColor from '@Utilities/Styles/ThemeColor';
+import {DefaultText} from '@Utilities/Styles/GlobalStyle';
 import {getCurrencySymbol} from '@Utilities/Tools/FormatCurrency';
 import {ICurrencyTypes} from '@Types/CommonTypes';
 
@@ -122,7 +122,7 @@ const TextInput = forwardRef<TextInputReact, ITextInputProps>((props, ref) => {
     props.showLabel && (
       <Text
         style={[
-          ThemeText.SubTitle_Regular,
+          DefaultText.SubTitle_Regular,
           styles.LabelText,
           props.labelStyle,
         ]}>
@@ -136,7 +136,7 @@ const TextInput = forwardRef<TextInputReact, ITextInputProps>((props, ref) => {
     props.isMoney && (
       <Text
         style={[
-          ThemeText.SubTitle_Regular,
+          DefaultText.SubTitle_Regular,
           {marginLeft: 10},
           props.currencyStyle,
         ]}>
@@ -154,7 +154,7 @@ const TextInput = forwardRef<TextInputReact, ITextInputProps>((props, ref) => {
           style={[
             inputPlatformStyle,
             {flex: 0},
-            ThemeText.SubTitle_Regular,
+            DefaultText.SubTitle_Regular,
             props.style,
           ]}
           placeholder="00"
@@ -185,7 +185,11 @@ const TextInput = forwardRef<TextInputReact, ITextInputProps>((props, ref) => {
           ref={ref}
           value={value}
           onChangeText={onChangeTextHandler}
-          style={[inputPlatformStyle, ThemeText.SubTitle_Regular, props.style]}
+          style={[
+            inputPlatformStyle,
+            DefaultText.SubTitle_Regular,
+            props.style,
+          ]}
           placeholder={props.placeholder || props.label}
           onFocus={onFocusHandler}
           onBlur={onBlurHandler}
