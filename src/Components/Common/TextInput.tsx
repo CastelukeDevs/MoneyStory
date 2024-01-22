@@ -8,7 +8,6 @@ import {
   TextInputProps,
   TextInput as TextInputReact,
   TextStyle,
-  View,
   ViewStyle,
 } from 'react-native';
 import Animated, {
@@ -24,6 +23,7 @@ import GlobalColor from '@Utilities/Styles/ThemeColor';
 import {DefaultText} from '@Utilities/Styles/GlobalStyle';
 import {getCurrencySymbol} from '@Utilities/Tools/FormatCurrency';
 import {ICurrencyTypes} from '@Types/CommonTypes';
+import ThemeColor from '@Utilities/Styles/ThemeColor';
 
 type ITextInputBordered = {
   mode?: 'Outlined' | 'Circled';
@@ -51,9 +51,17 @@ export type ITextInputProps = {
 } & IMergedTextInput &
   TextInputProps;
 
+const AnimatedIcon = Animated.createAnimatedComponent(Icon);
+
 /**
+ * Custom Input text with animation
+ * @requires label string
+ * @requires value string
+ * @requires onChangeText (text:string)=>void
  *
- * @returns
+ * @prop isError boolean
+ *
+ * @default mode "Outlined"
  */
 const TextInput = forwardRef<TextInputReact, ITextInputProps>((props, ref) => {
   const currentMode = props.mode || 'Circled';
@@ -71,14 +79,32 @@ const TextInput = forwardRef<TextInputReact, ITextInputProps>((props, ref) => {
    */
   const inputState = useSharedValue(0);
 
+  const interpolationInput = [0, 1, 2];
+  const interpolationOutput = [
+    ThemeColor.dark,
+    ThemeColor.accent,
+    ThemeColor.error,
+  ];
+
   const inputAnimationStyle = useAnimatedStyle(() => {
     const colorInterpolation = interpolateColor(
       inputState.value,
-      [0, 1, 2],
-      [GlobalColor.dark, GlobalColor.accent, GlobalColor.error],
+      interpolationInput,
+      interpolationOutput,
     );
     return {
       borderColor: colorInterpolation,
+    };
+  });
+
+  const iconAnimationStyle = useAnimatedStyle(() => {
+    const colorInterpolation = interpolateColor(
+      inputState.value,
+      interpolationInput,
+      interpolationOutput,
+    );
+    return {
+      color: colorInterpolation,
     };
   });
 
@@ -130,7 +156,8 @@ const TextInput = forwardRef<TextInputReact, ITextInputProps>((props, ref) => {
       </Text>
     );
 
-  const showIcon = (icon: IIconProps | undefined) => icon && <Icon {...icon} />;
+  const showIcon = (icon: IIconProps | undefined) =>
+    icon && <AnimatedIcon {...icon} style={iconAnimationStyle} />;
 
   const showLeadingMoney = () =>
     props.isMoney && (
