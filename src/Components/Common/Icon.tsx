@@ -1,6 +1,7 @@
 import React, {forwardRef} from 'react';
 import {TextStyle} from 'react-native';
 import IonIcon from 'react-native-vector-icons/Ionicons';
+import ThemeColor from '@Utilities/Styles/ThemeColor';
 
 enum IconMode {
   outline,
@@ -121,12 +122,17 @@ const getIconName = (name: IIcon, mode?: IIconMode): IIcon => {
  *
  * @default "home"
  * @default 20
- * @default black
+ * @default ThemeDark
  * @default "outline"
  * @returns
  */
 const Icon = forwardRef<IonIcon, IIconProps>((props, ref) => {
-  const {name = 'home', size = 20, mode = 'outline'} = props; //default value
+  const {
+    name = 'home',
+    size = 20,
+    mode = 'outline',
+    color = ThemeColor.dark,
+  } = props; //default value
 
   const iconName = getIconName(name, mode);
 
@@ -135,7 +141,7 @@ const Icon = forwardRef<IonIcon, IIconProps>((props, ref) => {
       ref={ref}
       name={iconName}
       size={size}
-      color={props.color}
+      color={color}
       disabled={typeof props.onPress === 'undefined' || props.disabled}
       onPress={props.onPress}
       style={props.style}
