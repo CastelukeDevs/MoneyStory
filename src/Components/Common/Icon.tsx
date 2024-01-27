@@ -33,6 +33,7 @@ enum IconList {
   'funnel',
   'bar-chart',
   'scan-circle',
+  'search',
 }
 
 export enum LogoList {

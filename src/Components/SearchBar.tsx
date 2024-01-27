@@ -11,13 +11,14 @@ const SearchBar = () => {
         value={search}
         onChangeText={setSearch}
         label="Search"
-        iconLeading={{name: 'search-outline'}}
+        iconLeading={{name: 'search'}}
         containerStyle={{flex: 1}}
       />
       <IconButton
         name="funnel"
         shape="circle"
-        mode="bordered"
+        buttonMode="bordered"
+        onPress={() => console.log('funnel pressed')}
         style={{marginLeft: 12}}
       />
     </View>
