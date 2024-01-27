@@ -11,7 +11,7 @@ import {IMainNavProp} from '@Routes/RouteTypes';
 import {ITransaction} from '@Types/TransactionTypes';
 import {IFile} from '@Types/CommonTypes';
 
-import {DefaultText} from '@Utilities/Styles/GlobalStyle';
+import {ThemeText} from '@Utilities/Styles/GlobalStyle';
 import Header from '@Components/Header';
 import TransactionImageFragment from './Fragment/1-TransactionImageFragment';
 import TransactionDetailFragment from './Fragment/2-TransactionDetailFragment';
@@ -84,7 +84,7 @@ const CreateTransactionScreen = ({
     <View style={styles.RootScreenContainer}>
       <Header label="Make Transaction" onBackPressed={backHandler} />
       <View style={styles.SubHeaderContainer}>
-        <Text style={DefaultText.H3_Bold}>{getSubHeaderTitle()}</Text>
+        <Text style={ThemeText.H3_Bold}>{getSubHeaderTitle()}</Text>
         <View style={{height: 18}} />
         <ProgressBar indicatorCount={fragments.length} indicatorActive={page} />
       </View>

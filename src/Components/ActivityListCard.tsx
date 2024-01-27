@@ -1,7 +1,7 @@
 import React from 'react';
 import {StyleSheet, Text, View, ViewStyle} from 'react-native';
 import Icon from './Common/Icon';
-import {DefaultText} from '@Utilities/Styles/GlobalStyle';
+import {Dimension, ThemeText} from '@Utilities/Styles/GlobalStyle';
 import {
   ICategory,
   ITransactionMain,
@@ -42,18 +42,18 @@ const ActivityListCard = (props: IActivityListCardPropsType) => {
           styles.Icon,
           {
             backgroundColor: getColor(transaction.transactionType),
-            marginRight: 12,
+            marginRight: Dimension.Space,
           },
         ]}>
         <Icon name={categories.icon} size={24} color={GlobalColor.light} />
       </View>
       <View style={styles.CenterTextContainer}>
-        <Text style={DefaultText.Title_Bold}>{categories.category}</Text>
-        <Text numberOfLines={1} style={DefaultText.SubTitle_Light}>
+        <Text style={ThemeText.Title_Bold}>{categories.category}</Text>
+        <Text numberOfLines={1} style={ThemeText.SubTitle_Light}>
           {transaction.note}
         </Text>
       </View>
-      <Text style={DefaultText.SubTitle_Regular}>
+      <Text style={ThemeText.SubTitle_Regular}>
         {FormatCurrency(transaction.amount as number, currency || 'IDR').format}
       </Text>
     </View>
@@ -66,12 +66,12 @@ const styles = StyleSheet.create({
   RootComponentContainer: {
     flexDirection: 'row',
     alignItems: 'center',
-    padding: 8,
+    padding: Dimension.SpaceM,
   },
   Icon: {
-    padding: 12,
+    padding: Dimension.Space,
     backgroundColor: 'skyblue',
-    borderRadius: 100,
+    borderRadius: Dimension.RadiusFull,
   },
   CenterTextContainer: {
     marginRight: 'auto',

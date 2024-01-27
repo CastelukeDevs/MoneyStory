@@ -20,7 +20,7 @@ import Animated, {
 import Icon, {IIconProps} from './Icon';
 
 import GlobalColor from '@Utilities/Styles/ThemeColor';
-import {DefaultText} from '@Utilities/Styles/GlobalStyle';
+import {Dimension, ThemeText} from '@Utilities/Styles/GlobalStyle';
 import {getCurrencySymbol} from '@Utilities/Tools/FormatCurrency';
 import {ICurrencyTypes} from '@Types/CommonTypes';
 import ThemeColor from '@Utilities/Styles/ThemeColor';
@@ -148,7 +148,7 @@ const TextInput = forwardRef<TextInputReact, ITextInputProps>((props, ref) => {
     props.showLabel && (
       <Text
         style={[
-          DefaultText.SubTitle_Regular,
+          ThemeText.SubTitle_Regular,
           styles.LabelText,
           props.labelStyle,
         ]}>
@@ -163,7 +163,7 @@ const TextInput = forwardRef<TextInputReact, ITextInputProps>((props, ref) => {
     props.isMoney && (
       <Text
         style={[
-          DefaultText.SubTitle_Regular,
+          ThemeText.SubTitle_Regular,
           {marginLeft: 10},
           props.currencyStyle,
         ]}>
@@ -181,7 +181,7 @@ const TextInput = forwardRef<TextInputReact, ITextInputProps>((props, ref) => {
           style={[
             inputPlatformStyle,
             {flex: 0},
-            DefaultText.SubTitle_Regular,
+            ThemeText.SubTitle_Regular,
             props.style,
           ]}
           placeholder="00"
@@ -212,12 +212,8 @@ const TextInput = forwardRef<TextInputReact, ITextInputProps>((props, ref) => {
           ref={ref}
           value={value}
           onChangeText={onChangeTextHandler}
-          style={[
-            inputPlatformStyle,
-            DefaultText.SubTitle_Regular,
-            props.style,
-          ]}
-          placeholder={props.placeholder || props.label}
+          style={[inputPlatformStyle, ThemeText.SubTitle_Regular, props.style]}
+          placeholder={props.isMoney ? '0' : props.placeholder || props.label}
           onFocus={onFocusHandler}
           onBlur={onBlurHandler}
           textContentType={props.secureTextEntry ? 'oneTimeCode' : undefined}
@@ -237,18 +233,18 @@ export default TextInput;
 
 const baseInputStyle: TextStyle = {
   flex: 1,
-  marginHorizontal: 6,
+  marginHorizontal: Dimension.SpaceM,
   // backgroundColor: 'red',
 };
 
 const baseBorderedContainerStyle: ViewStyle = {
-  paddingHorizontal: 16,
+  paddingHorizontal: Dimension.Space,
   borderWidth: 1,
 };
 
 const styles = StyleSheet.create({
   CoreContainer: {
-    paddingVertical: 8,
+    paddingVertical: Dimension.SpaceM,
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'center',
@@ -256,7 +252,7 @@ const styles = StyleSheet.create({
   },
   InputIOS: {
     ...baseInputStyle,
-    paddingVertical: 4,
+    paddingVertical: Dimension.SpaceS,
   },
   InputAndroid: {
     ...baseInputStyle,
@@ -265,21 +261,21 @@ const styles = StyleSheet.create({
   },
   ContainerCircledMode: {
     ...baseBorderedContainerStyle,
-    borderRadius: 1000,
+    borderRadius: Dimension.RadiusFull,
   },
   ContainerOutlinedMode: {
     ...baseBorderedContainerStyle,
-    borderRadius: 12,
+    borderRadius: Dimension.Space,
   },
   ContainerUnderlinedMode: {
-    paddingBottom: 4,
+    paddingBottom: Dimension.SpaceS,
     borderBottomWidth: 1,
-    marginBottom: 4,
+    marginBottom: Dimension.SpaceS,
   },
   LabelText: {
     textAlign: 'left',
     width: '100%',
-    marginBottom: 4,
+    marginBottom: Dimension.SpaceS,
   },
 });
 

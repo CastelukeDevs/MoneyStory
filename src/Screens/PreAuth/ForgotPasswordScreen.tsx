@@ -8,7 +8,7 @@ import {
 } from 'react-native';
 import {useSafeAreaInsets} from 'react-native-safe-area-context';
 
-import {DefaultText} from '@Utilities/Styles/GlobalStyle';
+import {ThemeText} from '@Utilities/Styles/GlobalStyle';
 import ForgetPassword from '@Utilities/Authentication/ForgetPassword';
 import {
   IValidationResult,
@@ -44,9 +44,9 @@ const ForgotPasswordScreen = () => {
         styles.RootContainer,
         Platform.OS === 'ios' && {paddingBottom: inset.bottom},
       ]}>
-      <Text style={DefaultText.Hero_Bold}>Forgot your Password</Text>
+      <Text style={ThemeText.Hero_Bold}>Forgot your Password</Text>
       <KeyboardAvoidingView style={styles.InputGroupContainer}>
-        <Text style={[DefaultText.Content_Regular, {marginBottom: 12}]}>
+        <Text style={[ThemeText.Content_Regular, {marginBottom: 12}]}>
           Enter Your registered email below to receive password reset Link or
           Instruction
         </Text>

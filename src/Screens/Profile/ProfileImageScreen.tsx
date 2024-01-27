@@ -16,7 +16,7 @@ import {PickerOption} from '@Utilities/Settings/ImagePicker';
 
 import {IMainNavProp} from '@Routes/RouteTypes';
 
-import {DefaultText} from '@Utilities/Styles/GlobalStyle';
+import {ThemeText} from '@Utilities/Styles/GlobalStyle';
 import GlobalColor from '@Utilities/Styles/ThemeColor';
 
 import Button from '@Components/Common/Button';
@@ -79,7 +79,7 @@ const SignUpImageScreen = (props: IMainNavProp<'ProfileImageScreen'>) => {
           ? {paddingBottom: inset.bottom}
           : {paddingBottom: 16},
       ]}>
-      <Text style={DefaultText.Hero_Bold}>
+      <Text style={ThemeText.Hero_Bold}>
         {isCreate ? 'Add your profile picture' : 'Change your profile picture'}
       </Text>
       <View style={{flex: 1, alignItems: 'center', marginTop: 48}}>

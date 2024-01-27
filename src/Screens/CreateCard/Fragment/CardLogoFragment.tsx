@@ -8,6 +8,7 @@ import WalletCard from '@Components/WalletCard';
 import Button from '@Components/Common/Button';
 import IconButton from '@Components/Common/IconButton';
 import {ILogoName, LogoList} from '@Components/Common/Icon';
+import ConvertEnumToArray from '@Utilities/Tools/ConvertEnumToArray';
 
 type ICardLogoFragmentProps = {
   onNextPress: (cardData: IWalletMain) => void;
@@ -28,9 +29,9 @@ const CardLogoFragment = (props: ICardLogoFragmentProps) => {
     props.onNextPress(props.cardData);
   };
 
-  const logoList = Object.keys(LogoList).map(logoName => ({
-    name: logoName as ILogoName,
-  }));
+  const logoList = ConvertEnumToArray(LogoList);
+
+  console.log('Logo Name', logoList);
 
   return (
     <View

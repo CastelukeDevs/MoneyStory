@@ -2,6 +2,7 @@ import React, {FC} from 'react';
 import Mons from '@Resources/MONS.svg';
 import {StyleSheet, View} from 'react-native';
 import GlobalColor from '@Utilities/Styles/ThemeColor';
+import {Dimension} from '@Utilities/Styles/GlobalStyle';
 
 type LogoPropTypes = {
   isSmall?: boolean;
@@ -18,10 +19,10 @@ const Logo: FC<LogoPropTypes> = props => {
 
 const style = StyleSheet.create({
   Base: {
-    padding: 12,
+    padding: Dimension.Space,
     backgroundColor: GlobalColor.light,
     // alignSelf: 'baseline',
-    borderRadius: 12,
+    borderRadius: Dimension.Space,
   },
 });
 

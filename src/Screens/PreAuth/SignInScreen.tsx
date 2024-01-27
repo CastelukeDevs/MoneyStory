@@ -4,7 +4,7 @@ import {SafeAreaView} from 'react-native-safe-area-context';
 
 import {IMainNavProp} from '@Routes/RouteTypes';
 
-import {DefaultText, DefaultStyle} from '@Utilities/Styles/GlobalStyle';
+import {ThemeText, DefaultStyle} from '@Utilities/Styles/GlobalStyle';
 import GlobalColor, {Opacity} from '@Utilities/Styles/ThemeColor';
 import getString from '@Utilities/String/LanguageTools';
 import {IUserAuth} from '@Types/AuthTypes';
@@ -63,8 +63,8 @@ const SignInScreen = (props: IMainNavProp<'SignInScreen'>) => {
           <Logo />
         </View>
         <View style={[DefaultStyle.CenterArea, styles.BodyContainer]}>
-          <Text style={DefaultText.LogoText}>{getString('APP_NAME')}</Text>
-          <Text style={DefaultText.HeroText}>{getString('APP_TAGLINE')}</Text>
+          <Text style={ThemeText.LogoText}>{getString('APP_NAME')}</Text>
+          <Text style={ThemeText.HeroText}>{getString('APP_TAGLINE')}</Text>
           <View style={DefaultStyle.StripeLine} />
         </View>
         <View
