@@ -1,7 +1,7 @@
 import React from 'react';
 import {StyleSheet, Text, View, ViewStyle} from 'react-native';
 import Icon from './Common/Icon';
-import {ThemeText} from '@Utilities/Styles/GlobalStyle';
+import {Dimension, ThemeText} from '@Utilities/Styles/GlobalStyle';
 import {
   ICategory,
   ITransactionMain,
@@ -42,7 +42,7 @@ const ActivityListCard = (props: IActivityListCardPropsType) => {
           styles.Icon,
           {
             backgroundColor: getColor(transaction.transactionType),
-            marginRight: 12,
+            marginRight: Dimension.Space,
           },
         ]}>
         <Icon name={categories.icon} size={24} color={GlobalColor.light} />
@@ -66,12 +66,12 @@ const styles = StyleSheet.create({
   RootComponentContainer: {
     flexDirection: 'row',
     alignItems: 'center',
-    padding: 8,
+    padding: Dimension.SpaceM,
   },
   Icon: {
-    padding: 12,
+    padding: Dimension.Space,
     backgroundColor: 'skyblue',
-    borderRadius: 100,
+    borderRadius: Dimension.RadiusFull,
   },
   CenterTextContainer: {
     marginRight: 'auto',

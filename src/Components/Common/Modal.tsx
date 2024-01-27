@@ -1,6 +1,6 @@
 import React, {ReactNode, useEffect, useState} from 'react';
 import {
-  Dimensions,
+  Dimensions as APPDimension,
   KeyboardAvoidingView,
   Platform,
   Pressable,
@@ -23,8 +23,9 @@ import Animated, {
   withSpring,
 } from 'react-native-reanimated';
 import GlobalColor, {Opacity} from '@Utilities/Styles/ThemeColor';
+import {Dimension} from '@Utilities/Styles/GlobalStyle';
 
-const windowHeight = Dimensions.get('window').height;
+const windowHeight = APPDimension.get('window').height;
 const AnimatedPressable = Animated.createAnimatedComponent(Pressable);
 
 type IModalPropTypes = {
@@ -167,8 +168,8 @@ const styles = StyleSheet.create({
 
   ModalContainer: {
     backgroundColor: GlobalColor.light,
-    borderTopLeftRadius: 12,
-    borderTopRightRadius: 12,
+    borderTopLeftRadius: Dimension.Space,
+    borderTopRightRadius: Dimension.Space,
     position: 'absolute',
     width: '100%',
     zIndex: 1,

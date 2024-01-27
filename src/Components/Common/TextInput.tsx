@@ -20,7 +20,7 @@ import Animated, {
 import Icon, {IIconProps} from './Icon';
 
 import GlobalColor from '@Utilities/Styles/ThemeColor';
-import {ThemeText} from '@Utilities/Styles/GlobalStyle';
+import {Dimension, ThemeText} from '@Utilities/Styles/GlobalStyle';
 import {getCurrencySymbol} from '@Utilities/Tools/FormatCurrency';
 import {ICurrencyTypes} from '@Types/CommonTypes';
 import ThemeColor from '@Utilities/Styles/ThemeColor';
@@ -233,18 +233,18 @@ export default TextInput;
 
 const baseInputStyle: TextStyle = {
   flex: 1,
-  marginHorizontal: 6,
+  marginHorizontal: Dimension.SpaceM,
   // backgroundColor: 'red',
 };
 
 const baseBorderedContainerStyle: ViewStyle = {
-  paddingHorizontal: 16,
+  paddingHorizontal: Dimension.Space,
   borderWidth: 1,
 };
 
 const styles = StyleSheet.create({
   CoreContainer: {
-    paddingVertical: 8,
+    paddingVertical: Dimension.SpaceM,
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'center',
@@ -252,7 +252,7 @@ const styles = StyleSheet.create({
   },
   InputIOS: {
     ...baseInputStyle,
-    paddingVertical: 4,
+    paddingVertical: Dimension.SpaceS,
   },
   InputAndroid: {
     ...baseInputStyle,
@@ -261,21 +261,21 @@ const styles = StyleSheet.create({
   },
   ContainerCircledMode: {
     ...baseBorderedContainerStyle,
-    borderRadius: 1000,
+    borderRadius: Dimension.RadiusFull,
   },
   ContainerOutlinedMode: {
     ...baseBorderedContainerStyle,
-    borderRadius: 12,
+    borderRadius: Dimension.Space,
   },
   ContainerUnderlinedMode: {
-    paddingBottom: 4,
+    paddingBottom: Dimension.SpaceS,
     borderBottomWidth: 1,
-    marginBottom: 4,
+    marginBottom: Dimension.SpaceS,
   },
   LabelText: {
     textAlign: 'left',
     width: '100%',
-    marginBottom: 4,
+    marginBottom: Dimension.SpaceS,
   },
 });
 

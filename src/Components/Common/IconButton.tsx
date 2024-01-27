@@ -2,6 +2,7 @@ import React from 'react';
 import {StyleSheet, TouchableOpacity, View, ViewStyle} from 'react-native';
 import Icon, {IIconProps} from './Icon';
 import GlobalColor from '@Utilities/Styles/ThemeColor';
+import {Dimension} from '@Utilities/Styles/GlobalStyle';
 
 type IIconButtonMode = 'contained' | 'bordered' | 'icon';
 type IIconButtonShape = 'box' | 'circle';
@@ -31,7 +32,8 @@ const IconButton = (props: IIconButtonPropTypes) => {
       style={[
         {
           padding: 12,
-          borderRadius: currentShape === 'box' ? 12 : 100,
+          borderRadius:
+            currentShape === 'box' ? Dimension.Space : Dimension.RadiusFull,
         },
         selectedContainerStyle(currentMode),
         props.style,

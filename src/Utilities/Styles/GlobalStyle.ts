@@ -16,8 +16,11 @@ export const DefaultStyle = StyleSheet.create({
 });
 
 export const Dimension = {
-  Padding: 12,
+  Space: 12,
+  SpaceM: 8,
+  SpaceS: 4,
   TextMargin: 6,
+  RadiusFull: 100,
   fontSize: {
     hero: 40,
     h1: 32,
@@ -27,7 +30,7 @@ export const Dimension = {
     subTitle: 14,
     content: 12,
   },
-};
+} as const;
 
 export const ThemeText = StyleSheet.create({
   LogoText: {

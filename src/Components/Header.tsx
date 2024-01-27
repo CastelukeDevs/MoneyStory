@@ -3,7 +3,7 @@ import {StyleSheet, Text, View} from 'react-native';
 import {useSafeAreaInsets} from 'react-native-safe-area-context';
 import Icon, {IIconName, IIconProps} from './Common/Icon';
 import GlobalColor, {Opacity} from '@Utilities/Styles/ThemeColor';
-import {ThemeText} from '@Utilities/Styles/GlobalStyle';
+import {Dimension, ThemeText} from '@Utilities/Styles/GlobalStyle';
 
 type IHeaderModeTypes = 'normal' | 'highlights';
 type IHeaderPropTypes = {
@@ -95,8 +95,8 @@ const styles = StyleSheet.create({
   ButtonGroupContainer: {
     flexDirection: 'row',
     alignItems: 'center',
-    paddingHorizontal: 14,
-    paddingVertical: 6,
+    paddingHorizontal: Dimension.Space,
+    paddingVertical: Dimension.SpaceM,
     bottom: 0,
     // backgroundColor: 'skyblue',
   },
@@ -111,9 +111,9 @@ const styles = StyleSheet.create({
     opacity: 0.1,
   },
   MiniIconContainer: {
-    padding: 6,
-    borderRadius: 8,
+    padding: Dimension.SpaceM,
+    borderRadius: Dimension.SpaceM,
     backgroundColor: GlobalColor.accent,
-    marginRight: 12,
+    marginRight: Dimension.Space,
   },
 });

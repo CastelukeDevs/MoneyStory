@@ -3,7 +3,7 @@ import {StyleSheet, Text, TouchableOpacity, View} from 'react-native';
 
 import GlobalColor from '@Utilities/Styles/ThemeColor';
 import Icon from './Common/Icon';
-import {ThemeText} from '@Utilities/Styles/GlobalStyle';
+import {Dimension, ThemeText} from '@Utilities/Styles/GlobalStyle';
 
 type INewWalletCardProps = {
   onPress?: () => void;
@@ -30,8 +30,8 @@ const styles = StyleSheet.create({
     borderWidth: 2,
     borderColor: GlobalColor.accent,
     flex: 1,
-    borderRadius: 12,
-    padding: 12,
+    borderRadius: Dimension.Space,
+    padding: Dimension.Space,
     borderStyle: 'dashed',
     alignItems: 'center',
     justifyContent: 'center',

@@ -8,7 +8,7 @@ import {
   useWindowDimensions,
 } from 'react-native';
 import IconButton from './IconButton';
-import {ThemeText} from '@Utilities/Styles/GlobalStyle';
+import {Dimension, ThemeText} from '@Utilities/Styles/GlobalStyle';
 import Icon, {IIconName} from './Icon';
 import GlobalColor, {Opacity} from '@Utilities/Styles/ThemeColor';
 import {ScrollView} from 'react-native-gesture-handler';
@@ -129,14 +129,14 @@ const styles = StyleSheet.create({
     width: '100%',
     // paddingHorizontal: 4,
     // paddingVertical: 4,
-    borderRadius: 12,
+    borderRadius: Dimension.Space,
     zIndex: 1,
   },
   DropMainContainer: {
     flexDirection: 'row',
-    padding: 8,
+    padding: (Dimension.Space / 2) * 3,
     backgroundColor: GlobalColor.dark + Opacity[10],
-    borderRadius: 12,
+    borderRadius: Dimension.Space,
     alignItems: 'center',
   },
 });

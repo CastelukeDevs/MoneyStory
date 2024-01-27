@@ -17,7 +17,7 @@ import {
   TextInput as RNInput,
 } from 'react-native';
 import {ScrollView} from 'react-native-gesture-handler';
-import {ThemeText} from '@Utilities/Styles/GlobalStyle';
+import {Dimension, ThemeText} from '@Utilities/Styles/GlobalStyle';
 import TextInput, {ITextInputProps} from './TextInput';
 import GlobalColor from '@Utilities/Styles/ThemeColor';
 
@@ -182,9 +182,9 @@ const styles = StyleSheet.create({
   LabelText: {
     textAlign: 'left',
     width: '100%',
-    marginBottom: 4,
+    marginBottom: Dimension.Space / 3,
   },
   DropdownItem: {
-    padding: 12,
+    padding: Dimension.Space,
   },
 });

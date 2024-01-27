@@ -1,7 +1,7 @@
 import React from 'react';
 import {Text, TextStyle, TouchableOpacity, ViewStyle} from 'react-native';
 import Icon, {IIconProps} from '@Components/Common/Icon';
-import {ThemeText} from '@Utilities/Styles/GlobalStyle';
+import {Dimension, ThemeText} from '@Utilities/Styles/GlobalStyle';
 import GlobalColor from '@Utilities/Styles/ThemeColor';
 
 type IButtonPropTypes = {
@@ -30,10 +30,10 @@ const Button = (props: IButtonPropTypes) => {
       style={[
         currentMode === 'contained' && {
           backgroundColor: GlobalColor.accent,
-          borderRadius: 100,
+          borderRadius: Dimension.RadiusFull,
         },
         {
-          padding: 12,
+          padding: Dimension.Space,
           flexDirection: 'row',
           justifyContent: 'center',
           alignItems: 'center',

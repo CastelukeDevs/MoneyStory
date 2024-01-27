@@ -2,6 +2,7 @@ import React, {useState} from 'react';
 import {StyleSheet, Text, View} from 'react-native';
 import TextInput from './Common/TextInput';
 import IconButton from './Common/IconButton';
+import {Dimension} from '@Utilities/Styles/GlobalStyle';
 
 const SearchBar = () => {
   const [search, setSearch] = useState('');
@@ -19,7 +20,7 @@ const SearchBar = () => {
         shape="circle"
         buttonMode="bordered"
         onPress={() => console.log('funnel pressed')}
-        style={{marginLeft: 12}}
+        style={{marginLeft: Dimension.Space}}
       />
     </View>
   );

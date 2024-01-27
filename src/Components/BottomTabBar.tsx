@@ -4,6 +4,7 @@ import {BottomTabBarProps} from '@react-navigation/bottom-tabs';
 
 import GlobalColor, {Opacity} from '@Utilities/Styles/ThemeColor';
 import Icon, {IIconName} from './Common/Icon';
+import {Dimension} from '@Utilities/Styles/GlobalStyle';
 
 type ITabIcon = {
   index: number;
@@ -97,20 +98,18 @@ export default BottomTabBar;
 
 const styles = StyleSheet.create({
   indicator: {
-    width: 3,
-    height: 3,
-    borderRadius: 10,
+    width: Dimension.SpaceS,
+    height: Dimension.SpaceS,
+    borderRadius: Dimension.Space,
     alignSelf: 'center',
-    marginTop: 8,
+    marginTop: Dimension.SpaceM,
   },
   indicatorActive: {
     backgroundColor: GlobalColor.accent,
   },
   middleContainer: {
-    padding: 12,
-    // borderColor: GlobalColor.overlay80,
+    padding: Dimension.Space,
     backgroundColor: GlobalColor.accent,
-    borderRadius: 100,
-    // borderWidth: 1.5,
+    borderRadius: Dimension.RadiusFull,
   },
 });

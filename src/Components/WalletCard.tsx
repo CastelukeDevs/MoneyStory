@@ -9,7 +9,7 @@ import {
 } from 'react-native';
 import LinearGradient from 'react-native-linear-gradient';
 
-import {ThemeText} from '@Utilities/Styles/GlobalStyle';
+import {Dimension, ThemeText} from '@Utilities/Styles/GlobalStyle';
 import GlobalColor from '@Utilities/Styles/ThemeColor';
 import {defaultWalletData} from '@Utilities/DefaultData/walletData';
 import FormatCurrency from '@Utilities/Tools/FormatCurrency';
@@ -104,18 +104,18 @@ const WalletCard = (props: IWalletCardProps) => {
 
 export default WalletCard;
 
-const CardWidth = 254;
-const CardHeight = 355;
+const CardSize = 254;
+// const CardHeight = 355;
 
 const styles = StyleSheet.create({
   RootComponentContainer: {
-    borderRadius: 12,
+    borderRadius: Dimension.Space,
     backgroundColor: GlobalColor.accent,
-    padding: 12,
+    padding: Dimension.Space,
     overflow: 'hidden',
   },
   CardPortrait: {
-    width: CardWidth,
+    width: CardSize,
     aspectRatio: 9 / 13,
     // height: CardHeight,
   },
@@ -141,9 +141,9 @@ const styles = StyleSheet.create({
   CardHolderNameText: {color: GlobalColor.light, letterSpacing: 4},
   CardHolderNumberText: {color: GlobalColor.light, letterSpacing: 2},
   NumberContainer: {
-    paddingVertical: 12,
-    borderRadius: 12,
-    marginBottom: 18,
+    paddingVertical: Dimension.Space,
+    borderRadius: Dimension.Space,
+    marginBottom: Dimension.Space,
   },
   NumberText: {color: GlobalColor.light},
   EmptyContainer: {flex: 1, alignItems: 'center', justifyContent: 'center'},
