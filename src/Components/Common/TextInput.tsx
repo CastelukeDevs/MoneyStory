@@ -217,7 +217,7 @@ const TextInput = forwardRef<TextInputReact, ITextInputProps>((props, ref) => {
             DefaultText.SubTitle_Regular,
             props.style,
           ]}
-          placeholder={props.placeholder || props.label}
+          placeholder={props.isMoney ? '0' : props.placeholder || props.label}
           onFocus={onFocusHandler}
           onBlur={onBlurHandler}
           textContentType={props.secureTextEntry ? 'oneTimeCode' : undefined}
