@@ -11,6 +11,7 @@ enum IconMode {
 
 enum IconList {
   'arrow-back',
+  'add',
   'at',
   'calendar',
   'card',
@@ -35,6 +36,7 @@ enum IconList {
   'bar-chart',
   'scan-circle',
   'search',
+  'ellipsis-vertical',
 }
 
 export enum LogoList {

@@ -1,9 +1,7 @@
 import React from 'react';
 import {StyleSheet, Text, View} from 'react-native';
 import {useSafeAreaInsets} from 'react-native-safe-area-context';
-import ProgressBar, {IProgressBarProp} from './Common/ProgressBar';
-import Button from './Common/Button';
-import Icon, {IIconProps} from './Common/Icon';
+import Icon, {IIconName, IIconProps} from './Common/Icon';
 import GlobalColor, {Opacity} from '@Utilities/Styles/ThemeColor';
 import {ThemeText} from '@Utilities/Styles/GlobalStyle';
 
@@ -17,12 +15,12 @@ type IHeaderPropTypes = {
   hideRightIcon?: boolean;
   // showProgressBar?: boolean;
   hideBackButton?: boolean;
-  miniIcon?: string;
+  miniIcon?: IIconName;
   textColor?: string;
 };
 type IRenderIconParams = {
   hide?: boolean;
-  iconName: string;
+  iconName: IIconName;
   onPress?: () => void;
 };
 

@@ -13,7 +13,7 @@ const NewWalletCard = (props: INewWalletCardProps) => {
     <TouchableOpacity
       onPress={() => props.onPress?.()}
       style={[styles.RootContainer]}>
-      <Icon name="add-outline" size={40} color={GlobalColor.accent} />
+      <Icon name="add" size={40} color={GlobalColor.accent} />
       <Text
         numberOfLines={2}
         style={[ThemeText.SubTitle_Regular, styles.TextColor]}>
