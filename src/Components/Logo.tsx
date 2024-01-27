@@ -1,5 +1,5 @@
 import React, {FC} from 'react';
-import Mons from '../Resources/MONS.svg';
+import Mons from '@Resources/MONS.svg';
 import {StyleSheet, View} from 'react-native';
 import GlobalColor from '@Utilities/Styles/ThemeColor';
 
