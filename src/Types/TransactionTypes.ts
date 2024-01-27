@@ -1,13 +1,16 @@
 import {ICancelSignal} from '@Utilities/APIs/APIUtils';
-import {CategoryList} from '@Utilities/DefaultData/CategoryList';
-import {IIconName, ILogoName, IPaginateProps} from './CommonTypes';
+import {
+  CategoryList,
+  TransactionType,
+} from '@Utilities/DefaultData/CategoryList';
+import {IPaginateProps} from './CommonTypes';
+import {IIconName} from '@Components/Common/Icon';
 
-export type ITransactionType = (typeof CategoryList)[number]['type'];
+export type ITransactionType = keyof typeof CategoryList;
+export type ITransactionCategory = {category: string; icon: IIconName};
 
-export type ICategory = {
-  category: string;
-  icon: ILogoName;
-  type?: ITransactionType;
+export type ICategoryList = {
+  [key: string]: ITransactionCategory[];
 };
 
 export type ITransactionItems = {
@@ -22,7 +25,7 @@ export type ITransactionMain = {
   ownerUID: string;
   walletId: string;
   transactionType: ITransactionType;
-  category: ICategory | string;
+  category: string;
   subCategories?: string[];
   amount: number;
   targetWallet?: string;

@@ -3,7 +3,7 @@ import {StyleSheet, Text, View, ViewStyle} from 'react-native';
 import Icon from './Common/Icon';
 import {Dimension, ThemeText} from '@Utilities/Styles/GlobalStyle';
 import {
-  ICategory,
+  ITransactionCategory,
   ITransactionMain,
   ITransactionType,
 } from '@Types/TransactionTypes';
@@ -20,7 +20,10 @@ type IActivityListCardPropsType = {
 };
 const ActivityListCard = (props: IActivityListCardPropsType) => {
   const {transaction} = props;
-  const transactionCategory = transaction.category as ICategory; //to future me, this has to be casted since its confused about its type
+  const transactionCategory = getCategories(
+    transaction.category,
+    transaction.transactionType,
+  ); //to future me, this has to be casted since its confused about its type
 
   const currency = useSelector(selectUserDefaultCurrency);
 

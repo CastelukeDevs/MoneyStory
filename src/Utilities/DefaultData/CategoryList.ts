@@ -1,22 +1,30 @@
-export const CategoryList = [
-  {type: 'Income', category: 'Salary', icon: 'business-outline'},
-  {type: 'Income', category: 'Investment', icon: 'analytics-outline'},
-  {type: 'Income', category: 'Interest', icon: 'diamond-outline'},
-  {type: 'Income', category: 'Gift', icon: 'gift-outline'},
-  {type: 'Income', category: 'Prize', icon: 'podium-outline'},
-  {type: 'Income', category: 'Other', icon: 'logo-usd'},
-  {type: 'Expense', category: 'Utilities', icon: 'flash-outline'},
-  {type: 'Expense', category: 'Bill', icon: 'receipt-outline'},
-  {type: 'Expense', category: 'Housing', icon: 'home-outline'},
-  {type: 'Expense', category: 'Internet', icon: 'globe-outline'},
-  {type: 'Expense', category: 'Phone', icon: 'call-outline'},
-  {type: 'Expense', category: 'Rent', icon: 'storefront-outline'},
-  {type: 'Expense', category: 'Tax', icon: 'server-outline'},
-  {type: 'Expense', category: 'Education', icon: 'book-outline'},
-  {type: 'Expense', category: 'Business', icon: 'business-outline'},
-  {type: 'Expense', category: 'Vehicle', icon: 'car-sport-outline'},
-  {type: 'Expense', category: 'Shopping', icon: 'cart-outline'},
-  {type: 'Expense', category: 'Supplies', icon: 'construct-outline'},
-  {type: 'Expense', category: 'Other', icon: 'logo-usd'},
-  {type: 'Transfer', category: 'Transfer', icon: 'navigate-outline'},
-] as const;
+import {ICategoryList} from '@Types/TransactionTypes';
+
+export const CategoryList = {
+  Income: [
+    {category: 'Salary', icon: 'business'},
+    {category: 'Investment', icon: 'analytics'},
+    {category: 'Interest', icon: 'diamond'},
+    {category: 'Gift', icon: 'gift'},
+    {category: 'Prize', icon: 'podium'},
+    {category: 'Other', icon: 'logo-usd'},
+  ],
+  Expense: [
+    {category: 'Utilities', icon: 'flash'},
+    {category: 'Bill', icon: 'receipt'},
+    {category: 'Housing', icon: 'home'},
+    {category: 'Internet', icon: 'globe'},
+    {category: 'Phone', icon: 'call'},
+    {category: 'Rent', icon: 'storefront'},
+    {category: 'Tax', icon: 'server'},
+    {category: 'Education', icon: 'book'},
+    {category: 'Business', icon: 'business'},
+    {category: 'Vehicle', icon: 'car-sport'},
+    {category: 'Shopping', icon: 'cart'},
+    {category: 'Supplies', icon: 'construct'},
+    {category: 'Other', icon: 'logo-usd'},
+  ],
+  Transfer: [{category: 'Transfer', icon: 'navigate'}],
+} as const satisfies ICategoryList;
+
+export const TransactionType = Object.keys(CategoryList);
