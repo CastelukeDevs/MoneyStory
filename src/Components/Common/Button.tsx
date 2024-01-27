@@ -1,8 +1,8 @@
 import React from 'react';
 import {Text, TextStyle, TouchableOpacity, ViewStyle} from 'react-native';
 import Icon, {IIconProps} from '@Components/Common/Icon';
-import {textStyle} from '@Utilities/Styles/GlobalStyle';
-import GlobalColor from '@Utilities/Styles/GlobalColor';
+import {Dimension, ThemeText} from '@Utilities/Styles/GlobalStyle';
+import GlobalColor from '@Utilities/Styles/ThemeColor';
 
 type IButtonPropTypes = {
   label: string;
@@ -30,10 +30,10 @@ const Button = (props: IButtonPropTypes) => {
       style={[
         currentMode === 'contained' && {
           backgroundColor: GlobalColor.accent,
-          borderRadius: 100,
+          borderRadius: Dimension.RadiusFull,
         },
         {
-          padding: 12,
+          padding: Dimension.Space,
           flexDirection: 'row',
           justifyContent: 'center',
           alignItems: 'center',
@@ -51,7 +51,7 @@ const Button = (props: IButtonPropTypes) => {
       {props.label && (
         <Text
           style={[
-            textStyle.SubTitle_Bold,
+            ThemeText.SubTitle_Bold,
             {textAlign: 'center', marginHorizontal: 12},
             {
               color:

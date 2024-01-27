@@ -8,7 +8,6 @@ import {
   TextInputProps,
   TextInput as TextInputReact,
   TextStyle,
-  View,
   ViewStyle,
 } from 'react-native';
 import Animated, {
@@ -20,10 +19,11 @@ import Animated, {
 
 import Icon, {IIconProps} from './Icon';
 
-import GlobalColor from '@Utilities/Styles/GlobalColor';
-import {textStyle} from '@Utilities/Styles/GlobalStyle';
-import {getCurrencySymbol} from '@Utilities/String/Currency/FormatCurrency';
+import GlobalColor from '@Utilities/Styles/ThemeColor';
+import {Dimension, ThemeText} from '@Utilities/Styles/GlobalStyle';
+import {getCurrencySymbol} from '@Utilities/Tools/FormatCurrency';
 import {ICurrencyTypes} from '@Types/CommonTypes';
+import ThemeColor from '@Utilities/Styles/ThemeColor';
 
 type ITextInputBordered = {
   mode?: 'Outlined' | 'Circled';
@@ -51,9 +51,17 @@ export type ITextInputProps = {
 } & IMergedTextInput &
   TextInputProps;
 
+const AnimatedIcon = Animated.createAnimatedComponent(Icon);
+
 /**
+ * Custom Input text with animation
+ * @requires label string
+ * @requires value string
+ * @requires onChangeText (text:string)=>void
  *
- * @returns
+ * @prop isError boolean
+ *
+ * @default mode "Outlined"
  */
 const TextInput = forwardRef<TextInputReact, ITextInputProps>((props, ref) => {
   const currentMode = props.mode || 'Circled';
@@ -71,14 +79,32 @@ const TextInput = forwardRef<TextInputReact, ITextInputProps>((props, ref) => {
    */
   const inputState = useSharedValue(0);
 
+  const interpolationInput = [0, 1, 2];
+  const interpolationOutput = [
+    ThemeColor.dark,
+    ThemeColor.accent,
+    ThemeColor.error,
+  ];
+
   const inputAnimationStyle = useAnimatedStyle(() => {
     const colorInterpolation = interpolateColor(
       inputState.value,
-      [0, 1, 2],
-      [GlobalColor.dark, GlobalColor.accent, GlobalColor.error],
+      interpolationInput,
+      interpolationOutput,
     );
     return {
       borderColor: colorInterpolation,
+    };
+  });
+
+  const iconAnimationStyle = useAnimatedStyle(() => {
+    const colorInterpolation = interpolateColor(
+      inputState.value,
+      interpolationInput,
+      interpolationOutput,
+    );
+    return {
+      color: colorInterpolation,
     };
   });
 
@@ -122,7 +148,7 @@ const TextInput = forwardRef<TextInputReact, ITextInputProps>((props, ref) => {
     props.showLabel && (
       <Text
         style={[
-          textStyle.SubTitle_Regular,
+          ThemeText.SubTitle_Regular,
           styles.LabelText,
           props.labelStyle,
         ]}>
@@ -130,13 +156,14 @@ const TextInput = forwardRef<TextInputReact, ITextInputProps>((props, ref) => {
       </Text>
     );
 
-  const showIcon = (icon: IIconProps | undefined) => icon && <Icon {...icon} />;
+  const showIcon = (icon: IIconProps | undefined) =>
+    icon && <AnimatedIcon {...icon} style={iconAnimationStyle} />;
 
   const showLeadingMoney = () =>
     props.isMoney && (
       <Text
         style={[
-          textStyle.SubTitle_Regular,
+          ThemeText.SubTitle_Regular,
           {marginLeft: 10},
           props.currencyStyle,
         ]}>
@@ -154,7 +181,7 @@ const TextInput = forwardRef<TextInputReact, ITextInputProps>((props, ref) => {
           style={[
             inputPlatformStyle,
             {flex: 0},
-            textStyle.SubTitle_Regular,
+            ThemeText.SubTitle_Regular,
             props.style,
           ]}
           placeholder="00"
@@ -185,12 +212,15 @@ const TextInput = forwardRef<TextInputReact, ITextInputProps>((props, ref) => {
           ref={ref}
           value={value}
           onChangeText={onChangeTextHandler}
-          style={[inputPlatformStyle, textStyle.SubTitle_Regular, props.style]}
-          placeholder={props.placeholder || props.label}
+          style={[inputPlatformStyle, ThemeText.SubTitle_Regular, props.style]}
+          placeholder={props.isMoney ? '0' : props.placeholder || props.label}
           onFocus={onFocusHandler}
           onBlur={onBlurHandler}
           textContentType={props.secureTextEntry ? 'oneTimeCode' : undefined}
           keyboardType={props.isMoney ? 'number-pad' : props.keyboardType}
+          returnKeyType={
+            props.isMoney ? 'done' : props.returnKeyType || 'default'
+          }
         />
         {showTrailingMoney()}
         {showIcon(props.iconTrailing)}
@@ -203,18 +233,18 @@ export default TextInput;
 
 const baseInputStyle: TextStyle = {
   flex: 1,
-  marginHorizontal: 6,
+  marginHorizontal: Dimension.SpaceM,
   // backgroundColor: 'red',
 };
 
 const baseBorderedContainerStyle: ViewStyle = {
-  paddingHorizontal: 16,
+  paddingHorizontal: Dimension.Space,
   borderWidth: 1,
 };
 
 const styles = StyleSheet.create({
   CoreContainer: {
-    paddingVertical: 8,
+    paddingVertical: Dimension.SpaceM,
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'center',
@@ -222,7 +252,7 @@ const styles = StyleSheet.create({
   },
   InputIOS: {
     ...baseInputStyle,
-    paddingVertical: 4,
+    paddingVertical: Dimension.SpaceS,
   },
   InputAndroid: {
     ...baseInputStyle,
@@ -231,21 +261,21 @@ const styles = StyleSheet.create({
   },
   ContainerCircledMode: {
     ...baseBorderedContainerStyle,
-    borderRadius: 1000,
+    borderRadius: Dimension.RadiusFull,
   },
   ContainerOutlinedMode: {
     ...baseBorderedContainerStyle,
-    borderRadius: 12,
+    borderRadius: Dimension.Space,
   },
   ContainerUnderlinedMode: {
-    paddingBottom: 4,
+    paddingBottom: Dimension.SpaceS,
     borderBottomWidth: 1,
-    marginBottom: 4,
+    marginBottom: Dimension.SpaceS,
   },
   LabelText: {
     textAlign: 'left',
     width: '100%',
-    marginBottom: 4,
+    marginBottom: Dimension.SpaceS,
   },
 });
 

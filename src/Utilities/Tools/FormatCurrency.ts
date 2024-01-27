@@ -1,5 +1,5 @@
 import {ICurrencyTypes} from '@Types/CommonTypes';
-import CurrencyList from '../../DefaultData/CurrencyList';
+import CurrencyList from '../DefaultData/CurrencyList';
 
 export const getCurrencySymbol = (abbr: ICurrencyTypes | string) => {
   const sign = CurrencyList.find(

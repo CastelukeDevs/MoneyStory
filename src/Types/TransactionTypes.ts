@@ -1,12 +1,12 @@
 import {ICancelSignal} from '@Utilities/APIs/APIUtils';
 import {CategoryList} from '@Utilities/DefaultData/CategoryList';
-import {IPaginateProps} from './CommonTypes';
+import {IIconName, ILogoName, IPaginateProps} from './CommonTypes';
 
 export type ITransactionType = (typeof CategoryList)[number]['type'];
 
 export type ICategory = {
   category: string;
-  icon: string;
+  icon: ILogoName;
   type?: ITransactionType;
 };
 

@@ -3,8 +3,7 @@ import {Text, TextInput as RNTextInput, View} from 'react-native';
 
 import {IUserAuth} from '@Types/AuthTypes';
 
-import {textStyle} from '@Utilities/Styles/GlobalStyle';
-import {IValidationResult} from '@Utilities/String/EmailPasswordValidation';
+import {ThemeText} from '@Utilities/Styles/GlobalStyle';
 
 import TextInput from '@Components/Common/TextInput';
 import Button from '@Components/Common/Button';
@@ -14,10 +13,6 @@ type ISignInModalProp = {
   onSignIn: (user: IUserAuth) => void;
   onSignUp: () => void;
   onForgotPassword: () => void;
-  error?: {
-    email: boolean;
-    password: boolean;
-  };
 };
 
 const SignInModal = (props: ISignInModalProp) => {
@@ -29,7 +24,7 @@ const SignInModal = (props: ISignInModalProp) => {
 
   return (
     <View style={{padding: 18}}>
-      <Text style={textStyle.Hero_Bold}>Login to your Account</Text>
+      <Text style={ThemeText.Hero_Bold}>Login to your Account</Text>
       <TextInput
         label="Email"
         onChangeText={setEmail}
@@ -37,7 +32,6 @@ const SignInModal = (props: ISignInModalProp) => {
         iconLeading={{name: 'mail-outline'}}
         containerStyle={{marginTop: 12}}
         onSubmitEditing={() => passwordRef.current?.focus()}
-        isError={props.error?.email !== undefined && props.error?.email}
         keyboardType="email-address"
       />
       <TextInput
@@ -53,7 +47,6 @@ const SignInModal = (props: ISignInModalProp) => {
         containerStyle={{marginTop: 12}}
         secureTextEntry={isPasswordHidden}
         onSubmitEditing={() => props.onSignIn({email, password})}
-        isError={props.error?.password !== undefined && props.error?.password}
       />
       <Button
         label="Login"
@@ -71,7 +64,7 @@ const SignInModal = (props: ISignInModalProp) => {
         onPress={props.onForgotPassword}
       />
       <View style={{height: 50}} />
-      <Text style={[textStyle.Content_Regular, {textAlign: 'center'}]}>
+      <Text style={[ThemeText.Content_Regular, {textAlign: 'center'}]}>
         or continue with
       </Text>
       <View
@@ -101,9 +94,9 @@ const SignInModal = (props: ISignInModalProp) => {
       </View>
       <View style={{height: 50}} />
       <Text style={{textAlign: 'center', marginBottom: 12}}>
-        <Text style={textStyle.SubTitle_Regular}>Don't have an account? </Text>
+        <Text style={ThemeText.SubTitle_Regular}>Don't have an account? </Text>
         <Text
-          style={[textStyle.SubTitle_Bold, textStyle.hyperlink]}
+          style={[ThemeText.SubTitle_Bold, ThemeText.hyperlink]}
           onPress={props.onSignUp}>
           Sign up
         </Text>

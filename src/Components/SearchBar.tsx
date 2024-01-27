@@ -2,6 +2,7 @@ import React, {useState} from 'react';
 import {StyleSheet, Text, View} from 'react-native';
 import TextInput from './Common/TextInput';
 import IconButton from './Common/IconButton';
+import {Dimension} from '@Utilities/Styles/GlobalStyle';
 
 const SearchBar = () => {
   const [search, setSearch] = useState('');
@@ -11,14 +12,15 @@ const SearchBar = () => {
         value={search}
         onChangeText={setSearch}
         label="Search"
-        iconLeading={{name: 'search-outline'}}
+        iconLeading={{name: 'search'}}
         containerStyle={{flex: 1}}
       />
       <IconButton
         name="funnel"
         shape="circle"
-        mode="bordered"
-        style={{marginLeft: 12}}
+        buttonMode="bordered"
+        onPress={() => console.log('funnel pressed')}
+        style={{marginLeft: Dimension.Space}}
       />
     </View>
   );

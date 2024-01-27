@@ -2,12 +2,13 @@ import React from 'react';
 import {StyleSheet, View} from 'react-native';
 import {BottomTabBarProps} from '@react-navigation/bottom-tabs';
 
-import GlobalColor, {Opacity} from '@Utilities/Styles/GlobalColor';
-import Icon from './Common/Icon';
+import GlobalColor, {Opacity} from '@Utilities/Styles/ThemeColor';
+import Icon, {IIconName} from './Common/Icon';
+import {Dimension} from '@Utilities/Styles/GlobalStyle';
 
 type ITabIcon = {
   index: number;
-  icon: string;
+  icon: IIconName;
 };
 
 const BottomTabBar = ({
@@ -21,23 +22,23 @@ const BottomTabBar = ({
   const menu: ITabIcon[] = [
     {
       index: 0,
-      icon: 'home-outline',
+      icon: 'home',
     },
     {
       index: 1,
-      icon: 'bar-chart-outline',
+      icon: 'bar-chart',
     },
     {
       index: 99,
-      icon: 'scan-circle-outline',
+      icon: 'scan-circle',
     },
     {
       index: 2,
-      icon: 'card-outline',
+      icon: 'card',
     },
     {
       index: 3,
-      icon: 'cash-outline',
+      icon: 'cash',
     },
   ];
 
@@ -97,20 +98,18 @@ export default BottomTabBar;
 
 const styles = StyleSheet.create({
   indicator: {
-    width: 3,
-    height: 3,
-    borderRadius: 10,
+    width: Dimension.SpaceS,
+    height: Dimension.SpaceS,
+    borderRadius: Dimension.Space,
     alignSelf: 'center',
-    marginTop: 8,
+    marginTop: Dimension.SpaceM,
   },
   indicatorActive: {
     backgroundColor: GlobalColor.accent,
   },
   middleContainer: {
-    padding: 12,
-    // borderColor: GlobalColor.overlay80,
+    padding: Dimension.Space,
     backgroundColor: GlobalColor.accent,
-    borderRadius: 100,
-    // borderWidth: 1.5,
+    borderRadius: Dimension.RadiusFull,
   },
 });

@@ -2,10 +2,10 @@ import React, {useState} from 'react';
 import {View, Text, Image, StyleSheet} from 'react-native';
 import {SafeAreaView} from 'react-native-safe-area-context';
 
-import {IMainNavPropTypes} from '../../Routes/RouteTypes';
+import {IMainNavProp} from '../../Routes/RouteTypes';
 
-import {textStyle, viewStyle} from '../../Utilities/Styles/GlobalStyle';
-import GlobalColor from '../../Utilities/Styles/GlobalColor';
+import {ThemeText, DefaultStyle} from '../../Utilities/Styles/GlobalStyle';
+import GlobalColor from '../../Utilities/Styles/ThemeColor';
 import getString from '../../Utilities/String/LanguageTools';
 
 import Button from '../../Components/Common/Button';
@@ -14,7 +14,7 @@ import Modal from '../../Components/Common/Modal';
 import IconButton from '../../Components/Common/IconButton';
 import Logo from '../../Components/Logo';
 
-const SplashScreen = (props: IMainNavPropTypes<'SplashScreen'>) => {
+const SplashScreen = (props: IMainNavProp<'SplashScreen'>) => {
   const {navigation, route} = props;
 
   const [modalVisible, setModalVisible] = useState(false);
@@ -34,7 +34,7 @@ const SplashScreen = (props: IMainNavPropTypes<'SplashScreen'>) => {
   };
 
   return (
-    <View style={viewStyle.Base}>
+    <View style={DefaultStyle.Base}>
       <Image
         // source={require('../Resources/bg-1.jpg')}
         source={require('../../Resources/Gradient/01.RoyalHeath.png')}
@@ -47,17 +47,20 @@ const SplashScreen = (props: IMainNavPropTypes<'SplashScreen'>) => {
         ]}
       />
 
-      <SafeAreaView style={[viewStyle.Base, styles.RootContainer]}>
-        <View style={viewStyle.LogoArea}>
+      <SafeAreaView style={[DefaultStyle.Base, styles.RootContainer]}>
+        <View style={DefaultStyle.LogoArea}>
           <Logo />
         </View>
-        <View style={[viewStyle.CenterArea, styles.BodyContainer]}>
-          <Text style={textStyle.LogoText}>{getString('APP_NAME')}</Text>
-          <Text style={textStyle.HeroText}>{getString('APP_TAGLINE')}</Text>
-          <View style={viewStyle.StripeLine} />
+        <View style={[DefaultStyle.CenterArea, styles.BodyContainer]}>
+          <Text style={ThemeText.LogoText}>{getString('APP_NAME')}</Text>
+          <Text style={ThemeText.HeroText}>{getString('APP_TAGLINE')}</Text>
+          <View style={DefaultStyle.StripeLine} />
         </View>
         <View
-          style={[viewStyle.Base, {justifyContent: 'flex-end', padding: 20}]}>
+          style={[
+            DefaultStyle.Base,
+            {justifyContent: 'flex-end', padding: 20},
+          ]}>
           <Button label="Unlock the possibilities" onPress={openModalHandler} />
         </View>
       </SafeAreaView>
@@ -92,7 +95,7 @@ type IModalLayoutPropType = {
 const ModalLayout = (prop: IModalLayoutPropType) => {
   return (
     <View style={{padding: 18}}>
-      <Text style={textStyle.Hero_Bold}>Login to your Account</Text>
+      <Text style={ThemeText.Hero_Bold}>Login to your Account</Text>
       <TextInput
         label="Email"
         onChangeText={() => {}}
@@ -120,7 +123,7 @@ const ModalLayout = (prop: IModalLayoutPropType) => {
         onPress={() => prop.onForgotPassword?.()}
       />
       <View style={{height: 50}} />
-      <Text style={[textStyle.Content_Regular, {textAlign: 'center'}]}>
+      <Text style={[ThemeText.Content_Regular, {textAlign: 'center'}]}>
         or continue with
       </Text>
       <View
@@ -150,9 +153,9 @@ const ModalLayout = (prop: IModalLayoutPropType) => {
       </View>
       <View style={{height: 50}} />
       <Text style={{textAlign: 'center', marginBottom: 12}}>
-        <Text style={textStyle.SubTitle_Regular}>Don't have an account? </Text>
+        <Text style={ThemeText.SubTitle_Regular}>Don't have an account? </Text>
         <Text
-          style={[textStyle.SubTitle_Bold, textStyle.hyperlink]}
+          style={[ThemeText.SubTitle_Bold, ThemeText.hyperlink]}
           onPress={prop.onSignUp}>
           Sign up
         </Text>

@@ -39,6 +39,7 @@ export const TransformObjectToForm = (object: any): FormData => {
   const formData = new FormData();
   Object.keys(object).forEach(key => {
     const value = object[key];
+    if (value === undefined || value === null) return;
     if (Array.isArray(value)) {
       value.forEach(v => {
         formData.append(`${key}[]`, JSON.stringify(v));

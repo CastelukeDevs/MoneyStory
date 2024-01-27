@@ -1,10 +1,10 @@
 import {ICancelSignal} from '@Utilities/APIs/APIUtils';
-import {ICurrencyTypes, IFile} from './CommonTypes';
+import {ICurrencyTypes, IFile, IIconName} from './CommonTypes';
 
 export type IWalletType = 'wallet' | 'debit' | 'credit';
 
 export type IWalletMain = {
-  logo: string;
+  logo: IIconName;
   walletName: string;
   walletAbbreviation: string;
   holderName: string;

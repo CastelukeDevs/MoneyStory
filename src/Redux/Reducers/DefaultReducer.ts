@@ -1,19 +1,14 @@
-import {createSlice} from '@reduxjs/toolkit';
+import createSliceWithThunks from '@Redux/createSliceWithThunks';
 
 export type IDefaultState = {};
 
-export const contactInitialState: IDefaultState = {
-  // isLoading: false,
-  // error: null,
-  // userData: null,
-};
+export const defaultInitialState: IDefaultState = {};
 
-const DefaultReducer = createSlice({
+const DefaultReducer = createSliceWithThunks({
   name: 'default',
-  initialState: contactInitialState,
+  initialState: defaultInitialState,
   reducers: {},
-  // extraReducers: DefaultAction,
 });
 
 export const {} = DefaultReducer.actions;
-export default DefaultReducer;
+export default DefaultReducer.reducer;

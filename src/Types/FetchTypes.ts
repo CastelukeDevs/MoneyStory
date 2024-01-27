@@ -1,4 +1,4 @@
-export type IFetchProgress = 'idle' | 'fetching' | 'success' | 'error';
+export type IFetchProgress = 'idle' | 'fetching' | 'error';
 
 export type IErrorMessage = {
   message: string | null;

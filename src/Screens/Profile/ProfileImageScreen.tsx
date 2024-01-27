@@ -9,19 +9,19 @@ import {
   useWindowDimensions,
 } from 'react-native';
 import {useSafeAreaInsets} from 'react-native-safe-area-context';
-import {useDispatch} from 'react-redux';
-import {createUserData, updateUserData} from '@Redux/Actions/UserAction';
+import {useAppDispatch} from '@Redux/Store';
+import {createUserData, updateUserData} from '@Redux/Reducers/UserReducer';
 import {launchImageLibrary, Asset} from 'react-native-image-picker';
-
-import {IMainNavPropTypes} from '@Routes/RouteTypes';
-
-import {textStyle} from '@Utilities/Styles/GlobalStyle';
-import GlobalColor from '@Utilities/Styles/GlobalColor';
-
-import Button from '@Components/Common/Button';
 import {PickerOption} from '@Utilities/Settings/ImagePicker';
 
-const SignUpImageScreen = (props: IMainNavPropTypes<'ProfileImageScreen'>) => {
+import {IMainNavProp} from '@Routes/RouteTypes';
+
+import {ThemeText} from '@Utilities/Styles/GlobalStyle';
+import GlobalColor from '@Utilities/Styles/ThemeColor';
+
+import Button from '@Components/Common/Button';
+
+const SignUpImageScreen = (props: IMainNavProp<'ProfileImageScreen'>) => {
   const payload = props.route.params;
 
   const inset = useSafeAreaInsets();
@@ -31,7 +31,7 @@ const SignUpImageScreen = (props: IMainNavPropTypes<'ProfileImageScreen'>) => {
   console.log('screen payload', payload);
 
   const width = useWindowDimensions().width;
-  const dispatch = useDispatch<any>();
+  const dispatch = useAppDispatch();
 
   const [image, setImage] = useState<Asset>();
 
@@ -79,7 +79,7 @@ const SignUpImageScreen = (props: IMainNavPropTypes<'ProfileImageScreen'>) => {
           ? {paddingBottom: inset.bottom}
           : {paddingBottom: 16},
       ]}>
-      <Text style={textStyle.Hero_Bold}>
+      <Text style={ThemeText.Hero_Bold}>
         {isCreate ? 'Add your profile picture' : 'Change your profile picture'}
       </Text>
       <View style={{flex: 1, alignItems: 'center', marginTop: 48}}>

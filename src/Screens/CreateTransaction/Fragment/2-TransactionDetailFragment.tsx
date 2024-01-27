@@ -1,21 +1,27 @@
 import React, {useState} from 'react';
 import {StyleSheet, Text, View} from 'react-native';
 import {useSafeAreaInsets} from 'react-native-safe-area-context';
+import {useSelector} from 'react-redux';
+import {selectWallets} from '@Redux/Reducers/WalletReducer';
 
-import {textStyle, viewStyle} from '@Utilities/Styles/GlobalStyle';
+import {
+  ThemeText,
+  DefaultStyle,
+  Dimension,
+} from '@Utilities/Styles/GlobalStyle';
 import {ITransactionFragmentProps} from '@Types/FragmentTypes';
+
+import FormatCurrency from '@Utilities/Tools/FormatCurrency';
 
 import Button from '@Components/Common/Button';
 import DropdownV2, {IDropdownItem} from '@Components/Common/DropdownV2';
-import {useSelector} from 'react-redux';
-import {IRootStateType} from '@Redux/Store';
-import FormatCurrency from '@Utilities/String/Currency/FormatCurrency';
 import TextInput from '@Components/Common/TextInput';
 
 const TransactionDetailFragment = (props: ITransactionFragmentProps) => {
   const inset = useSafeAreaInsets();
-  const walletState = useSelector((state: IRootStateType) => state.wallet);
-  const wallet = walletState.wallets;
+
+  const wallet = useSelector(selectWallets);
+
   const walletDropdownDataset: IDropdownItem[] = wallet.map(w => ({
     label: w.walletName,
     subLabel: FormatCurrency(+w.balance, w.currency).format,
@@ -25,19 +31,31 @@ const TransactionDetailFragment = (props: ITransactionFragmentProps) => {
 
   const [amount, setAmount] = useState('');
   return (
-    <View style={[viewStyle.RootFragmentStyle, {paddingBottom: inset.bottom}]}>
-      <View style={styles.ContentContainer}>
-        <Text>Wallet</Text>
-        <DropdownV2 items={walletDropdownDataset} />
+    <View
+      style={[DefaultStyle.RootFragmentStyle, {paddingBottom: inset.bottom}]}>
+      <View style={[styles.ContentContainer, {zIndex: 10}]}>
+        <Text style={styles.LabelText}>Wallet</Text>
+        <DropdownV2 initialIndex={1} items={walletDropdownDataset} />
+        <Text>Transaction Amount</Text>
         <TextInput
           label="Transaction Amount"
           value={amount}
           onChangeText={setAmount}
-          showLabel
+          // showLabel
           mode="Underlined"
           isMoney="IDR"
-          currencyStyle={{...textStyle.H1_Bold, opacity: 0.5}}
-          style={textStyle.H1_Bold}
+          currencyStyle={{...ThemeText.H1_Bold, opacity: 0.5}}
+          style={ThemeText.H1_Bold}
+        />
+      </View>
+      <View style={{flex: 1, zIndex: 0}}>
+        <Text>Transaction Type</Text>
+        <DropdownV2
+          items={[
+            {label: 'Transfer', value: 'transfer'},
+            {label: 'Income', value: 'income'},
+            {label: 'Expense', value: 'expense'},
+          ]}
         />
       </View>
       <View style={styles.ButtonContainer}>
@@ -50,6 +68,10 @@ const TransactionDetailFragment = (props: ITransactionFragmentProps) => {
 export default TransactionDetailFragment;
 
 const styles = StyleSheet.create({
-  ContentContainer: {flex: 1},
+  ContentContainer: {},
   ButtonContainer: {},
+  LabelText: {
+    ...ThemeText.SubTitle_Regular,
+    marginBottom: Dimension.TextMargin,
+  },
 });

@@ -6,14 +6,18 @@ import {
   View,
   useWindowDimensions,
 } from 'react-native';
-import {useDispatch, useSelector} from 'react-redux';
-import {IRootStateType} from '@Redux/Store';
-import {createUserWallets} from '@Redux/Actions/WalletAction';
+import {useSelector} from 'react-redux';
+import {useAppDispatch} from '@Redux/Store';
+import {
+  createNewWallet,
+  selectWalletStatus,
+} from '@Redux/Reducers/WalletReducer';
 
-import {IMainNavPropTypes} from '@Routes/RouteTypes';
+import {IMainNavProp} from '@Routes/RouteTypes';
 import {IWalletMain} from '@Types/WalletTypes';
+import {IFile} from '@Types/CommonTypes';
 
-import {textStyle} from '@Utilities/Styles/GlobalStyle';
+import {ThemeText} from '@Utilities/Styles/GlobalStyle';
 import {defaultWalletData} from '@Utilities/DefaultData/walletData';
 
 import ProgressBar from '@Components/Common/ProgressBar';
@@ -23,15 +27,14 @@ import CardImageFragment from './Fragment/CardImageFragment';
 import CardLogoFragment from './Fragment/CardLogoFragment';
 import CardDetailsFragment from './Fragment/CardDetailsFragment';
 import CardCompletionFragment from './Fragment/CardCompletionFragment';
-import {IFile} from '@Types/CommonTypes';
 
-const CreateCardScreen = (props: IMainNavPropTypes<'CreateCardScreen'>) => {
+const CreateCardScreen = (props: IMainNavProp<'CreateCardScreen'>) => {
   const width = useWindowDimensions().width;
-  const dispatch = useDispatch<any>();
+  const dispatch = useAppDispatch();
 
   const scrollViewRef = useRef<ScrollView>(null);
 
-  const wallet = useSelector((state: IRootStateType) => state.wallet);
+  const walletStatus = useSelector(selectWalletStatus);
 
   const [page, setPage] = useState(1);
   const [cardData, setCardData] = useState(defaultWalletData);
@@ -62,7 +65,7 @@ const CreateCardScreen = (props: IMainNavPropTypes<'CreateCardScreen'>) => {
   };
 
   const onSubmitDataHandler = async () => {
-    if (wallet.status === 'fetching') return;
+    if (walletStatus === 'fetching') return;
 
     const image: IFile = {
       uri: cardData.imageUrl!,
@@ -70,7 +73,7 @@ const CreateCardScreen = (props: IMainNavPropTypes<'CreateCardScreen'>) => {
       name: 'avatar.jpg',
     };
 
-    await dispatch(createUserWallets({data: {...cardData, image}}))
+    await dispatch(createNewWallet({data: {...cardData, image}}))
       .unwrap()
       .then(() => {
         props.navigation.goBack();
@@ -115,7 +118,7 @@ const CreateCardScreen = (props: IMainNavPropTypes<'CreateCardScreen'>) => {
     <View style={{flex: 1}}>
       <Header label="Create Card" onBackPressed={onHeaderBackPressHandler} />
       <View style={styles.SubHeaderContainer}>
-        <Text style={textStyle.H3_Bold}>{getSubHeaderTitle()}</Text>
+        <Text style={ThemeText.H3_Bold}>{getSubHeaderTitle()}</Text>
         <View style={{height: 18}} />
         <ProgressBar indicatorCount={fragments.length} indicatorActive={page} />
       </View>

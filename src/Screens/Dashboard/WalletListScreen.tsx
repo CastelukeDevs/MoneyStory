@@ -1,23 +1,20 @@
 import React from 'react';
-import {FlatList, StyleSheet, Text, TouchableOpacity, View} from 'react-native';
-import {useSelector} from 'react-redux';
-import {IRootStateType} from '@Redux/Store';
-import WalletCard from '@Components/WalletCard';
-import {IMainNavPropTypes, ITabNavPropTypes} from '@Routes/RouteTypes';
+import {FlatList, StyleSheet, View} from 'react-native';
 import {useSafeAreaInsets} from 'react-native-safe-area-context';
-import Header from '@Components/Header';
-import {IWallet} from '@Types/WalletTypes';
-import NewWalletCard from '@Components/NewWalletCard';
-import Icon from '@Components/Common/Icon';
-import {textStyle} from '@Utilities/Styles/GlobalStyle';
-import GlobalColor from '@Utilities/Styles/GlobalColor';
+import {useSelector} from 'react-redux';
+import {selectWallets} from '@Redux/Reducers/WalletReducer';
 
-const WalletListScreen = ({navigation}: ITabNavPropTypes<'WalletScreen'>) => {
+import {ITabNavProp} from '@Routes/RouteTypes';
+import {IWallet} from '@Types/WalletTypes';
+
+import Header from '@Components/Header';
+import NewWalletCard from '@Components/NewWalletCard';
+import WalletCard from '@Components/WalletCard';
+
+const WalletListScreen = ({navigation}: ITabNavProp<'WalletScreen'>) => {
   const inset = useSafeAreaInsets();
 
-  const userWallet = useSelector(
-    (state: IRootStateType) => state.wallet.wallets,
-  );
+  const userWallet = useSelector(selectWallets);
 
   const itemSeparator = () => <View style={{height: 12}} />;
 

@@ -1,6 +1,7 @@
 import React, {useMemo} from 'react';
-import GlobalColor from '@Utilities/Styles/GlobalColor';
+import GlobalColor from '@Utilities/Styles/ThemeColor';
 import {StyleSheet, View} from 'react-native';
+import {Dimension} from '@Utilities/Styles/GlobalStyle';
 
 export type IProgressBarProp = {
   indicatorCount?: number;
@@ -42,7 +43,7 @@ const styles = StyleSheet.create({
     height: 3,
     flex: 1,
     marginHorizontal: 4,
-    borderRadius: 100,
+    borderRadius: Dimension.RadiusFull,
   },
   IndicatorActive: {
     backgroundColor: GlobalColor.accent,
