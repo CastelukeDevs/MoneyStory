@@ -37,6 +37,22 @@ enum IconList {
   'scan-circle',
   'search',
   'ellipsis-vertical',
+  'business',
+  'analytics',
+  'gift',
+  'podium',
+  'diamond',
+  'flash',
+  'receipt',
+  'globe',
+  'call',
+  'storefront',
+  'server',
+  'book',
+  'car-sport',
+  'cart',
+  'construct',
+  'navigate',
 }
 
 export enum LogoList {
