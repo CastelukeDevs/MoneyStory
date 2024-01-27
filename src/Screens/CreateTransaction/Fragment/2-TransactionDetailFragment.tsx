@@ -33,9 +33,9 @@ const TransactionDetailFragment = (props: ITransactionFragmentProps) => {
   return (
     <View
       style={[DefaultStyle.RootFragmentStyle, {paddingBottom: inset.bottom}]}>
-      <View style={styles.ContentContainer}>
+      <View style={[styles.ContentContainer, {zIndex: 10}]}>
         <Text style={styles.LabelText}>Wallet</Text>
-        <DropdownV2 items={walletDropdownDataset} />
+        <DropdownV2 initialIndex={1} items={walletDropdownDataset} />
         <Text>Transaction Amount</Text>
         <TextInput
           label="Transaction Amount"
@@ -48,7 +48,7 @@ const TransactionDetailFragment = (props: ITransactionFragmentProps) => {
           style={ThemeText.H1_Bold}
         />
       </View>
-      <View style={{flex: 1}}>
+      <View style={{flex: 1, zIndex: 0}}>
         <Text>Transaction Type</Text>
         <DropdownV2
           items={[

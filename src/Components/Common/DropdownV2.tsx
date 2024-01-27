@@ -134,7 +134,7 @@ const styles = StyleSheet.create({
   },
   DropMainContainer: {
     flexDirection: 'row',
-    padding: (Dimension.Space / 2) * 3,
+    padding: Dimension.Space,
     backgroundColor: GlobalColor.dark + Opacity[10],
     borderRadius: Dimension.Space,
     alignItems: 'center',
