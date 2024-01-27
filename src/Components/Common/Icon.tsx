@@ -17,6 +17,7 @@ enum IconList {
   'cash',
   'checkmark',
   'chevron-back',
+  'chevron-down',
   'close',
   'desktop',
   'eye',

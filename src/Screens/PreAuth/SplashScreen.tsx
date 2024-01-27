@@ -4,7 +4,7 @@ import {SafeAreaView} from 'react-native-safe-area-context';
 
 import {IMainNavProp} from '../../Routes/RouteTypes';
 
-import {DefaultText, DefaultStyle} from '../../Utilities/Styles/GlobalStyle';
+import {ThemeText, DefaultStyle} from '../../Utilities/Styles/GlobalStyle';
 import GlobalColor from '../../Utilities/Styles/ThemeColor';
 import getString from '../../Utilities/String/LanguageTools';
 
@@ -52,8 +52,8 @@ const SplashScreen = (props: IMainNavProp<'SplashScreen'>) => {
           <Logo />
         </View>
         <View style={[DefaultStyle.CenterArea, styles.BodyContainer]}>
-          <Text style={DefaultText.LogoText}>{getString('APP_NAME')}</Text>
-          <Text style={DefaultText.HeroText}>{getString('APP_TAGLINE')}</Text>
+          <Text style={ThemeText.LogoText}>{getString('APP_NAME')}</Text>
+          <Text style={ThemeText.HeroText}>{getString('APP_TAGLINE')}</Text>
           <View style={DefaultStyle.StripeLine} />
         </View>
         <View
@@ -95,7 +95,7 @@ type IModalLayoutPropType = {
 const ModalLayout = (prop: IModalLayoutPropType) => {
   return (
     <View style={{padding: 18}}>
-      <Text style={DefaultText.Hero_Bold}>Login to your Account</Text>
+      <Text style={ThemeText.Hero_Bold}>Login to your Account</Text>
       <TextInput
         label="Email"
         onChangeText={() => {}}
@@ -123,7 +123,7 @@ const ModalLayout = (prop: IModalLayoutPropType) => {
         onPress={() => prop.onForgotPassword?.()}
       />
       <View style={{height: 50}} />
-      <Text style={[DefaultText.Content_Regular, {textAlign: 'center'}]}>
+      <Text style={[ThemeText.Content_Regular, {textAlign: 'center'}]}>
         or continue with
       </Text>
       <View
@@ -153,11 +153,9 @@ const ModalLayout = (prop: IModalLayoutPropType) => {
       </View>
       <View style={{height: 50}} />
       <Text style={{textAlign: 'center', marginBottom: 12}}>
-        <Text style={DefaultText.SubTitle_Regular}>
-          Don't have an account?{' '}
-        </Text>
+        <Text style={ThemeText.SubTitle_Regular}>Don't have an account? </Text>
         <Text
-          style={[DefaultText.SubTitle_Bold, DefaultText.hyperlink]}
+          style={[ThemeText.SubTitle_Bold, ThemeText.hyperlink]}
           onPress={prop.onSignUp}>
           Sign up
         </Text>

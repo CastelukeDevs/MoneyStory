@@ -5,7 +5,7 @@ import ProgressBar, {IProgressBarProp} from './Common/ProgressBar';
 import Button from './Common/Button';
 import Icon, {IIconProps} from './Common/Icon';
 import GlobalColor, {Opacity} from '@Utilities/Styles/ThemeColor';
-import {DefaultText} from '@Utilities/Styles/GlobalStyle';
+import {ThemeText} from '@Utilities/Styles/GlobalStyle';
 
 type IHeaderModeTypes = 'normal' | 'highlights';
 type IHeaderPropTypes = {
@@ -65,9 +65,9 @@ const Header = (props: IHeaderPropTypes) => {
             })}
         <Text
           style={[
-            DefaultText.Title_Bold,
+            ThemeText.Title_Bold,
             styles.Text,
-            isHighlight ? DefaultText.H3_Bold : styles.TextCenter,
+            isHighlight ? ThemeText.H3_Bold : styles.TextCenter,
             {color: props.textColor || GlobalColor.dark},
           ]}>
           {isHighlight ? props.label?.toUpperCase() : props.label}
@@ -79,7 +79,7 @@ const Header = (props: IHeaderPropTypes) => {
         })}
         <Text
           style={[
-            DefaultText.Hero_Bold,
+            ThemeText.Hero_Bold,
             styles.TextOverlay,
             {color: props.textColor || GlobalColor.dark},
           ]}>

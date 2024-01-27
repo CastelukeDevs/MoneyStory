@@ -4,7 +4,11 @@ import {useSafeAreaInsets} from 'react-native-safe-area-context';
 import {useSelector} from 'react-redux';
 import {selectWallets} from '@Redux/Reducers/WalletReducer';
 
-import {DefaultText, DefaultStyle} from '@Utilities/Styles/GlobalStyle';
+import {
+  ThemeText,
+  DefaultStyle,
+  Dimension,
+} from '@Utilities/Styles/GlobalStyle';
 import {ITransactionFragmentProps} from '@Types/FragmentTypes';
 
 import FormatCurrency from '@Utilities/Tools/FormatCurrency';
@@ -30,17 +34,28 @@ const TransactionDetailFragment = (props: ITransactionFragmentProps) => {
     <View
       style={[DefaultStyle.RootFragmentStyle, {paddingBottom: inset.bottom}]}>
       <View style={styles.ContentContainer}>
-        <Text>Wallet</Text>
+        <Text style={styles.LabelText}>Wallet</Text>
         <DropdownV2 items={walletDropdownDataset} />
+        <Text>Transaction Amount</Text>
         <TextInput
           label="Transaction Amount"
           value={amount}
           onChangeText={setAmount}
-          showLabel
+          // showLabel
           mode="Underlined"
           isMoney="IDR"
-          currencyStyle={{...DefaultText.H1_Bold, opacity: 0.5}}
-          style={DefaultText.H1_Bold}
+          currencyStyle={{...ThemeText.H1_Bold, opacity: 0.5}}
+          style={ThemeText.H1_Bold}
+        />
+      </View>
+      <View style={{flex: 1}}>
+        <Text>Transaction Type</Text>
+        <DropdownV2
+          items={[
+            {label: 'Transfer', value: 'transfer'},
+            {label: 'Income', value: 'income'},
+            {label: 'Expense', value: 'expense'},
+          ]}
         />
       </View>
       <View style={styles.ButtonContainer}>
@@ -53,6 +68,10 @@ const TransactionDetailFragment = (props: ITransactionFragmentProps) => {
 export default TransactionDetailFragment;
 
 const styles = StyleSheet.create({
-  ContentContainer: {flex: 1},
+  ContentContainer: {},
   ButtonContainer: {},
+  LabelText: {
+    ...ThemeText.SubTitle_Regular,
+    marginBottom: Dimension.TextMargin,
+  },
 });

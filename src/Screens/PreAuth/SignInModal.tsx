@@ -3,7 +3,7 @@ import {Text, TextInput as RNTextInput, View} from 'react-native';
 
 import {IUserAuth} from '@Types/AuthTypes';
 
-import {DefaultText} from '@Utilities/Styles/GlobalStyle';
+import {ThemeText} from '@Utilities/Styles/GlobalStyle';
 
 import TextInput from '@Components/Common/TextInput';
 import Button from '@Components/Common/Button';
@@ -24,7 +24,7 @@ const SignInModal = (props: ISignInModalProp) => {
 
   return (
     <View style={{padding: 18}}>
-      <Text style={DefaultText.Hero_Bold}>Login to your Account</Text>
+      <Text style={ThemeText.Hero_Bold}>Login to your Account</Text>
       <TextInput
         label="Email"
         onChangeText={setEmail}
@@ -64,7 +64,7 @@ const SignInModal = (props: ISignInModalProp) => {
         onPress={props.onForgotPassword}
       />
       <View style={{height: 50}} />
-      <Text style={[DefaultText.Content_Regular, {textAlign: 'center'}]}>
+      <Text style={[ThemeText.Content_Regular, {textAlign: 'center'}]}>
         or continue with
       </Text>
       <View
@@ -94,11 +94,9 @@ const SignInModal = (props: ISignInModalProp) => {
       </View>
       <View style={{height: 50}} />
       <Text style={{textAlign: 'center', marginBottom: 12}}>
-        <Text style={DefaultText.SubTitle_Regular}>
-          Don't have an account?{' '}
-        </Text>
+        <Text style={ThemeText.SubTitle_Regular}>Don't have an account? </Text>
         <Text
-          style={[DefaultText.SubTitle_Bold, DefaultText.hyperlink]}
+          style={[ThemeText.SubTitle_Bold, ThemeText.hyperlink]}
           onPress={props.onSignUp}>
           Sign up
         </Text>

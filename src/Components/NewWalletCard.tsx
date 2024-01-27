@@ -3,7 +3,7 @@ import {StyleSheet, Text, TouchableOpacity, View} from 'react-native';
 
 import GlobalColor from '@Utilities/Styles/ThemeColor';
 import Icon from './Common/Icon';
-import {DefaultText} from '@Utilities/Styles/GlobalStyle';
+import {ThemeText} from '@Utilities/Styles/GlobalStyle';
 
 type INewWalletCardProps = {
   onPress?: () => void;
@@ -16,7 +16,7 @@ const NewWalletCard = (props: INewWalletCardProps) => {
       <Icon name="add-outline" size={40} color={GlobalColor.accent} />
       <Text
         numberOfLines={2}
-        style={[DefaultText.SubTitle_Regular, styles.TextColor]}>
+        style={[ThemeText.SubTitle_Regular, styles.TextColor]}>
         Add new card
       </Text>
     </TouchableOpacity>
