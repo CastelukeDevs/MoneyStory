@@ -31,7 +31,12 @@ const DropdownV2 = (props: IDropdownPropType) => {
 
   const halfWindow = wHeight / 2;
   const dropdownItems = props.items;
-  const initialItems = dropdownItems[props.initialIndex || 0];
+  const initialIndex = props.initialIndex
+    ? props.initialIndex >= dropdownItems.length
+      ? dropdownItems.length - 1
+      : props.initialIndex
+    : 0;
+  const initialItems = dropdownItems[initialIndex];
 
   const [showDropdown, setShowDropdown] = useState(false);
   const [selectedItem, setSelectedItem] = useState<IDropdownItem>(initialItems);
@@ -104,7 +109,9 @@ const DropdownV2 = (props: IDropdownPropType) => {
 
 const ItemRender = (items: IDropdownItem) => (
   <View style={styles.ItemGeneral}>
-    {items.icon && <IconButton name={items.icon} shape="circle" />}
+    {items.icon !== undefined && (
+      <IconButton name={items.icon} shape="circle" />
+    )}
     <View style={styles.ItemTextContainer}>
       <Text style={ThemeText.SubTitle_Bold}>{items.label}</Text>
       {items.subLabel && (
