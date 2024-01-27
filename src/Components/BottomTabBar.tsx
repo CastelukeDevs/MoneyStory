@@ -3,11 +3,11 @@ import {StyleSheet, View} from 'react-native';
 import {BottomTabBarProps} from '@react-navigation/bottom-tabs';
 
 import GlobalColor, {Opacity} from '@Utilities/Styles/ThemeColor';
-import Icon from './Common/Icon';
+import Icon, {IIconName} from './Common/Icon';
 
 type ITabIcon = {
   index: number;
-  icon: string;
+  icon: IIconName;
 };
 
 const BottomTabBar = ({
@@ -21,23 +21,23 @@ const BottomTabBar = ({
   const menu: ITabIcon[] = [
     {
       index: 0,
-      icon: 'home-outline',
+      icon: 'home',
     },
     {
       index: 1,
-      icon: 'bar-chart-outline',
+      icon: 'bar-chart',
     },
     {
       index: 99,
-      icon: 'scan-circle-outline',
+      icon: 'scan-circle',
     },
     {
       index: 2,
-      icon: 'card-outline',
+      icon: 'card',
     },
     {
       index: 3,
-      icon: 'cash-outline',
+      icon: 'cash',
     },
   ];
 
