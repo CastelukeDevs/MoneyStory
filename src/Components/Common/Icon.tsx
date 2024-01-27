@@ -30,6 +30,7 @@ enum IconList {
   'pencil',
   'person',
   'rocket',
+  'funnel',
 }
 
 export enum LogoList {
