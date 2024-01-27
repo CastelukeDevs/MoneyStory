@@ -27,10 +27,13 @@ import ActivityListCard from '@Components/ActivityListCard';
 import NewWalletCard from '@Components/NewWalletCard';
 import {selectUserData} from '@Redux/Reducers/UserReducer';
 import {selectWallets} from '@Redux/Reducers/WalletReducer';
+import {userSignOut} from '@Redux/Reducers/CommonReducer';
+import useSignOut from '@Utilities/Hooks/useSignOut';
 
 const HomeScreen = ({navigation}: IDashNavProp<'HomeScreen'>) => {
   const inset = useSafeAreaInsets();
   const dispatch = useAppDispatch();
+  const signOut = useSignOut();
 
   const totalBalance = useUserBalance();
 
@@ -72,7 +75,7 @@ const HomeScreen = ({navigation}: IDashNavProp<'HomeScreen'>) => {
   };
 
   const onLogoutHandler = () => {
-    firebase.auth().signOut();
+    signOut();
   };
 
   const onSeeAllWalletHandler = () => {
@@ -90,7 +93,7 @@ const HomeScreen = ({navigation}: IDashNavProp<'HomeScreen'>) => {
         <View>
           <Icon
             onPress={onNotificationPressHandler}
-            name="notifications-outline"
+            name="notifications"
             color={GlobalColor.accent}
           />
         </View>
@@ -148,7 +151,6 @@ const HomeScreen = ({navigation}: IDashNavProp<'HomeScreen'>) => {
           </View>
           <SearchBar />
           <View>
-            {/**Using map since this is scaled vertically inside scroll view */}
             {transactionList.map(item => (
               <ActivityListCard
                 key={item.id}

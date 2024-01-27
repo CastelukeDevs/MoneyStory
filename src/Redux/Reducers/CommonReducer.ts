@@ -13,7 +13,7 @@ const CommonReducer = createSliceWithThunks({
   initialState: null,
   reducers: create => ({
     userSignOut: create.asyncThunk(
-      (_, thunkAPI) => {
+      (props, thunkAPI) => {
         const state = thunkAPI.getState() as IRootStateType;
         const dispatch = thunkAPI.dispatch as AppDispatch;
 
