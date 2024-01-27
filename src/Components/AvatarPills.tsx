@@ -19,7 +19,7 @@ const AvatarPills = (props: IAvatarPillsProps) => {
         {user.avatarUrl && (
           <Image
             source={{uri: user.avatarUrl}}
-            style={StyleSheet.absoluteFillObject}
+            style={StyleSheet.absoluteFill}
           />
         )}
       </View>
@@ -56,6 +56,7 @@ const styles = StyleSheet.create({
     marginRight: 'auto',
   },
   AvatarSize: {
+    overflow: 'hidden',
     width: 50,
     height: 50,
     borderRadius: 100,
