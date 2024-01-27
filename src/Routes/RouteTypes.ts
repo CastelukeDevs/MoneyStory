@@ -51,19 +51,19 @@ export type ITabNav = {
 //   T
 // >;
 
-export type IMainNavPropTypes<T extends keyof IMainNav> = StackScreenProps<
+export type IMainNavProp<T extends keyof IMainNav> = StackScreenProps<
   IMainNav,
   T
 >;
 
-export type IDashNavPropTypes<T extends keyof IDashNav> = CompositeScreenProps<
+export type IDashNavProp<T extends keyof IDashNav> = CompositeScreenProps<
   DrawerScreenProps<IDashNav, T>,
-  IMainNavPropTypes<keyof IMainNav>
+  IMainNavProp<keyof IMainNav>
 >;
 
-export type ITabNavPropTypes<T extends keyof ITabNav> = CompositeScreenProps<
+export type ITabNavProp<T extends keyof ITabNav> = CompositeScreenProps<
   BottomTabScreenProps<ITabNav, T>,
-  IMainNavPropTypes<keyof IMainNav>
+  IMainNavProp<keyof IMainNav>
 >;
 
 declare global {

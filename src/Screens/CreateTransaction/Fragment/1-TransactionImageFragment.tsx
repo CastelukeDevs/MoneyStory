@@ -9,11 +9,11 @@ import {
 } from 'react-native';
 import {useSafeAreaInsets} from 'react-native-safe-area-context';
 
-import {viewStyle} from '@Utilities/Styles/GlobalStyle';
+import {DefaultStyle} from '@Utilities/Styles/GlobalStyle';
 import {ITransactionFragmentProps} from '@Types/FragmentTypes';
 
 import Button from '@Components/Common/Button';
-import GlobalColor from '@Utilities/Styles/GlobalColor';
+import GlobalColor from '@Utilities/Styles/ThemeColor';
 
 import {launchImageLibrary} from 'react-native-image-picker';
 import {PickerOption} from '@Utilities/Settings/ImagePicker';
@@ -21,22 +21,25 @@ import {PickerOption} from '@Utilities/Settings/ImagePicker';
 const dimens = Dimensions.get('window');
 
 const TransactionImageFragment = (
-  props: ITransactionFragmentProps & {onImageChange: (uri: string) => void},
+  props: ITransactionFragmentProps & {
+    onImageChange: (uri: string | undefined) => void;
+  },
 ) => {
   const inset = useSafeAreaInsets();
 
-  const [imageUri, setImageUri] = useState<string>();
+  const [imageUri, setImageUri] = useState<string | undefined>(undefined);
 
   const onImagePress = async () => {
     await launchImageLibrary(PickerOption).then(result => {
       const assets = result.assets?.[0];
       setImageUri(assets?.uri);
-      props.onImageChange(assets?.uri!);
+      props.onImageChange(assets?.uri);
     });
   };
 
   return (
-    <View style={[viewStyle.RootFragmentStyle, {paddingBottom: inset.bottom}]}>
+    <View
+      style={[DefaultStyle.RootFragmentStyle, {paddingBottom: inset.bottom}]}>
       <View style={styles.ContentContainer}>
         <TouchableOpacity style={styles.ImageContainer} onPress={onImagePress}>
           {imageUri && (

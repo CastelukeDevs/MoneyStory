@@ -1,26 +1,19 @@
-import React, {useEffect, useState} from 'react';
-import {useDispatch, useSelector} from 'react-redux';
-import {StyleSheet, Text, View} from 'react-native';
+import React, {useEffect} from 'react';
+import {StyleSheet, Text} from 'react-native';
 import {SafeAreaView} from 'react-native-safe-area-context';
+import {useAppDispatch} from '@Redux/Store';
 
-import Button from '@Components/Common/Button';
-import {getUserData} from '@Redux/Actions/UserAction';
-import {IUserStateType, resetAuth} from '@Redux/Reducers/UserReducer';
-import {IRootStateType} from '@Redux/Store';
-import {IMainNavPropTypes} from '@Routes/RouteTypes';
+import {IMainNavProp} from '@Routes/RouteTypes';
 
-import auth from '@react-native-firebase/auth';
 import Logo from '@Components/Logo';
-import GlobalColor from '@Utilities/Styles/GlobalColor';
-import {textStyle} from '@Utilities/Styles/GlobalStyle';
-import {getUserWallets} from '@Redux/Actions/WalletAction';
-import {getUserAccount} from '@Redux/Actions/AccountAction';
+import GlobalColor from '@Utilities/Styles/ThemeColor';
+import {DefaultText} from '@Utilities/Styles/GlobalStyle';
 import useInitializeEntry from '@Utilities/Hooks/useInitializeEntry';
 
 const PostAuthTransitionScreen = (
-  props: IMainNavPropTypes<'PostAuthTransitionScreen'>,
+  props: IMainNavProp<'PostAuthTransitionScreen'>,
 ) => {
-  const dispatch = useDispatch<any>();
+  const dispatch = useAppDispatch();
 
   const init = useInitializeEntry();
 
@@ -40,16 +33,16 @@ const PostAuthTransitionScreen = (
   return (
     <SafeAreaView style={styles.RootScreenContainer}>
       <Logo />
-      <Text style={textStyle.Hero_Bold}>Money Story</Text>
-      <Text style={textStyle.H3_Light}>
+      <Text style={DefaultText.Hero_Bold}>Money Story</Text>
+      <Text style={DefaultText.H3_Light}>
         getting {processName.replace('_', ' ')}
       </Text>
       {error && (
         <>
-          <Text style={[textStyle.H3_Light, {color: GlobalColor.error}]}>
+          <Text style={[DefaultText.H3_Light, {color: GlobalColor.error}]}>
             error {error}
           </Text>
-          <Text style={[textStyle.H3_Light, {color: GlobalColor.error}]}>
+          <Text style={[DefaultText.H3_Light, {color: GlobalColor.error}]}>
             Please try again later
           </Text>
         </>

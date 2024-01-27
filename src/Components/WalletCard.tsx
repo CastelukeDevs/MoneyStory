@@ -9,13 +9,17 @@ import {
 } from 'react-native';
 import LinearGradient from 'react-native-linear-gradient';
 
-import {textStyle} from '@Utilities/Styles/GlobalStyle';
-import GlobalColor from '@Utilities/Styles/GlobalColor';
+import {DefaultText} from '@Utilities/Styles/GlobalStyle';
+import GlobalColor from '@Utilities/Styles/ThemeColor';
 import {defaultWalletData} from '@Utilities/DefaultData/walletData';
-import FormatCurrency from '@Utilities/String/Currency/FormatCurrency';
+import FormatCurrency from '@Utilities/Tools/FormatCurrency';
 import {LinearGradientProps} from '@Utilities/Settings/LinearGradient';
 
-import {IWallet, IWalletCreateUpdateData} from '@Types/WalletTypes';
+import {
+  IWallet,
+  IWalletCreateUpdateData,
+  IWalletMain,
+} from '@Types/WalletTypes';
 import {IOrientation} from '@Types/CommonTypes';
 
 import IconButton from './Common/IconButton';
@@ -25,7 +29,7 @@ type IWalletCardProps = {
   onPress?: () => void;
   disable?: boolean;
   orientation?: IOrientation;
-  wallet: IWalletCreateUpdateData | IWallet;
+  wallet: IWalletCreateUpdateData | IWallet | IWalletMain;
   style?: ViewStyle;
 };
 
@@ -58,11 +62,15 @@ const WalletCard = (props: IWalletCardProps) => {
           <IconButton name={walletData.logo} />
           <View style={styles.HeaderTextContainer}>
             <Text
-              style={[textStyle.H2_Bold, styles.HeaderText, {paddingLeft: 12}]}
+              style={[
+                DefaultText.H2_Bold,
+                styles.HeaderText,
+                {paddingLeft: 12},
+              ]}
               numberOfLines={3}>
               {walletData.walletName}.
             </Text>
-            <Text style={[textStyle.Title_Light, styles.HeaderText]}>
+            <Text style={[DefaultText.Title_Light, styles.HeaderText]}>
               ( {walletData.walletAbbreviation} )
             </Text>
           </View>
@@ -70,7 +78,7 @@ const WalletCard = (props: IWalletCardProps) => {
         <View style={styles.NumberContainer}>
           <Text
             style={[
-              isPortrait ? textStyle.H2_Bold : textStyle.H1_Bold,
+              isPortrait ? DefaultText.H2_Bold : DefaultText.H1_Bold,
               styles.NumberText,
             ]}>
             {
@@ -78,18 +86,19 @@ const WalletCard = (props: IWalletCardProps) => {
                 .format
             }
           </Text>
-          <Text style={[textStyle.Content_Regular, styles.NumberText]}>
+          <Text style={[DefaultText.Content_Regular, styles.NumberText]}>
             +{walletData.monthDiff} ({walletData.percentDiff}%)
           </Text>
         </View>
         <View style={styles.PersonContainer}>
-          <Text style={[textStyle.SubTitle_Light, styles.CardHolderNumberText]}>
+          <Text
+            style={[DefaultText.SubTitle_Light, styles.CardHolderNumberText]}>
             {walletData.type}
           </Text>
-          <Text style={[textStyle.H3_Regular, styles.CardHolderNameText]}>
+          <Text style={[DefaultText.H3_Regular, styles.CardHolderNameText]}>
             {walletData.holderName}
           </Text>
-          <Text style={[textStyle.Title_Light, styles.CardHolderNumberText]}>
+          <Text style={[DefaultText.Title_Light, styles.CardHolderNumberText]}>
             {walletData.holderNumber}
           </Text>
         </View>

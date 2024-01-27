@@ -1,18 +1,22 @@
 import React, {useEffect, useMemo} from 'react';
 import {View, Text, StyleSheet, ScrollView, FlatList} from 'react-native';
-import {useDispatch, useSelector} from 'react-redux';
-import {firebase} from '@react-native-firebase/auth';
-import {IRootStateType} from '@Redux/Store';
-import {getTransaction} from '@Redux/Actions/TransactionAction';
 import {useSafeAreaInsets} from 'react-native-safe-area-context';
+import {firebase} from '@react-native-firebase/auth';
+import {useSelector} from 'react-redux';
+import {useAppDispatch} from '@Redux/Store';
+import {
+  getTransaction,
+  selectTransactionList,
+} from '@Redux/Reducers/TransactionReducer';
 
 import useUserBalance from '@Utilities/Hooks/useUserBalance';
 
-import {IDashNavPropTypes} from '@Routes/RouteTypes';
+import {IDashNavProp} from '@Routes/RouteTypes';
+import {IWallet} from '@Types/WalletTypes';
 
-import GlobalColor from '@Utilities/Styles/GlobalColor';
-import {textStyle} from '@Utilities/Styles/GlobalStyle';
-import FormatCurrency from '@Utilities/String/Currency/FormatCurrency';
+import GlobalColor from '@Utilities/Styles/ThemeColor';
+import {DefaultText} from '@Utilities/Styles/GlobalStyle';
+import FormatCurrency from '@Utilities/Tools/FormatCurrency';
 
 import Button from '@Components/Common/Button';
 import Icon from '@Components/Common/Icon';
@@ -20,26 +24,19 @@ import AvatarPills from '@Components/AvatarPills';
 import WalletCard from '@Components/WalletCard';
 import SearchBar from '@Components/SearchBar';
 import ActivityListCard from '@Components/ActivityListCard';
-import {IWallet} from '@Types/WalletTypes';
 import NewWalletCard from '@Components/NewWalletCard';
+import {selectUserData} from '@Redux/Reducers/UserReducer';
+import {selectWallets} from '@Redux/Reducers/WalletReducer';
 
-const HomeScreen = ({navigation}: IDashNavPropTypes<'HomeScreen'>) => {
+const HomeScreen = ({navigation}: IDashNavProp<'HomeScreen'>) => {
   const inset = useSafeAreaInsets();
-  const dispatch = useDispatch<any>();
+  const dispatch = useAppDispatch();
 
   const totalBalance = useUserBalance();
 
-  const userData = useSelector(
-    (state: IRootStateType) => state.user,
-  ).userProfileData;
-  // const {currency} = useSelector((state: IRootStateType) => state.account);
-  const userWallets = useSelector(
-    (state: IRootStateType) => state.wallet,
-  ).wallets;
-
-  const transactionList = useSelector(
-    (state: IRootStateType) => state.transaction.allTransaction,
-  );
+  const userData = useSelector(selectUserData);
+  const userWallets = useSelector(selectWallets);
+  const transactionList = useSelector(selectTransactionList);
 
   useEffect(() => {
     dispatch(getTransaction());
@@ -100,20 +97,20 @@ const HomeScreen = ({navigation}: IDashNavPropTypes<'HomeScreen'>) => {
       </View>
       <ScrollView bounces={false}>
         <View style={styles.SectionContainer}>
-          <Text style={textStyle.Title_Bold}>Your Wealth</Text>
-          <Text style={textStyle.Hero_Bold}>
+          <Text style={DefaultText.Title_Bold}>Your Wealth</Text>
+          <Text style={DefaultText.Hero_Bold}>
             <Text style={styles.BalanceTextGrey}>{balance.symbol}</Text>
             <Text>{' ' + balance.whole}</Text>
             <Text style={styles.BalanceTextGrey}>{balance.decimal}</Text>
           </Text>
-          <Text style={[textStyle.Content_Light]}>+0,0 (0,00%)</Text>
+          <Text style={[DefaultText.Content_Light]}>+0,0 (0,00%)</Text>
         </View>
 
         <View style={[styles.SectionContainer, {paddingHorizontal: 0}]}>
           <View style={[styles.SectionHeader, {paddingHorizontal: 14}]}>
-            <Text style={textStyle.Title_Bold}>Your Wallet</Text>
+            <Text style={DefaultText.Title_Bold}>Your Wallet</Text>
             <Text
-              style={textStyle.Content_Regular}
+              style={DefaultText.Content_Regular}
               onPress={onSeeAllWalletHandler}>
               See All
             </Text>
@@ -142,9 +139,9 @@ const HomeScreen = ({navigation}: IDashNavPropTypes<'HomeScreen'>) => {
 
         <View style={styles.SectionContainer}>
           <View style={styles.SectionHeader}>
-            <Text style={textStyle.Title_Bold}>Your Activities</Text>
+            <Text style={DefaultText.Title_Bold}>Your Activities</Text>
             <Text
-              style={textStyle.Content_Regular}
+              style={DefaultText.Content_Regular}
               onPress={onSeeAllActivitiesHandler}>
               See All
             </Text>
@@ -162,7 +159,7 @@ const HomeScreen = ({navigation}: IDashNavPropTypes<'HomeScreen'>) => {
           </View>
         </View>
 
-        {/* <Button label="Sign Out" onPress={onLogoutHandler} /> */}
+        <Button label="Sign Out" onPress={onLogoutHandler} />
       </ScrollView>
     </View>
   );

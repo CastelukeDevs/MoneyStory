@@ -2,30 +2,26 @@ import React, {useState} from 'react';
 import {View, Text, Image, StyleSheet} from 'react-native';
 import {SafeAreaView} from 'react-native-safe-area-context';
 
-import {IMainNavPropTypes} from '@Routes/RouteTypes';
+import {IMainNavProp} from '@Routes/RouteTypes';
 
-import {textStyle, viewStyle} from '@Utilities/Styles/GlobalStyle';
-import GlobalColor, {Opacity} from '@Utilities/Styles/GlobalColor';
+import {DefaultText, DefaultStyle} from '@Utilities/Styles/GlobalStyle';
+import GlobalColor, {Opacity} from '@Utilities/Styles/ThemeColor';
 import getString from '@Utilities/String/LanguageTools';
 import {IUserAuth} from '@Types/AuthTypes';
 import SignInUserEmailPassword from '@Utilities/Authentication/SignInUserEmailPassword';
-import {
-  IValidationResult,
-  validateEmail,
-  validatePassword,
-} from '@Utilities/String/EmailPasswordValidation';
 
 import Button from '@Components/Common/Button';
 import Modal from '@Components/Common/Modal';
 import Logo from '@Components/Logo';
 import SignInModal from './SignInModal';
+import StringValidation from '@Utilities/Tools/ValidateString';
 
-const SignInScreen = (props: IMainNavPropTypes<'SignInScreen'>) => {
+const SignInScreen = (props: IMainNavProp<'SignInScreen'>) => {
   const {navigation, route} = props;
 
   const [modalVisible, setModalVisible] = useState(false);
-  const [emailError, setEmailError] = useState<IValidationResult[]>([]);
-  const [passwordError, setPasswordError] = useState<IValidationResult[]>([]);
+  const [emailError, setEmailError] = useState<string[]>([]);
+  const [passwordError, setPasswordError] = useState<string[]>([]);
   const [generalError, setGeneralError] = useState(false);
 
   const openModalHandler = () => {
@@ -33,16 +29,7 @@ const SignInScreen = (props: IMainNavPropTypes<'SignInScreen'>) => {
   };
 
   const signInHandler = async (prop: IUserAuth) => {
-    const isPasswordValid = validatePassword(prop.password);
-    const isEmailValid = validateEmail(prop.email);
-
-    if (isEmailValid.length > 0) return setEmailError(isEmailValid);
-    setEmailError([]);
-    if (isPasswordValid.length > 0) return setPasswordError(isPasswordValid);
-    setPasswordError([]);
-
     console.log('sign in attempt', prop);
-
     await SignInUserEmailPassword(prop).catch(() => {
       setGeneralError(true);
       return;
@@ -58,7 +45,7 @@ const SignInScreen = (props: IMainNavPropTypes<'SignInScreen'>) => {
   };
 
   return (
-    <View style={viewStyle.Base}>
+    <View style={DefaultStyle.Base}>
       <Image
         // source={require('../Resources/bg-1.jpg')}
         source={require('../../Resources/Gradient/01.RoyalHeath.png')}
@@ -71,17 +58,20 @@ const SignInScreen = (props: IMainNavPropTypes<'SignInScreen'>) => {
         ]}
       />
 
-      <SafeAreaView style={[viewStyle.Base, styles.RootContainer]}>
-        <View style={viewStyle.LogoArea}>
+      <SafeAreaView style={[DefaultStyle.Base, styles.RootContainer]}>
+        <View style={DefaultStyle.LogoArea}>
           <Logo />
         </View>
-        <View style={[viewStyle.CenterArea, styles.BodyContainer]}>
-          <Text style={textStyle.LogoText}>{getString('APP_NAME')}</Text>
-          <Text style={textStyle.HeroText}>{getString('APP_TAGLINE')}</Text>
-          <View style={viewStyle.StripeLine} />
+        <View style={[DefaultStyle.CenterArea, styles.BodyContainer]}>
+          <Text style={DefaultText.LogoText}>{getString('APP_NAME')}</Text>
+          <Text style={DefaultText.HeroText}>{getString('APP_TAGLINE')}</Text>
+          <View style={DefaultStyle.StripeLine} />
         </View>
         <View
-          style={[viewStyle.Base, {justifyContent: 'flex-end', padding: 20}]}>
+          style={[
+            DefaultStyle.Base,
+            {justifyContent: 'flex-end', padding: 20},
+          ]}>
           <Button label="Unlock the possibilities" onPress={openModalHandler} />
         </View>
       </SafeAreaView>
@@ -100,10 +90,6 @@ const SignInScreen = (props: IMainNavPropTypes<'SignInScreen'>) => {
           onSignIn={signInHandler}
           onForgotPassword={forgotPasswordHandler}
           onSignUp={signUpHandler}
-          error={{
-            email: emailError.length > 0,
-            password: passwordError.length > 0,
-          }}
         />
       </Modal>
     </View>

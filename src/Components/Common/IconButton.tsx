@@ -1,7 +1,7 @@
 import React from 'react';
 import {StyleSheet, TouchableOpacity, View, ViewStyle} from 'react-native';
 import Icon, {IIconProps} from './Icon';
-import GlobalColor from '@Utilities/Styles/GlobalColor';
+import GlobalColor from '@Utilities/Styles/ThemeColor';
 
 type IIconButtonMode = 'contained' | 'bordered' | 'icon';
 type IIconButtonShape = 'box' | 'circle';

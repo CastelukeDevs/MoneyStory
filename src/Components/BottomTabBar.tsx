@@ -2,7 +2,7 @@ import React from 'react';
 import {StyleSheet, View} from 'react-native';
 import {BottomTabBarProps} from '@react-navigation/bottom-tabs';
 
-import GlobalColor, {Opacity} from '@Utilities/Styles/GlobalColor';
+import GlobalColor, {Opacity} from '@Utilities/Styles/ThemeColor';
 import Icon from './Common/Icon';
 
 type ITabIcon = {

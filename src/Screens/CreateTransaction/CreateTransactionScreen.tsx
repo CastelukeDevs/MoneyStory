@@ -6,20 +6,22 @@ import {
   View,
   useWindowDimensions,
 } from 'react-native';
-import {IMainNavPropTypes} from '@Routes/RouteTypes';
 
+import {IMainNavProp} from '@Routes/RouteTypes';
+import {ITransaction} from '@Types/TransactionTypes';
+import {IFile} from '@Types/CommonTypes';
+
+import {DefaultText} from '@Utilities/Styles/GlobalStyle';
 import Header from '@Components/Header';
 import TransactionImageFragment from './Fragment/1-TransactionImageFragment';
 import TransactionDetailFragment from './Fragment/2-TransactionDetailFragment';
 import TransactionItemFragment from './Fragment/3-TransactionItemFragment';
 import TransactionReceiptFragment from './Fragment/4-TransactionReceiptFragment';
 import ProgressBar from '@Components/Common/ProgressBar';
-import {textStyle} from '@Utilities/Styles/GlobalStyle';
-import {ITransaction} from '@Types/TransactionTypes';
 
 const CreateTransactionScreen = ({
   navigation,
-}: IMainNavPropTypes<'CreateTransactionScreen'>) => {
+}: IMainNavProp<'CreateTransactionScreen'>) => {
   const width = useWindowDimensions().width;
   const scrollViewRef = useRef<ScrollView>(null);
 
@@ -50,8 +52,13 @@ const CreateTransactionScreen = ({
     return fragments[page - 1].title;
   };
 
-  const onImageChange = (uri: string) => {
-    const newImage = {};
+  const onImageChange = (uri: string | undefined) => {
+    if (uri === undefined) return;
+    const newImage: IFile = {
+      uri: uri,
+      name: 'transaction.jpg',
+      type: 'image/jpeg',
+    };
   };
 
   const fragments = [
@@ -77,7 +84,7 @@ const CreateTransactionScreen = ({
     <View style={styles.RootScreenContainer}>
       <Header label="Make Transaction" onBackPressed={backHandler} />
       <View style={styles.SubHeaderContainer}>
-        <Text style={textStyle.H3_Bold}>{getSubHeaderTitle()}</Text>
+        <Text style={DefaultText.H3_Bold}>{getSubHeaderTitle()}</Text>
         <View style={{height: 18}} />
         <ProgressBar indicatorCount={fragments.length} indicatorActive={page} />
       </View>
@@ -91,13 +98,16 @@ const CreateTransactionScreen = ({
         showsHorizontalScrollIndicator={false}
         bounces={false}
         scrollEventThrottle={16}>
-        {fragments.map((item, index) => (
+        {/* {fragments.map((item, index) => (
           <View key={index}>{item.view}</View>
-        ))}
-        {/* <TransactionImageFragment
+        ))} */}
+        <TransactionImageFragment
           onNext={onNext}
           onImageChange={onImageChange}
-        /> */}
+        />
+        <TransactionDetailFragment onNext={onNext} />
+        <TransactionItemFragment onNext={onNext} />
+        <TransactionReceiptFragment onNext={onSubmit} />
       </ScrollView>
     </View>
   );

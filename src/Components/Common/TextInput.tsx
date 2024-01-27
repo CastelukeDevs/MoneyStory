@@ -8,7 +8,6 @@ import {
   TextInputProps,
   TextInput as TextInputReact,
   TextStyle,
-  View,
   ViewStyle,
 } from 'react-native';
 import Animated, {
@@ -20,10 +19,11 @@ import Animated, {
 
 import Icon, {IIconProps} from './Icon';
 
-import GlobalColor from '@Utilities/Styles/GlobalColor';
-import {textStyle} from '@Utilities/Styles/GlobalStyle';
-import {getCurrencySymbol} from '@Utilities/String/Currency/FormatCurrency';
+import GlobalColor from '@Utilities/Styles/ThemeColor';
+import {DefaultText} from '@Utilities/Styles/GlobalStyle';
+import {getCurrencySymbol} from '@Utilities/Tools/FormatCurrency';
 import {ICurrencyTypes} from '@Types/CommonTypes';
+import ThemeColor from '@Utilities/Styles/ThemeColor';
 
 type ITextInputBordered = {
   mode?: 'Outlined' | 'Circled';
@@ -41,18 +41,27 @@ export type ITextInputProps = {
   onChangeText: (str: string) => void;
   iconLeading?: IIconProps;
   iconTrailing?: IIconProps;
-  containerStyle?: ViewStyle;
   options?: TextInputProps;
   isError?: boolean;
   showLabel?: boolean;
-  labelStyle?: TextStyle;
   isMoney?: ICurrencyTypes;
+  containerStyle?: ViewStyle;
+  labelStyle?: TextStyle;
+  currencyStyle?: TextStyle;
 } & IMergedTextInput &
   TextInputProps;
 
+const AnimatedIcon = Animated.createAnimatedComponent(Icon);
+
 /**
+ * Custom Input text with animation
+ * @requires label string
+ * @requires value string
+ * @requires onChangeText (text:string)=>void
  *
- * @returns
+ * @prop isError boolean
+ *
+ * @default mode "Outlined"
  */
 const TextInput = forwardRef<TextInputReact, ITextInputProps>((props, ref) => {
   const currentMode = props.mode || 'Circled';
@@ -70,14 +79,32 @@ const TextInput = forwardRef<TextInputReact, ITextInputProps>((props, ref) => {
    */
   const inputState = useSharedValue(0);
 
+  const interpolationInput = [0, 1, 2];
+  const interpolationOutput = [
+    ThemeColor.dark,
+    ThemeColor.accent,
+    ThemeColor.error,
+  ];
+
   const inputAnimationStyle = useAnimatedStyle(() => {
     const colorInterpolation = interpolateColor(
       inputState.value,
-      [0, 1, 2],
-      [GlobalColor.dark, GlobalColor.accent, GlobalColor.error],
+      interpolationInput,
+      interpolationOutput,
     );
     return {
       borderColor: colorInterpolation,
+    };
+  });
+
+  const iconAnimationStyle = useAnimatedStyle(() => {
+    const colorInterpolation = interpolateColor(
+      inputState.value,
+      interpolationInput,
+      interpolationOutput,
+    );
+    return {
+      color: colorInterpolation,
     };
   });
 
@@ -121,7 +148,7 @@ const TextInput = forwardRef<TextInputReact, ITextInputProps>((props, ref) => {
     props.showLabel && (
       <Text
         style={[
-          textStyle.SubTitle_Regular,
+          DefaultText.SubTitle_Regular,
           styles.LabelText,
           props.labelStyle,
         ]}>
@@ -129,11 +156,17 @@ const TextInput = forwardRef<TextInputReact, ITextInputProps>((props, ref) => {
       </Text>
     );
 
-  const showIcon = (icon: IIconProps | undefined) => icon && <Icon {...icon} />;
+  const showIcon = (icon: IIconProps | undefined) =>
+    icon && <AnimatedIcon {...icon} style={iconAnimationStyle} />;
 
   const showLeadingMoney = () =>
     props.isMoney && (
-      <Text style={(textStyle.SubTitle_Regular, {marginLeft: 10})}>
+      <Text
+        style={[
+          DefaultText.SubTitle_Regular,
+          {marginLeft: 10},
+          props.currencyStyle,
+        ]}>
         {getCurrencySymbol(props.isMoney)}
       </Text>
     );
@@ -141,17 +174,23 @@ const TextInput = forwardRef<TextInputReact, ITextInputProps>((props, ref) => {
   const showTrailingMoney = () =>
     props.isMoney && (
       <>
-        <Text>.</Text>
+        <Text style={props.style}>.</Text>
         <TextInputReact
           value={decimalValue || ''}
           onChangeText={onDecimalChangeText}
-          style={[inputPlatformStyle, {flex: 0}, textStyle.SubTitle_Regular]}
+          style={[
+            inputPlatformStyle,
+            {flex: 0},
+            DefaultText.SubTitle_Regular,
+            props.style,
+          ]}
           placeholder="00"
           maxLength={2}
           // ref={ref}
           onFocus={onFocusHandler}
           onBlur={onBlurHandler}
           onSubmitEditing={props.onSubmitEditing}
+          keyboardType="number-pad"
         />
       </>
     );
@@ -173,11 +212,19 @@ const TextInput = forwardRef<TextInputReact, ITextInputProps>((props, ref) => {
           ref={ref}
           value={value}
           onChangeText={onChangeTextHandler}
-          style={[inputPlatformStyle, textStyle.SubTitle_Regular]}
+          style={[
+            inputPlatformStyle,
+            DefaultText.SubTitle_Regular,
+            props.style,
+          ]}
           placeholder={props.placeholder || props.label}
           onFocus={onFocusHandler}
           onBlur={onBlurHandler}
           textContentType={props.secureTextEntry ? 'oneTimeCode' : undefined}
+          keyboardType={props.isMoney ? 'number-pad' : props.keyboardType}
+          returnKeyType={
+            props.isMoney ? 'done' : props.returnKeyType || 'default'
+          }
         />
         {showTrailingMoney()}
         {showIcon(props.iconTrailing)}

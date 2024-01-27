@@ -1,16 +1,17 @@
 import React from 'react';
 import {StyleSheet, Text, View, ViewStyle} from 'react-native';
 import Icon from './Common/Icon';
-import {textStyle} from '@Utilities/Styles/GlobalStyle';
+import {DefaultText} from '@Utilities/Styles/GlobalStyle';
 import {
   ICategory,
   ITransactionMain,
   ITransactionType,
 } from '@Types/TransactionTypes';
-import FormatCurrency from '@Utilities/String/Currency/FormatCurrency';
 import {useSelector} from 'react-redux';
-import {IRootStateType} from '@Redux/Store';
-import GlobalColor from '@Utilities/Styles/GlobalColor';
+import {selectUserDefaultCurrency} from '@Redux/Reducers/UserReducer';
+
+import FormatCurrency from '@Utilities/Tools/FormatCurrency';
+import GlobalColor from '@Utilities/Styles/ThemeColor';
 import getCategories from '@Utilities/Tools/getCategories';
 
 type IActivityListCardPropsType = {
@@ -21,9 +22,7 @@ const ActivityListCard = (props: IActivityListCardPropsType) => {
   const {transaction} = props;
   const transactionCategory = transaction.category as ICategory; //to future me, this has to be casted since its confused about its type
 
-  const currency = useSelector(
-    (state: IRootStateType) => state.user.userProfileData?.defaultCurrency,
-  );
+  const currency = useSelector(selectUserDefaultCurrency);
 
   const getColor = (type: ITransactionType) => {
     if (type === 'Expense') return GlobalColor.error;
@@ -49,12 +48,12 @@ const ActivityListCard = (props: IActivityListCardPropsType) => {
         <Icon name={categories.icon} size={24} color={GlobalColor.light} />
       </View>
       <View style={styles.CenterTextContainer}>
-        <Text style={textStyle.Title_Bold}>{categories.category}</Text>
-        <Text numberOfLines={1} style={textStyle.SubTitle_Light}>
+        <Text style={DefaultText.Title_Bold}>{categories.category}</Text>
+        <Text numberOfLines={1} style={DefaultText.SubTitle_Light}>
           {transaction.note}
         </Text>
       </View>
-      <Text style={textStyle.SubTitle_Regular}>
+      <Text style={DefaultText.SubTitle_Regular}>
         {FormatCurrency(transaction.amount as number, currency || 'IDR').format}
       </Text>
     </View>

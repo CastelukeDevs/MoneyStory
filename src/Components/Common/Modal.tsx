@@ -22,7 +22,7 @@ import Animated, {
   useSharedValue,
   withSpring,
 } from 'react-native-reanimated';
-import GlobalColor, {Opacity} from '@Utilities/Styles/GlobalColor';
+import GlobalColor, {Opacity} from '@Utilities/Styles/ThemeColor';
 
 const windowHeight = Dimensions.get('window').height;
 const AnimatedPressable = Animated.createAnimatedComponent(Pressable);

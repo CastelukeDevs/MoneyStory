@@ -32,10 +32,6 @@ export type IAPIsCallOption = {
   auth?: boolean;
 } & ICancelSignal;
 
-export const ActionPrefix: IEndpoint[] = EndpointPool.map(
-  endpointItem => endpointItem.endpoint,
-);
-
 export type IAPIError = {message: string; status: number; error: any};
 
 export const TransformObjectToForm = (object: any): FormData => {
@@ -43,6 +39,7 @@ export const TransformObjectToForm = (object: any): FormData => {
   const formData = new FormData();
   Object.keys(object).forEach(key => {
     const value = object[key];
+    if (value === undefined || value === null) return;
     if (Array.isArray(value)) {
       value.forEach(v => {
         formData.append(`${key}[]`, JSON.stringify(v));
