@@ -53,6 +53,7 @@ enum IconList {
   'cart',
   'construct',
   'navigate',
+  'document',
 }
 
 export enum LogoList {
