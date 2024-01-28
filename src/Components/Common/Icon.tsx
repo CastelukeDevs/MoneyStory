@@ -54,6 +54,7 @@ enum IconList {
   'construct',
   'navigate',
   'document',
+  'pricetag',
 }
 
 export enum LogoList {

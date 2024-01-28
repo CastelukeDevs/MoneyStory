@@ -16,6 +16,7 @@ export const DefaultStyle = StyleSheet.create({
 });
 
 export const Dimension = {
+  SpaceL: 18,
   Space: 12,
   SpaceM: 8,
   SpaceS: 4,

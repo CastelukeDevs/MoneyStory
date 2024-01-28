@@ -65,9 +65,18 @@ const TransactionDetailFragment = (props: ITransactionFragmentProps) => {
 
   return (
     <View
-      style={[DefaultStyle.RootFragmentStyle, {paddingBottom: inset.bottom}]}>
+      style={[
+        DefaultStyle.RootFragmentStyle,
+        {paddingBottom: inset.bottom, paddingHorizontal: 0},
+      ]}>
       <View
-        style={[styles.ContentContainer, {zIndex: topDropdownActive ? 2 : 0}]}>
+        style={[
+          styles.ContentContainer,
+          {
+            zIndex: topDropdownActive ? 2 : 0,
+            paddingHorizontal: Dimension.SpaceL,
+          },
+        ]}>
         <Text style={[styles.LabelText, {marginTop: 0}]}>Wallet</Text>
         <DropdownV2
           items={walletDropdownDataset}
@@ -87,16 +96,28 @@ const TransactionDetailFragment = (props: ITransactionFragmentProps) => {
         />
       </View>
       <ScrollView
-        style={{flex: 1, zIndex: 1}}
+        style={{
+          flex: 1,
+          zIndex: 1,
+          marginTop: Dimension.SpaceL,
+          paddingHorizontal: Dimension.SpaceL,
+        }}
+        bounces={false}
         automaticallyAdjustKeyboardInsets>
         <Text style={styles.LabelText}>Transaction Type</Text>
         <DropdownV2
           items={transactionTypeDataset}
           onSelected={(v, i) => setSelectedTransactionType(i)}
+          alwaysDropDown
+          layoutIndex={1}
         />
 
         <Text style={styles.LabelText}>Categories</Text>
-        <DropdownV2 items={transactionCategoriesDataset} />
+        <DropdownV2
+          items={transactionCategoriesDataset}
+          alwaysDropDown
+          layoutIndex={0}
+        />
 
         <Text style={styles.LabelText}>Date</Text>
         <TextInput
@@ -119,16 +140,17 @@ const TransactionDetailFragment = (props: ITransactionFragmentProps) => {
 
         <Text style={styles.LabelText}>Tags</Text>
         <TextInput
-          label="Transaction Note"
+          label="Transaction Tags"
           value={transactionDate}
           onChangeText={setTransactionDate}
           mode="Outlined"
-          iconLeading={{name: 'document'}}
+          iconLeading={{name: 'pricetag'}}
         />
+
+        <View style={styles.ButtonContainer}>
+          <Button label="Next" onPress={props.onNext} />
+        </View>
       </ScrollView>
-      <View style={styles.ButtonContainer}>
-        <Button label="Next" onPress={props.onNext} />
-      </View>
     </View>
   );
 };
@@ -137,7 +159,7 @@ export default TransactionDetailFragment;
 
 const styles = StyleSheet.create({
   ContentContainer: {},
-  ButtonContainer: {},
+  ButtonContainer: {marginTop: Dimension.SpaceL},
   LabelText: {
     ...ThemeText.SubTitle_Regular,
     marginBottom: Dimension.TextMargin,

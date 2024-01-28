@@ -25,11 +25,14 @@ type IDropdownPropType = {
   initialIndex?: number;
   onSelected?: (value: any, index: number, item: IDropdownItem) => void;
   onOpen?: (isOpen: boolean) => void;
+  alwaysDropDown?: boolean;
+  layoutIndex?: number;
 };
 
 const DropdownV2 = (props: IDropdownPropType) => {
   const wHeight = useWindowDimensions().height;
 
+  const layoutIndex = props.layoutIndex || 0;
   const halfWindow = wHeight / 2;
   const items = props.items;
 
@@ -75,15 +78,16 @@ const DropdownV2 = (props: IDropdownPropType) => {
     setPosTop(isTopHalf);
   });
 
-  const positionWiseDropdown = posTop
-    ? {top: wrapperHeight}
-    : {bottom: wrapperHeight};
+  const positionWiseDropdown =
+    posTop || props.alwaysDropDown
+      ? {top: wrapperHeight}
+      : {bottom: wrapperHeight};
 
   return (
     <View
       ref={wrapperRef}
       onLayout={onLayoutWrapperHandler}
-      style={{zIndex: showDropdown ? 20 : 0}}>
+      style={{zIndex: showDropdown ? 20 + layoutIndex : 0}}>
       <TouchableOpacity
         onPress={onPressHandler}
         style={styles.DropMainContainer}>
@@ -98,7 +102,7 @@ const DropdownV2 = (props: IDropdownPropType) => {
           }}
           style={[
             styles.DropContainer,
-            {maxHeight: wrapperHeight * 3.5},
+            {maxHeight: wrapperHeight * 3},
             positionWiseDropdown,
           ]}>
           {dropdownItems.map((item, i) => (

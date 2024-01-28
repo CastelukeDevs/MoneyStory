@@ -109,6 +109,8 @@ const styles = StyleSheet.create({
     fontSize: 84,
     zIndex: -1,
     opacity: 0.1,
+    bottom: -12,
+    textAlignVertical: 'bottom',
   },
   MiniIconContainer: {
     padding: Dimension.SpaceM,
