@@ -1,4 +1,4 @@
-import React, {useCallback, useRef, useState} from 'react';
+import React, {useCallback, useEffect, useRef, useState} from 'react';
 import {
   LayoutChangeEvent,
   StyleSheet,
@@ -24,40 +24,48 @@ type IDropdownPropType = {
   items: IDropdownItem[];
   initialIndex?: number;
   onSelected?: (value: any, index: number, item: IDropdownItem) => void;
+  onOpen?: (isOpen: boolean) => void;
 };
 
 const DropdownV2 = (props: IDropdownPropType) => {
   const wHeight = useWindowDimensions().height;
 
   const halfWindow = wHeight / 2;
-  const dropdownItems = props.items;
+  const items = props.items;
+
   const initialIndex = props.initialIndex
-    ? props.initialIndex >= dropdownItems.length
-      ? dropdownItems.length - 1
+    ? props.initialIndex >= items.length
+      ? items.length - 1
       : props.initialIndex
     : 0;
-  const initialItems = dropdownItems[initialIndex];
 
+  const [dropdownItems, setDropdownItems] = useState<IDropdownItem[]>(items);
   const [showDropdown, setShowDropdown] = useState(false);
-  const [selectedItem, setSelectedItem] = useState<IDropdownItem>(initialItems);
   const [wrapperHeight, setWrapperHeight] = useState(0);
   const [posTop, setPosTop] = useState(true);
+  const [selectedIndex, setSelectedIndex] = useState(initialIndex);
 
   const wrapperRef = useRef<View>(null);
 
+  useEffect(() => {
+    setDropdownItems(items);
+    setSelectedIndex(initialIndex);
+  }, [items]);
+
   const onPressHandler = () => {
     setShowDropdown(!showDropdown);
+    props.onOpen?.(!showDropdown);
   };
 
   const onItemPress = (selected: IDropdownItem, index: number) => {
     props.onSelected?.(selected.value, index, selected);
-    setSelectedItem(selected);
+    setSelectedIndex(index);
     setShowDropdown(false);
   };
 
   const onLayoutWrapperHandler = useCallback((ev: LayoutChangeEvent) => {
     const layout = ev.nativeEvent.layout;
-    console.log('layout', layout);
+    // console.log('layout', layout);
 
     setWrapperHeight(layout.height);
   }, []);
@@ -79,7 +87,7 @@ const DropdownV2 = (props: IDropdownPropType) => {
       <TouchableOpacity
         onPress={onPressHandler}
         style={styles.DropMainContainer}>
-        {ItemRender(selectedItem)}
+        {ItemRender(dropdownItems[selectedIndex])}
         <Icon name={showDropdown ? 'chevron-back' : 'chevron-down'} />
       </TouchableOpacity>
       {showDropdown && (
@@ -95,7 +103,7 @@ const DropdownV2 = (props: IDropdownPropType) => {
           ]}>
           {dropdownItems.map((item, i) => (
             <TouchableOpacity
-              key={i}
+              key={item.value}
               style={{padding: 4}}
               onPress={() => onItemPress(item, i)}>
               {ItemRender(item)}

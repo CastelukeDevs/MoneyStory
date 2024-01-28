@@ -18,6 +18,7 @@ import TransactionDetailFragment from './Fragment/2-TransactionDetailFragment';
 import TransactionItemFragment from './Fragment/3-TransactionItemFragment';
 import TransactionReceiptFragment from './Fragment/4-TransactionReceiptFragment';
 import ProgressBar from '@Components/Common/ProgressBar';
+import ThemeColor, {Opacity} from '@Utilities/Styles/ThemeColor';
 
 const CreateTransactionScreen = ({
   navigation,
@@ -116,7 +117,9 @@ const CreateTransactionScreen = ({
 export default CreateTransactionScreen;
 
 const styles = StyleSheet.create({
-  RootScreenContainer: {flex: 1},
+  RootScreenContainer: {
+    flex: 1,
+  },
   SubHeaderContainer: {
     paddingHorizontal: 14,
     paddingVertical: 18,

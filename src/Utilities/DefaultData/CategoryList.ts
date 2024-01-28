@@ -1,6 +1,6 @@
 import {ICategoryList} from '@Types/TransactionTypes';
 
-export const CategoryList = {
+export const CategoryList: ICategoryList = {
   Income: [
     {category: 'Salary', icon: 'business'},
     {category: 'Investment', icon: 'analytics'},
@@ -24,7 +24,13 @@ export const CategoryList = {
     {category: 'Supplies', icon: 'construct'},
     {category: 'Other', icon: 'logo-usd'},
   ],
-  Transfer: [{category: 'Transfer', icon: 'navigate'}],
-} as const satisfies ICategoryList;
+  Transfer: [
+    {
+      category: 'Transfer',
+      icon: 'navigate',
+      description: 'Wallet to Wallet transaction',
+    },
+  ],
+};
 
 export const TransactionType = Object.keys(CategoryList);

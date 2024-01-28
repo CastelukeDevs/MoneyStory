@@ -7,7 +7,11 @@ import {IPaginateProps} from './CommonTypes';
 import {IIconName} from '@Components/Common/Icon';
 
 export type ITransactionType = keyof typeof CategoryList;
-export type ITransactionCategory = {category: string; icon: IIconName};
+export type ITransactionCategory = {
+  category: string;
+  icon: IIconName;
+  description?: string;
+};
 
 export type ICategoryList = {
   [key: string]: ITransactionCategory[];
