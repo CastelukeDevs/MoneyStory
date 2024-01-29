@@ -33,6 +33,7 @@
     "moment": "^2.29.4",
     "react": "18.2.0",
     "react-native": "0.72.4",
+    "react-native-dashed-line": "^1.1.0",
     "react-native-flipper": "^0.212.0",
     "react-native-gesture-handler": "^2.12.1",
     "react-native-image-picker": "^7.1.0",
