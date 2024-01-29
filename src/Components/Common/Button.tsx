@@ -14,11 +14,13 @@ type IButtonPropTypes = {
 };
 
 //TODO: add disable button function
+//TODO: add bordered mode
 
 /**
  *
  * @param label string
  * @param onPress function
+ * @param mode "contained" / "text"
  * Simple button
  */
 const Button = (props: IButtonPropTypes) => {
