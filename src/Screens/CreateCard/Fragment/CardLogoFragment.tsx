@@ -31,8 +31,6 @@ const CardLogoFragment = (props: ICardLogoFragmentProps) => {
 
   const logoList = ConvertEnumToArray(LogoList);
 
-  console.log('Logo Name', logoList);
-
   return (
     <View
       style={{

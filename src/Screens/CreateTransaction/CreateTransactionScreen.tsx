@@ -94,7 +94,7 @@ const CreateTransactionScreen = ({
         style={{flex: 1}}
         horizontal
         snapToInterval={width}
-        // scrollEnabled={false}
+        scrollEnabled={false}
         decelerationRate={0}
         showsHorizontalScrollIndicator={false}
         bounces={false}
@@ -119,6 +119,7 @@ export default CreateTransactionScreen;
 const styles = StyleSheet.create({
   RootScreenContainer: {
     flex: 1,
+    backgroundColor: ThemeColor.dark + Opacity[20],
   },
   SubHeaderContainer: {
     paddingHorizontal: 14,

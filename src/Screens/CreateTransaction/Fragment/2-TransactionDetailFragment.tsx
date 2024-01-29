@@ -21,6 +21,7 @@ import {
   TransactionType,
 } from '@Utilities/DefaultData/CategoryList';
 import {ITransaction, ITransactionType} from '@Types/TransactionTypes';
+import ThemeColor from '@Utilities/Styles/ThemeColor';
 
 const TransactionDetailFragment = (props: ITransactionFragmentProps) => {
   const inset = useSafeAreaInsets();
@@ -64,11 +65,7 @@ const TransactionDetailFragment = (props: ITransactionFragmentProps) => {
   //TODO: Arrange index for dropdown
 
   return (
-    <View
-      style={[
-        DefaultStyle.RootFragmentStyle,
-        {paddingBottom: inset.bottom, paddingHorizontal: 0},
-      ]}>
+    <View style={[DefaultStyle.RootFragmentStyle, {paddingHorizontal: 0}]}>
       <View
         style={[
           styles.ContentContainer,
@@ -101,6 +98,7 @@ const TransactionDetailFragment = (props: ITransactionFragmentProps) => {
           zIndex: 1,
           marginTop: Dimension.SpaceL,
           paddingHorizontal: Dimension.SpaceL,
+          backgroundColor: ThemeColor.light,
         }}
         bounces={false}
         automaticallyAdjustKeyboardInsets>
@@ -159,7 +157,10 @@ export default TransactionDetailFragment;
 
 const styles = StyleSheet.create({
   ContentContainer: {},
-  ButtonContainer: {marginTop: Dimension.SpaceL},
+  ButtonContainer: {
+    marginTop: Dimension.SpaceL,
+    paddingBottom: Dimension.SpaceL,
+  },
   LabelText: {
     ...ThemeText.SubTitle_Regular,
     marginBottom: Dimension.TextMargin,

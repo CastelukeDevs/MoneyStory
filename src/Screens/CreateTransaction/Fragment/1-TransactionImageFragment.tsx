@@ -17,6 +17,7 @@ import GlobalColor from '@Utilities/Styles/ThemeColor';
 
 import {launchImageLibrary} from 'react-native-image-picker';
 import {PickerOption} from '@Utilities/Settings/ImagePicker';
+import ThemeColor from '@Utilities/Styles/ThemeColor';
 
 const dimens = Dimensions.get('window');
 
@@ -66,7 +67,7 @@ const styles = StyleSheet.create({
   ImageContainer: {
     width: (dimens.width / 4) * 3,
     aspectRatio: 9 / 13,
-    backgroundColor: 'skyblue',
+    backgroundColor: ThemeColor.light,
   },
 });
 
