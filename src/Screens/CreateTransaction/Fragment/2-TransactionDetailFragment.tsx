@@ -164,6 +164,6 @@ const styles = StyleSheet.create({
   LabelText: {
     ...ThemeText.SubTitle_Regular,
     marginBottom: Dimension.TextMargin,
-    marginTop: Dimension.Space,
+    marginTop: Dimension.SpaceL,
   },
 });
